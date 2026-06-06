@@ -37,7 +37,6 @@ jobs:
         run: bunx --bun vite build
 
       - name: Create 404 page for SPA routing
-        # This ensures that deep links and page refreshes work on GitHub Pages
         run: cp dist/index.html dist/404.html
 
       - name: Setup Pages
