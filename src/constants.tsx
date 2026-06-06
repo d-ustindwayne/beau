@@ -93,13 +93,14 @@ export function getProducts(
     count?: number,
     bgColor?: string
 ): Array<JSX.Element> {
+    const baseUrl = import.meta.env.BASE_URL;
     const productCategory = productList[category];
     let products: JSX.Element[] = Object.values(productCategory).map((product) =>
         <ProductCard key={`${category}-${product.name}`}
             productCategory={category} productName={product.name}
             lipstickType={product.lipstickType} description={product.description}
             price={product.price} bgColor={bgColor || "bg-transparent"}
-            imageURL={product.photoUrl} imageAlt={`${category}-${product.name}`} />
+            imageURL={`${baseUrl}${product.photoUrl}`} imageAlt={`${category}-${product.name}`} />
     )
     if (random) products = randomize(products);
     if (count) products = products.slice(0, count);

@@ -3,6 +3,9 @@ import sortArray, { AnchorDesign, getProducts } from "../constants"
 import productList from '../productList.json'
 import type { ProductList, sortType, lipType } from "../types"
 import { SortButton } from "../components/SortButton"
+import glossyType from "../assets/LipstickType/Glossy.png"
+import matteType from "../assets/LipstickType/Matte.png"
+import satinType from "../assets/LipstickType/Satin.png"
 
 export default function Shop(): JSX.Element {
     const [sort, setSort] = useState("random" as sortType); 
@@ -43,19 +46,19 @@ export default function Shop(): JSX.Element {
             <div className="md:w-2/3 w-full flex flex-row justify-evenly gap-4 py-10 sm:mr-10.5 mr-0 md:px-0 px-4">
                 <div className="flex flex-col items-center px-3.5" onClick={() => changeType("Glossy")}>
                     <div className="max-w-45 min-w-30.5 lg:w-45 md:w-32.5 sm:30.5 rounded-full aspect-square flex justify-center items-center">
-                        <img src="src/assets/LipstickType/Glossy.png" alt="Type: Glossy" className={`w-full h-full object-cover rounded-full inset-0 animate-spin [animation-duration:25s] cursor-pointer ${type == "Glossy"? 'ring-12 ring-[#e37d72]' : 'filter-none ring-none'}`}/>
+                        <img src={glossyType} alt="Type: Glossy" className={`w-full h-full object-cover rounded-full inset-0 animate-spin [animation-duration:25s] cursor-pointer ${type == "Glossy"? 'ring-12 ring-[#e37d72]' : 'filter-none ring-none'}`}/>
                     </div>
                     <div className="my-4 text-3xl">Glossy</div>
                 </div>
                 <div className="flex flex-col items-center px-3.5" onClick={() => changeType("Matte")}>
                     <div className="max-w-45 min-w-30.5 lg:w-45 md:w-32.5 sm:30.5 rounded-full aspect-square flex justify-center items-center">
-                        <img src="src/assets/LipstickType/Matte.png" alt="Type: Matte" className={`w-full h-full object-cover rounded-full inset-0 animate-spin [animation-duration:25s] cursor-pointer ${type == "Matte"? 'ring-12 ring-[#e37d72]' : 'filter-none ring-none'}`}/>
+                        <img src={matteType} alt="Type: Matte" className={`w-full h-full object-cover rounded-full inset-0 animate-spin [animation-duration:25s] cursor-pointer ${type == "Matte"? 'ring-12 ring-[#e37d72]' : 'filter-none ring-none'}`}/>
                     </div>
                     <div className="my-4 text-3xl">Matte</div>
                 </div>
                 <div className="flex flex-col items-center px-3.5" onClick={() => changeType("Satin")}>
                     <div className="max-w-45 min-w-30.5 lg:w-45 md:w-32.5 sm:30.5 rounded-full aspect-square flex justify-center items-center">
-                        <img src="src/assets/LipstickType/Satin.png" alt="Type: Satin" className={`w-full h-full object-cover rounded-full inset-0 animate-spin [animation-duration:25s] cursor-pointer ${type == "Satin"? 'ring-12 ring-[#e37d72]' : 'filter-none ring-none'}`}/>
+                        <img src={satinType} alt="Type: Satin" className={`w-full h-full object-cover rounded-full inset-0 animate-spin [animation-duration:25s] cursor-pointer ${type == "Satin"? 'ring-12 ring-[#e37d72]' : 'filter-none ring-none'}`}/>
                     </div>
                     <div className="my-4 text-3xl">Satin</div>
                 </div>

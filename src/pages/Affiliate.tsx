@@ -6,6 +6,11 @@ import { Splide, SplideSlide, SplideTrack } from '@splidejs/react-splide'
 import '@splidejs/react-splide/css'
 import affiliateList from '../affiliateList.json'
 import type { AffiliateDetails } from "../types"
+import qrCode from "../assets/misc_photos/Affiliate-QR.png"
+import joinImg from "../assets/misc_photos/Join.png"
+import advertiseImg from "../assets/misc_photos/Advertise.png"
+import earnImg from "../assets/misc_photos/Earn.png"
+import instaIcon from "/instagram.png" // Since this is in public, we use the string
 
 export default function Affiliate(): JSX.Element {
     const affiliates: AffiliateDetails[] = affiliateList;
@@ -49,7 +54,7 @@ export default function Affiliate(): JSX.Element {
                             <div className="flex flex-col justify-center items-center">
                                 <p className="font-[Times_New_Roman] bold text-3xl whitespace-nowrap tracking-wider">{aff.name}</p>
                                 <span className="flex flex-row items-center whitespace-nowrap gap-2">
-                                    <img className="mt-1 h-6 w-6 flex items-end justify-center" src="/instagram.png" alt={`Instagram: ${aff.insta}`} />
+                                    <img className="mt-1 h-6 w-6 flex items-end justify-center" src={`${import.meta.env.BASE_URL}${instaIcon}`} alt={`Instagram: ${aff.insta}`} />
                                     <p className="font-[OpenSans] text-2xl tracking-wider">{aff.insta}</p>
                                 </span>
                             </div>
@@ -70,20 +75,20 @@ export default function Affiliate(): JSX.Element {
             <div className="lg:w-1/3 md:w-1/2 w-full p-10">
                 <h1 className="text-center md:text-start lg:text-4xl sm:text-3xl text-2xl font-['Times_New_Roman',serif] tracking-wider">Scan QR code to join</h1>
                 <div className="w-full">
-                    <img className="w-full aspect-square md:object-contain md:scale-100 scale-70" src="src/assets/misc_photos/Affiliate-QR.png" alt="QR code" />
+                    <img className="w-full aspect-square md:object-contain md:scale-100 scale-70" src={qrCode} alt="QR code" />
                 </div>
             </div>
         </section>
 
         <section className="flex md:flex-row flex-col w-dvw justify-center items-center">
             <div className="flex justify-center md:w-1/3 w-full p-10 ">
-                <img src="src/assets/misc_photos/Join.png" alt="Join Image" />
+                <img src={joinImg} alt="Join Image" />
             </div>
             <div className="flex justify-center md:w-1/3 w-full p-10 ">
-                <img src="src/assets/misc_photos/Advertise.png" alt="Advertise Image" />
+                <img src={advertiseImg} alt="Advertise Image" />
             </div>
             <div className="flex justify-center md:w-1/3 w-full p-10 ">
-                <img src="src/assets/misc_photos/Earn.png" alt="Earn Image" />
+                <img src={earnImg} alt="Earn Image" />
             </div>
         </section>
         </section>

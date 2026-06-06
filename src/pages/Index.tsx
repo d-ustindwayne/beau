@@ -7,6 +7,9 @@ import productList from '../productList.json' with {type: 'json'}
 import { AnchorDesign, ButtonDesign, SplideClass } from '../constants'
 import affiliatePhoto from '/src/assets/misc_photos/AffiliatePhoto.jpg'
 import getLookPhoto from '/src/assets/misc_photos/LookHighlightPhoto.jpg'
+import carousel1 from '../assets/HeaderCarousel/CarouselImage1.png'
+import carousel2 from '../assets/HeaderCarousel/CarouselImage2.png'
+import carousel3 from '../assets/HeaderCarousel/CarouselImage3.png'
 import sendButton from '/src/newsletter-email-button.svg'
 import { getProducts } from '../constants'
 
@@ -19,15 +22,15 @@ export default function Index(): ReactElement {
                     lazyLoad: 'nearby', classes: SplideClass } }>
                     <SplideTrack>
                         <SplideSlide className="relative text-center">
-                            <img className="w-dvw" src="src/assets/HeaderCarousel/CarouselImage1.png" alt="IMAGE" />
+                            <img className="w-dvw" src={carousel1} alt="IMAGE" />
                             <Link to="/shop" className={`${ButtonDesign} z-10 absolute lg:bottom-15 md:bottom-9 sm:bottom-5 bottom-8 right-1/2 translate-x-1/2`}>Shop Now</Link>
                         </SplideSlide>
                         <SplideSlide className="relative">
-                            <img className="w-dvw" src="src/assets/HeaderCarousel/CarouselImage2.png" alt="IMAGE" />
+                            <img className="w-dvw" src={carousel2} alt="IMAGE" />
                             <Link to="/shop" className={`${ButtonDesign} z-10 absolute lg:bottom-15 md:bottom-9 sm:bottom-5 bottom-8 right-1/2 translate-x-1/2`}>Shop Now</Link>
                         </SplideSlide>
                         <SplideSlide className="relative">
-                            <img className="w-dvw" src="src/assets/HeaderCarousel/CarouselImage3.png" alt="IMAGE" />
+                            <img className="w-dvw" src={carousel3} alt="IMAGE" />
                             <Link to="/shop" className={`${ButtonDesign} z-10 absolute lg:bottom-15 md:bottom-9 sm:bottom-5 bottom-8 right-1/2 translate-x-1/2`}>Shop Now</Link>
                         </SplideSlide>
                     </SplideTrack>
