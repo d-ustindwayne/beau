@@ -1,0 +1,37 @@
+@import 'tailwindcss';
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* FONTS */
+@font-face {
+    font-family: 'OpenSans';
+    src: url(fonts/OpenSans-VariableFont.ttf) format("truetype");
+    font-weight: 200 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url(fonts/OpenSans-Italic-VariableFont.ttf) format("truetype");
+    font-weight: 200 800;
+    font-style: italic;
+}
+
+/* ANIMATIONS */
+@keyframes addToCart {
+  0% {
+    transform: translate(0, 0) scale(2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(100vw - var(--start-x) + 4rem), calc(0px - var(--start-y) + 160px)) scale(1);
+    opacity: 0.4;
+  }
+}
+
+.cart-float {
+    animation: addToCart 1.5s cubic-bezier(0.5, 1, 0.25, 1.25) forwards;
+}
