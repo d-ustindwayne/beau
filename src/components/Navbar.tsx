@@ -1,4 +1,4 @@
-import logo from "../assets/beau-with-motto-logo.png"
+import logo from "/beau-with-motto-logo.png"
 import { useState, type ReactElement } from "react"
 import { Link } from 'react-router-dom'
 

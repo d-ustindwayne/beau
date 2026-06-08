@@ -3,9 +3,9 @@ import sortArray, { AnchorDesign, getProducts } from "../constants"
 import productList from '../productList.json'
 import type { ProductList, sortType, lipType } from "../types"
 import { SortButton } from "../components/SortButton"
-import glossyType from "../assets/LipstickType/Glossy.png"
-import matteType from "../assets/LipstickType/Matte.png"
-import satinType from "../assets/LipstickType/Satin.png"
+import glossyType from "/Glossy.png"
+import matteType from "/Matte.png"
+import satinType from "/Satin.png"
 
 export default function Shop(): JSX.Element {
     const [sort, setSort] = useState("random" as sortType); 

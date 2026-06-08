@@ -54,7 +54,7 @@ export default function Affiliate(): JSX.Element {
                             <div className="flex flex-col justify-center items-center">
                                 <p className="font-[Times_New_Roman] bold text-3xl whitespace-nowrap tracking-wider">{aff.name}</p>
                                 <span className="flex flex-row items-center whitespace-nowrap gap-2">
-                                    <img className="mt-1 h-6 w-6 flex items-end justify-center" src={`${import.meta.env.BASE_URL}${instaIcon}`} alt={`Instagram: ${aff.insta}`} />
+                                    <img className="mt-1 h-6 w-6 flex items-end justify-center" src={instaIcon} alt={`Instagram: ${aff.insta}`} />
                                     <p className="font-[OpenSans] text-2xl tracking-wider">{aff.insta}</p>
                                 </span>
                             </div>

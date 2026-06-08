@@ -52,7 +52,7 @@ export default function ProductCard({ imageURL, imageAlt, productCategory, produ
             <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
                 {badges.map((badge) => (
                     <div key={badge.id}
-                        className="cart-float absolute size-10 bg-[#891402] shadow-md bg-no-repeat bg-contain"
+                        className="cart-float absolute size-10 bg-[#891402] shadow-md bg-no-repeat bg-cover bg-center"
                         style={{
                             backgroundImage: `url('${imageURL}')`,
                             left: `${badge.x}px`,
