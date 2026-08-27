@@ -1,5 +1,5 @@
-import { type JSX } from "react"
-import type { sortType } from "../types"
+import { type JSX } from "react";
+import type { sortType } from "../types";
 
 interface SortSetting {
     children: string,

@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react"
-import type { CartList, ProductData, sortType } from "./types"
-import sortArray from './constants'
+import { useState, useEffect } from "react";
+import type { CartList, ProductData, sortType } from "./types";
+import sortArray from "./constants";
 
 const LOCAL_STORAGE_KEY = "shopping_cart_data";
 

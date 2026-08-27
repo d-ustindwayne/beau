@@ -1,19 +1,19 @@
-import type { ReactElement } from "react"
-import { Link } from 'react-router-dom'
-import { Splide, SplideSlide, SplideTrack } from '@splidejs/react-splide'
-import '@splidejs/react-splide/css'
-import MediaText from '../components/MediaText'
-import productList from '../productList.json' with {type: 'json'}
-import { AnchorDesign, ButtonDesign, SplideClass } from '../constants'
-import affiliatePhoto from '/src/assets/misc_photos/AffiliatePhoto.jpg'
-import getLookPhoto from '/src/assets/misc_photos/LookHighlightPhoto.jpg'
-import carousel1 from '../assets/HeaderCarousel/CarouselImage1.png'
-import carousel2 from '../assets/HeaderCarousel/CarouselImage2.png'
-import carousel3 from '../assets/HeaderCarousel/CarouselImage3.png'
-import sendButton from '/src/newsletter-email-button.svg'
-import { getProducts } from '../constants'
+import type { JSX } from "react";
+import { Link } from "react-router-dom";
+import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
+import "@splidejs/react-splide/css";
+import MediaText from "../components/MediaText";
+import productList from "../productList.json" with {type: "json"};
+import { AnchorDesign, ButtonDesign, SplideClass } from "../constants";
+import affiliatePhoto from "/assets/misc_photos/AffiliatePhoto.jpg";
+import getLookPhoto from "/assets/misc_photos/LookHighlightPhoto.jpg";
+import carousel1 from "/assets/HeaderCarousel/CarouselImage1.png";
+import carousel2 from "/assets/HeaderCarousel/CarouselImage2.png";
+import carousel3 from "/assets/HeaderCarousel/CarouselImage3.png";
+import sendButton from "/newsletter-email-button.svg";
+import { getProducts } from "../constants";
 
-export default function Index(): ReactElement {
+export default function Index(): JSX.Element {
     return (
         <>
             <header id="header-carousel">
@@ -43,24 +43,24 @@ export default function Index(): ReactElement {
                     options={ { type: 'loop', rewind: true, arrow: true, snap: true, perMove: 1, autoplay: true,
                     padding: '5rem', perPage: 3, lazyLoad: 'nearby', focus: 'center', classes: defaultClasses,} }>
                     <SplideTrack>
-                        <SplideSlide><img className="" src="src/assets/ProductsCarousel/Product1.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="src/assets/ProductsCarousel/Product2.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="src/assets/ProductsCarousel/Product3.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="src/assets/ProductsCarousel/Product4.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="src/assets/ProductsCarousel/Product5.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="src/assets/ProductsCarousel/Product6.png" alt="IMAGE" /></SplideSlide>
+                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product1.png" alt="IMAGE" /></SplideSlide>
+                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product2.png" alt="IMAGE" /></SplideSlide>
+                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product3.png" alt="IMAGE" /></SplideSlide>
+                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product4.png" alt="IMAGE" /></SplideSlide>
+                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product5.png" alt="IMAGE" /></SplideSlide>
+                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product6.png" alt="IMAGE" /></SplideSlide>
                     </SplideTrack>
                 </Splide>
                 <Splide className="block sm:hidden" hasTrack={false} aria-label="Header Carousel" tag="section"
                     options={ { type: 'loop', rewind: true, snap: true, perMove: 1, autoplay: true, pagination: false,
                     padding: '2.5rem', perPage: 1, lazyLoad: 'nearby', classes: defaultClasses,} }>
                     <SplideTrack>
-                        <SplideSlide><img className="" src="src/assets/ProductsCarousel/Product1.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="src/assets/ProductsCarousel/Product2.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="src/assets/ProductsCarousel/Product3.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="src/assets/ProductsCarousel/Product4.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="src/assets/ProductsCarousel/Product5.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="src/assets/ProductsCarousel/Product6.png" alt="IMAGE" /></SplideSlide>
+                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product1.png" alt="IMAGE" /></SplideSlide>
+                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product2.png" alt="IMAGE" /></SplideSlide>
+                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product3.png" alt="IMAGE" /></SplideSlide>
+                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product4.png" alt="IMAGE" /></SplideSlide>
+                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product5.png" alt="IMAGE" /></SplideSlide>
+                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product6.png" alt="IMAGE" /></SplideSlide>
                     </SplideTrack>
                 </Splide>
             </section> */}
@@ -68,13 +68,13 @@ export default function Index(): ReactElement {
             <section className="bg-[#d2e5eb] flex flex-col items-center justify-center pb-12 pt-7.5">
                 <h1 className='font-[\"Times_New_Roman\",serif] text-6xl text-center italic pt-5 pb-6.25'>Winter Garden Collection</h1>
                 <div className="lg:grid md:hidden hidden grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {getProducts(productList, "Winter Garden")}
+                    {getProducts(productList, "Winter_Garden")}
                 </div>
                 <div className="lg:hidden md:grid hidden grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {getProducts(productList, "Winter Garden", false, 3)}
+                    {getProducts(productList, "Winter_Garden", false, 3)}
                 </div>
                 <div className="lg:hidden md:hidden grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {getProducts(productList, "Winter Garden", false, 2)}
+                    {getProducts(productList, "Winter_Garden", false, 2)}
                 </div>
                 <div className="block lg:mt-6 md:mt-4 mt-2">
                     <Link to="/shop" className={AnchorDesign}>View More</Link>
@@ -85,7 +85,7 @@ export default function Index(): ReactElement {
                 <img src={getLookPhoto} alt="Sun Goddess - Perena" className="absolute inset-0 h-full w-full object-cover object-left"/>
                 <div className="relative flex flex-col justify-center items-center py-10 lg:mr-10 md:mr-8 mr-0">
                     <h1 className="font-['Times_New_Roman',serif] text-white xl:text-7xl md:text-6xl text-5xl py-4">Get This Look</h1>
-                    {getProducts(productList, "Sun Goddess", false, 1, "bg-white")}
+                    {getProducts(productList, "Sun_Goddess", false, 1, "bg-white")}
                 </div>
             </section>
 

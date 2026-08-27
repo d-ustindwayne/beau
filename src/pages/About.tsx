@@ -1,9 +1,9 @@
-import type { JSX } from "react"
-import HeroHeading from "../components/HeroHeading"
-import heroUrl from '/src/assets/misc_photos/DefaultHeroBackground.jpg'
-import MediaText from "../components/MediaText"
-import aboutPhoto from '/src/assets/misc_photos/OurStoryPhoto.jpg'
-import missionPhoto from '/src/assets/misc_photos/MissionVision.jpg'
+import { type JSX } from "react";
+import HeroHeading from "../components/HeroHeading";
+import heroUrl from "/assets/misc_photos/DefaultHeroBackground.jpg";
+import MediaText from "../components/MediaText";
+import aboutPhoto from "/assets/misc_photos/OurStoryPhoto.jpg";
+import missionPhoto from "/assets/misc_photos/MissionVision.jpg";
 
 
 export default function About(): JSX.Element {

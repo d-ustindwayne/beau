@@ -1,8 +1,8 @@
-import { useState, type ChangeEvent, type JSX } from "react"
-import HeroHeading from "../components/HeroHeading"
-import heroUrl from '/src/assets/misc_photos/DefaultHeroBackground.jpg'
-import { ButtonDesign } from "../constants"
-import sendButton from '/src/newsletter-email-button.svg'
+import { useState, type ChangeEvent, type JSX } from "react";
+import HeroHeading from "../components/HeroHeading";
+import heroUrl from "/assets/misc_photos/DefaultHeroBackground.jpg";
+import { ButtonDesign } from "../constants";
+import sendButton from "/newsletter-email-button.svg";
 
 export default function Contact(): JSX.Element {
     const [textCount, setTextCount] = useState(0);

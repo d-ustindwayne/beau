@@ -1,11 +1,11 @@
-import { useState, useMemo, type JSX } from "react"
-import sortArray, { AnchorDesign, getProducts } from "../constants"
-import productList from '../productList.json'
-import type { ProductList, sortType, lipType } from "../types"
-import { SortButton } from "../components/SortButton"
-import glossyType from "/Glossy.png"
-import matteType from "/Matte.png"
-import satinType from "/Satin.png"
+import { useState, useMemo, type JSX } from "react";
+import sortArray, { AnchorDesign, getProducts } from "../constants";
+import productList from "../productList.json";
+import type { ProductList, sortType, lipType } from "../types";
+import { SortButton } from "../components/SortButton";
+import glossyType from "/Glossy.png";
+import matteType from "/Matte.png";
+import satinType from "/Satin.png";
 
 export default function Shop(): JSX.Element {
     const [sort, setSort] = useState("random" as sortType); 

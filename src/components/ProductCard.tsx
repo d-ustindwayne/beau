@@ -1,8 +1,8 @@
-import React, { useState, type JSX } from 'react'
-import type { ProductDetails, CartDot } from '../types'
-import { ButtonDesign, dollarFormatter } from '../constants'
-import { Cart } from '../cartData.tsx'
-import Modal from './Modal.tsx';
+import React, { useState, type JSX } from "react";
+import type { ProductDetails, CartDot } from "../types";
+import { ButtonDesign, dollarFormatter } from "../constants";
+import { Cart } from "../cartData.tsx";
+import Modal from "./Modal.tsx";
 
 export default function ProductCard({ imageURL, imageAlt, productCategory, productName, lipstickType, description, price, bgColor }: ProductDetails): JSX.Element {
     const [badges, setDots] = useState<CartDot[]>([]);
@@ -44,7 +44,7 @@ export default function ProductCard({ imageURL, imageAlt, productCategory, produ
                         <img src={imageURL} alt={imageAlt} className="object-cover object-center md:w-[67%] w-[90%]" />
                     </div>
                     <h4 className='md:text-nowrap text-wrap xl:text-4xl text-3xl md:mt-4 mt-1 px-6.5 font-thin font-[OpenSans]'>{productName}</h4>
-                    <h5 className="md:text-nowrap text-wrap lg:text-3xl text-2xl font-bold font-['Times_New_Roman',serif]">{productCategory}</h5>
+                    <h5 className="md:text-nowrap text-wrap lg:text-3xl text-2xl font-bold font-['Times_New_Roman',serif]">{productCategory.replaceAll('_', ' ')}</h5>
                     <p className="md:text-nowrap text-wrap text-2xl font-normal font-[OpenSans]">${price.toFixed(2)}</p>
                 </span>
                 <button type="button" className={`${ButtonDesign}`} disabled={wait} onClick={(e) => { addToCart(e, productCategory, productName, lipstickType, description, price, imageURL); clickTraffic() }}>Buy Now</button>

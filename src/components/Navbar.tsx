@@ -1,8 +1,8 @@
-import logo from "/beau-with-motto-logo.png"
-import { useState, type ReactElement } from "react"
-import { Link } from 'react-router-dom'
+import logo from "/beau-logo.png";
+import { useState, type JSX } from "react";
+import { Link } from "react-router-dom";
 
-export default function Navbar(): ReactElement {
+export default function Navbar(): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

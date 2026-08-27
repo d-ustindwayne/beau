@@ -1,16 +1,16 @@
-import { useState, useEffect, useMemo, type JSX } from "react"
-import HeroHeading from "../components/HeroHeading"
-import heroUrl from '/src/assets/misc_photos/DefaultHeroBackground.jpg'
-import { breakpoints, SplideClass } from "../constants"
-import { Splide, SplideSlide, SplideTrack } from '@splidejs/react-splide'
-import '@splidejs/react-splide/css'
-import affiliateList from '../affiliateList.json'
-import type { AffiliateDetails } from "../types"
-import qrCode from "../assets/misc_photos/Affiliate-QR.png"
-import joinImg from "../assets/misc_photos/Join.png"
-import advertiseImg from "../assets/misc_photos/Advertise.png"
-import earnImg from "../assets/misc_photos/Earn.png"
-import instaIcon from "/instagram.png" // Since this is in public, we use the string
+import { useState, useEffect, useMemo, type JSX } from "react";
+import HeroHeading from "../components/HeroHeading";
+import heroUrl from "/assets/misc_photos/DefaultHeroBackground.jpg";
+import { breakpoints, SplideClass } from "../constants";
+import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
+import "@splidejs/react-splide/css";
+import affiliateList from "../affiliateList.json";
+import type { AffiliateDetails } from "../types";
+import qrCode from "/assets/misc_photos/Affiliate-QR.png";
+import joinImg from "/assets/misc_photos/Join.png";
+import advertiseImg from "/assets/misc_photos/Advertise.png";
+import earnImg from "/assets/misc_photos/Earn.png";
+import instaIcon from "/instagram.png"; // Since this is in public, we use the string
 
 export default function Affiliate(): JSX.Element {
     const affiliates: AffiliateDetails[] = affiliateList;

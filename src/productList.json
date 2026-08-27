@@ -1,92 +1,92 @@
 {
-    "Winter Garden": [
+    "Winter_Garden": [
         {
             "name": "Crimson",
             "price": 50.99,
             "lipstickType": "Matte",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Winter Garden0.jpg"
+            "photoUrl": "./assets/CollectionProducts/Winter_Garden0.jpg"
         },
         {
             "name": "Origin",
             "price": 52,
             "lipstickType": "Matte",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Winter Garden1.jpg"
+            "photoUrl": "./assets/CollectionProducts/Winter_Garden1.jpg"
         },
         {
             "name": "Petal",
             "price": 52,
             "lipstickType": "Matte",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Winter Garden2.jpg"
+            "photoUrl": "./assets/CollectionProducts/Winter_Garden2.jpg"
         },
         {
             "name": "Dusk",
             "price": 52,
             "lipstickType": "Matte",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Winter Garden3.jpg"
+            "photoUrl": "./assets/CollectionProducts/Winter_Garden3.jpg"
         }
     ],
-    "Sun Goddess": [
+    "Sun_Goddess": [
         {
             "name": "Danaya",
             "price": 59,
             "lipstickType": "Satin",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Sun Goddess0.jpg"
+            "photoUrl": "./assets/CollectionProducts/Sun_Goddess0.jpg"
         },
         {
             "name": "Hasmin",
             "price": 67.99,
             "lipstickType": "Satin",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Sun Goddess1.jpg"
+            "photoUrl": "./assets/CollectionProducts/Sun_Goddess1.jpg"
         },
         {
             "name": "Mahal",
             "price": 72,
             "lipstickType": "Satin",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Sun Goddess2.jpg"
+            "photoUrl": "./assets/CollectionProducts/Sun_Goddess2.jpg"
         },
         {
             "name": "Perena",
             "price": 59,
             "lipstickType": "Satin",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Sun Goddess3.jpg"
+            "photoUrl": "./assets/CollectionProducts/Sun_Goddess3.jpg"
         }
     ],
-    "Thorns & Roses": [
+    "Thorns_and_Roses": [
         {
             "name": "Yzeth",
             "price": 49.99,
             "lipstickType": "Glossy",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Thorns & Roses0.jpg"
+            "photoUrl": "./assets/CollectionProducts/Thorns_and_Roses0.jpg"
         },
         {
             "name": "Lylia",
             "price": 48,
             "lipstickType": "Glossy",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Thorns & Roses1.jpg"
+            "photoUrl": "./assets/CollectionProducts/Thorns_and_Roses1.jpg"
         },
         {
             "name": "Amarantha",
             "price": 49.99,
             "lipstickType": "Glossy",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Thorns & Roses2.jpg"
+            "photoUrl": "./assets/CollectionProducts/Thorns_and_Roses2.jpg"
         },
         {
             "name": "Thuy",
             "price": 52.99,
             "lipstickType": "Glossy",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Thorns & Roses3.jpg"
+            "photoUrl": "./assets/CollectionProducts/Thorns_and_Roses3.jpg"
         }
     ],
     "Beaunds": [
@@ -95,28 +95,28 @@
             "price": 13.80,
             "lipstickType": "Satin",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Beaunds0.jpg"
+            "photoUrl": "./assets/CollectionProducts/Beaunds0.jpg"
         },
         {
             "name": "Benesa",
             "price": 20.11,
             "lipstickType": "Satin",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Beaunds1.jpg"
+            "photoUrl": "./assets/CollectionProducts/Beaunds1.jpg"
         },
         {
             "name": "Hillary",
             "price": 21.45,
             "lipstickType": "Satin",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Beaunds2.jpg"
+            "photoUrl": "./assets/CollectionProducts/Beaunds2.jpg"
         },
         {
             "name": "Leigh",
             "price": 10.45,
             "lipstickType": "Satin",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Beaunds3.jpg"
+            "photoUrl": "./assets/CollectionProducts/Beaunds3.jpg"
         }
     ],
     "Liexquizo": [
@@ -125,28 +125,28 @@
             "price": 72.00,
             "lipstickType": "Matte",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Liexquizo0.jpg"
+            "photoUrl": "./assets/CollectionProducts/Liexquizo0.jpg"
         },
         {
             "name": "Solana",
             "price": 72.00,
             "lipstickType": "Matte",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Liexquizo1.jpg"
+            "photoUrl": "./assets/CollectionProducts/Liexquizo1.jpg"
         },
         {
             "name": "Migrana",
             "price": 72.00,
             "lipstickType": "Matte",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Liexquizo2.jpg"
+            "photoUrl": "./assets/CollectionProducts/Liexquizo2.jpg"
         },
         {
             "name": "Aotea",
             "price": 72.00,
             "lipstickType": "Matte",
             "description": "A delicate, romantic pastel pink designed to bring a soft, youthful flush to the lips. It offers full-pigment coverage with a smooth, velvety matte texture that sits comfortably all day.\n\nHow it appears to you: This shade reads as a soft, clean, light neutral grey with a slight pastel warmth.\n\nThe True Tone: It is a bright, low-saturation pink. On a grayscale from black to white, it sits firmly at a 75% lightness level (a bright, soft highlight tone). It provides a gentle, low-contrast lift against natural lip tones without appearing deep or dark.",
-            "photoUrl": "/src/assets/CollectionProducts/Liexquizo3.jpg"
+            "photoUrl": "./assets/CollectionProducts/Liexquizo3.jpg"
         }
     ]
 }

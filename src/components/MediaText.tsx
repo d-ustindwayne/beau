@@ -1,6 +1,6 @@
-import type { ComponentPropsWithoutRef, JSX, ReactElement } from "react"
-import type { Props } from "../types"
-import { ButtonDesign } from "../constants"
+import type { ComponentPropsWithoutRef, JSX } from "react";
+import type { Props } from "../types";
+import { ButtonDesign } from "../constants";
 
 function renderMedia(mediaType: string | undefined, mediaURL: string, mediaAlt?: string, className?: string): JSX.Element | undefined {
     if (mediaType === "image" || mediaType === "photo") return (<img src={mediaURL} alt={mediaAlt} className={className}/>);
@@ -17,7 +17,7 @@ function loadButton(hasButton: boolean = false, buttonContent: string = "", butt
 }
 
 export default function MediaText({mediaType, mediaURL, mediaAlt, mediaPadding, title, subtitle, description, direction,
-hasButton, buttonClass, buttonContent, textColor, bgColor, alignment, ratio, phoneHideMedia, font}: Props): ReactElement & ComponentPropsWithoutRef<'div'> | undefined {
+hasButton, buttonClass, buttonContent, textColor, bgColor, alignment, ratio, phoneHideMedia, font}: Props): JSX.Element & ComponentPropsWithoutRef<'div'> | undefined {
     const widthMapping: Record<string, string> = {
         '1': 'md:w-1/12', '2': 'md:w-2/12', '3': 'md:w-3/12',
         '4': 'md:w-4/12', '5': 'md:w-5/12', '6': 'md:w-6/12',

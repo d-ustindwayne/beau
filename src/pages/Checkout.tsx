@@ -1,6 +1,6 @@
-import { Cart, useCartList } from "../cartData.tsx"
-import { ButtonDesign, dollarFormatter } from "../constants"
-import { type JSX } from "react"
+import { Cart, useCartList } from "../cartData.tsx";
+import { ButtonDesign, dollarFormatter } from "../constants";
+import { type JSX } from "react";
 
 export default function Checkout(): JSX.Element {
     const currentCart = useCartList("alphabet");
@@ -108,7 +108,7 @@ export default function Checkout(): JSX.Element {
                                 </div>
                                 <div className="flex-1 min-w-0 flex flex-col justify-start items-start min-h-full">
                                     <p className="font-bold font-['Times_New_Roman',serif] text-xl">{item.product.name}</p>
-                                    <p className="font-[OpenSans] text-lg">{item.category}</p>
+                                    <p className="font-[OpenSans] text-lg">{item.category.replaceAll('_', ' ')}</p>
                                     <p className="font-[OpenSans] text-lg">QTY: <span className="font-bold">{item.amount}</span>    </p>
                                 </div>
                                 <div className="flex h-full">

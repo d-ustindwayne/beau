@@ -1,28 +1,22 @@
-name: Deploy to GitHub Pages
+name: Deploy Beau to GitHub Pages
 
 on:
   push:
-    branches: ['main'] # Change to 'master' if your default branch is master
+    branches: ["main"] # Change to your default branch if it's "master"
+  workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow one concurrent deployment
 concurrency:
-  group: 'pages'
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,20 +29,21 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Build Project
-        run: bunx --bun vite build
+      - name: Build
+        run: bun run build
 
-      - name: Create 404 page for SPA routing
-        run: cp dist/index.html dist/404.html
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload Artifacts
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './dist'
 
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

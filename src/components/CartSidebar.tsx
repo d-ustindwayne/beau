@@ -113,7 +113,7 @@ export default function CartSidebar() {
                                     <img className="w-full object-cover" src={item.product.photoUrl}/>
                                 </div>
                                 <div className="flex-1 min-w-0 min-h-3/4">
-                                    <p className="text-sm font-medium text-black truncate"><span className="font-bold">{item.category}</span> | {item.product.name}</p>
+                                    <p className="text-sm font-medium text-black truncate"><span className="font-bold">{item.category.replaceAll('_', ' ')}</span> | {item.product.name}</p>
                                     <div className="w-fit flex flex-row align-top border border-black justify-start mt-2 text-black">
                                         <button className="h-lh font-extrabold border-r w-7.5 cursor-pointer" onClick={() => {
                                             if (item.amount === 1) handleRemoveProduct(item.category, item.product.name)
@@ -139,7 +139,7 @@ export default function CartSidebar() {
                         <span>Subtotal</span>
                         <span className="font-semibold text-black">{dollarFormatter(subtotal)}</span>
                     </div>
-                    <Link to="/checkout" className={`w-full block text-center py-3 rounded-full bg-black text-white text-sm font-semibold hover:bg-amber-950 active:scale-[0.98] transition-all duration-200 ${cartCount !== 0? 'cursor-pointer' : 'cursor-not-allowed! bg-gray-700!'}`} onClick={cartCount !== 0? handleClose : (e: React.MouseEvent<HTMLAnchorElement>) => e.preventDefault()}>
+                    <Link to="/checkout" className={`w-full block text-center py-3 rounded-full bg-[#841910] text-white text-sm font-semibold active:scale-[0.98] transition-all duration-200 ${cartCount !== 0? 'cursor-pointer' : 'cursor-not-allowed! bg-gray-700!'}`} onClick={cartCount !== 0? handleClose : (e: React.MouseEvent<HTMLAnchorElement>) => e.preventDefault()}>
                         Checkout
                     </Link>
                     <button onClick={handleClose} 

@@ -1,5 +1,5 @@
-import type { JSX } from 'react'
-import type { Props } from '../types';
+import { type JSX } from "react";
+import type { Props } from "../types";
 
 interface ExtProps extends Props {
     darkenBackground?: boolean,

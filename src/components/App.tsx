@@ -1,10 +1,10 @@
-import { Suspense } from 'react'
-import Navbar from './Navbar'
-import { Routes, Route, useLocation } from 'react-router-dom'
-import Footer from './Footer'
-import CartSidebar from './CartSidebar'
-import * as Pages from '../routes.ts'
-import LoadingScreen from './LoadingScreen'
+import { Suspense } from "react";
+import Navbar from "./Navbar";
+import { Routes, Route, useLocation } from "react-router-dom";
+import Footer from "./Footer";
+import CartSidebar from "./CartSidebar";
+import * as Pages from "../routes.ts";
+import LoadingScreen from "./LoadingScreen";
 
 export default function App() {
     const currentLocation = useLocation();

@@ -1,9 +1,9 @@
-import type { ReactElement } from "react"
-import logo from "/beau-with-motto-logo.png"
-import beautext from '/beau-logo.png'
-import { Link } from 'react-router-dom'
+import type { JSX } from "react";
+import logo from "/beau-logo.png";
+import beautext from "/beau-logo.png";
+import { Link } from "react-router-dom";
 
-export default function Footer(): ReactElement {
+export default function Footer(): JSX.Element {
   return (
     <footer className="bg-[#7A1C16] text-white font-serif py-16 px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto">
