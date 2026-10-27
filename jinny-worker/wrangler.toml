@@ -1,0 +1,12 @@
+name = "jinny-proxy"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+
+[vars]
+GROQ_MODEL = "llama-3.3-70b-versatile"
+GEMINI_MODEL = "gemini-2.5-flash"
+ALLOWED_ORIGINS = "https://d-ustindwayne.github.io,http://localhost:5173,http://localhost:4173"
+
+# Secrets: never put keys in this file. Set them with:
+#   npx wrangler secret put GROQ_API_KEY     (primary, from console.groq.com)
+#   npx wrangler secret put GEMINI_API_KEY   (fallback, from aistudio.google.com)
