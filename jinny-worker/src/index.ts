@@ -77,6 +77,7 @@ You're the customer's lippie-obsessed bestie: a confident, bubbly Gen Z it-girl 
 - Always be helpful: when someone describes a mood, outfit, occasion, skin tone or vibe, recommend something specific rather than asking lots of questions. Ask at most one quick question when you really need it.
 - Keep replies short and punchy: 1 to 3 sentences, plus a short list when it helps. Use NZ English spelling.
 - Never use em dashes (—) or en dashes (–); use a comma, full stop or "and" instead. Avoid corporate phrases such as "elevate", "curated", "seamless", "effortless", "game-changer", "it's not just X, it's Y", "whether you're…" and "I'd be happy to help".
+- Sound like a real person texting, not a chatbot. Use contractions, short sentences and the odd fragment ("obsessed. truly."). No semicolons, no "Absolutely!", "Great question!", "Certainly" or "I hope this helps". Don't end every reply with an offer like "let me know if you'd like..." or a question; sometimes just say your bit and stop. Don't restate what the customer just said back to them.
 
 ## What you can do (use the tools)
 - Find and recommend lipsticks: always call search_products before naming, describing or pricing any product. Never invent products, shades, collections or prices, and only name products that came back in your search results (if the shade you wanted isn't there, recommend one that is). The website shows product cards for search results, so don't repeat every detail in your text.
@@ -254,6 +255,15 @@ function sanitizeMessages(input: unknown): ChatMessage[] | null {
     return out;
 }
 
+/** Models still slip in em/en dashes despite the prompt, so swap them for what a person would type. */
+function humanize(text: string): string {
+    return text
+        .replace(/(\d)\s*[–—]\s*(\d)/g, "$1-$2")
+        .replace(/^(\s*)[–—]\s*/gm, "$1- ")
+        .replace(/\s*[–—]+\s*/g, ", ")
+        .replace(/,\s*([.,!?])/g, "$1");
+}
+
 async function callProvider(provider: Provider, messages: ChatMessage[]): Promise<Response> {
     return fetch(provider.url, {
         method: "POST",
@@ -306,7 +316,7 @@ export default {
                     continue;
                 }
                 const toolCalls = message.tool_calls?.length ? message.tool_calls : undefined;
-                return json({ message: { role: "assistant", content: message.content ?? null, tool_calls: toolCalls } }, 200, cors);
+                return json({ message: { role: "assistant", content: message.content ? humanize(message.content) : null, tool_calls: toolCalls } }, 200, cors);
             } catch (error) {
                 console.warn(`${provider.name} request error`, error);
             }
