@@ -8,9 +8,6 @@ import "@splidejs/react-splide/css";
 import affiliateList from "../affiliateList.json";
 import type { AffiliateDetails } from "../types";
 import qrCode from "/assets/sections/affiliate-qr.png";
-import joinImg from "/assets/sections/affiliate-join.webp";
-import advertiseImg from "/assets/sections/affiliate-advertise.webp";
-import earnImg from "/assets/sections/affiliate-earn.webp";
 import instaIcon from "/assets/icons/instagram.png"; // Since this is in public, we use the string
 
 const splideOptions = {
@@ -23,9 +20,16 @@ const splideOptions = {
 };
 
 const steps = [
-    { image: joinImg, alt: "Join: Apply to our exclusive affiliate collective and become a curated voice for modern luxury." },
-    { image: advertiseImg, alt: "Advertise: Share your unique link using our premium visual assets and high-end brand imagery." },
-    { image: earnImg, alt: "Earn: Receive competitive commissions on every successful purchase driven by your influence." },
+    { title: "Join", text: "Apply to our exclusive affiliate collective and become a curated voice for modern luxury." },
+    { title: "Advertise", text: "Share your unique link using our premium visual assets and high-end brand imagery." },
+    { title: "Earn", text: "Receive competitive commissions on every successful purchase driven by your influence." },
+];
+
+const perks = [
+    { title: "Competitive commission", text: "Earn on every purchase made through your unique link, paid monthly.", icon: "M12 3v18M16.5 7.5c-.7-1.4-2.3-2.2-4.2-2.2-2.4 0-4.1 1.2-4.1 3.1 0 4.4 8.6 2.2 8.6 6.5 0 2-1.9 3.2-4.4 3.2-2 0-3.7-.8-4.4-2.3" },
+    { title: "Early access", text: "Be the first to wear and share every new collection before launch.", icon: "M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z" },
+    { title: "Brand assets", text: "High-end imagery, shade swatches and copy, ready for your channels.", icon: "M4 5h16v14H4zM8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM20 15l-5-5-9 9" },
+    { title: "Dedicated support", text: "A partnership team to help with links, tracking and payouts.", icon: "M4 12a8 8 0 1 1 16 0v4a2 2 0 0 1-2 2h-1v-6h3M4 12v4a2 2 0 0 0 2 2h1v-6H4" },
 ];
 
 export default function Affiliate(): JSX.Element {
@@ -77,12 +81,40 @@ export default function Affiliate(): JSX.Element {
             </div>
         </section>
 
-        <section className="flex md:flex-row flex-col w-full justify-center items-center pb-6">
-            {steps.map((step) => (
-                <div key={step.image} className="flex justify-center md:w-1/3 w-full lg:p-10 p-6">
-                    <LazyImage src={step.image} alt={step.alt} width={400} height={400} className="w-full max-w-sm aspect-square object-contain rounded-full" />
-                </div>
-            ))}
+        <section aria-labelledby="how-it-works" className="px-6 md:pb-16 pb-12">
+            <h2 id="how-it-works" className="font-serif italic lg:text-6xl text-5xl text-center md:pb-10 pb-8">How it works</h2>
+            <ol className="max-w-6xl mx-auto flex md:flex-row flex-col items-center justify-center gap-6 lg:gap-8">
+                {steps.map((step, i) => (
+                    <li key={step.title} className="relative w-full max-w-sm md:max-w-none md:flex-1 md:basis-0 min-w-0 aspect-square rounded-full bg-sand flex flex-col items-center justify-center text-center lg:p-12 md:p-6 p-10 transition-transform duration-300 hover:-translate-y-1">
+                        <span aria-hidden="true" className="font-sans text-xs font-semibold tracking-[0.3em] text-beau">{String(i + 1).padStart(2, "0")}</span>
+                        <h3 className="font-serif italic lg:text-6xl md:text-5xl text-6xl tracking-wider mt-2">{step.title}</h3>
+                        <p className="font-sans xl:text-xl lg:text-lg md:text-sm text-lg tracking-wide leading-snug mt-4 max-w-[18rem]">{step.text}</p>
+                        {i < steps.length - 1 && (
+                            <span aria-hidden="true" className="absolute z-10 flex items-center justify-center size-10 rounded-full bg-beau text-white shadow-md md:-right-5 lg:-right-6 md:top-1/2 md:-translate-y-1/2 max-md:-bottom-8 max-md:left-1/2 max-md:-translate-x-1/2 max-md:rotate-90">
+                                <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                            </span>
+                        )}
+                    </li>
+                ))}
+            </ol>
+        </section>
+
+        <section aria-labelledby="perks-title" className="bg-white border-t border-black/10">
+            <div className="max-w-6xl mx-auto px-6 md:py-16 py-12">
+                <p className="font-sans text-xs font-semibold uppercase tracking-[0.25em] text-beau text-center">Membership</p>
+                <h2 id="perks-title" className="font-serif italic lg:text-6xl text-5xl text-center mt-2">What you'll receive</h2>
+                <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 mt-12">
+                    {perks.map((perk) => (
+                        <li key={perk.title} className="flex flex-col items-center text-center">
+                            <span aria-hidden="true" className="flex items-center justify-center size-14 rounded-full bg-cream border border-beau/20 text-beau">
+                                <svg viewBox="0 0 24 24" className="size-6" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"><path d={perk.icon} /></svg>
+                            </span>
+                            <h3 className="font-serif text-2xl mt-4">{perk.title}</h3>
+                            <p className="font-sans text-neutral-700 mt-2 leading-relaxed">{perk.text}</p>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </section>
         </section>
     </>)
