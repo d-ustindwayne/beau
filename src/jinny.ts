@@ -29,6 +29,19 @@ export type NavigateFn = (path: string) => void;
 
 export const JINNY_API_URL: string | undefined = import.meta.env.VITE_JINNY_API_URL || undefined;
 
+const OPEN_EVENT = "jinny:open";
+
+/** Opens the Jinny chat panel from anywhere on the site, optionally sending a first message. */
+export function openJinny(message?: string): void {
+    window.dispatchEvent(new CustomEvent<string | undefined>(OPEN_EVENT, { detail: message }));
+}
+
+export function onJinnyOpen(handler: (message?: string) => void): () => void {
+    const listener = (e: Event) => handler((e as CustomEvent<string | undefined>).detail);
+    window.addEventListener(OPEN_EVENT, listener);
+    return () => window.removeEventListener(OPEN_EVENT, listener);
+}
+
 const PAGE_PATHS: Record<string, string> = {
     home: "/", shop: "/shop", about: "/about", contact: "/contact", affiliate: "/affiliate", checkout: "/checkout",
 };
@@ -178,6 +191,17 @@ export async function askJinny(history: JinnyMessage[], navigate: NavigateFn, si
     if (!JINNY_API_URL) return [await offlineReply(history, navigate)];
 
     const turn: JinnyMessage[] = [];
+    try {
+        return await askOnline(history, turn, navigate, signal);
+    } catch (error) {
+        // If the AI service is down or not configured, answer from the local catalogue instead of failing,
+        // unless a tool already ran this turn (re-running it offline could, for example, add an item twice).
+        if (signal?.aborted || turn.some((m) => m.role === "tool")) throw error;
+        return [await offlineReply(history, navigate)];
+    }
+}
+
+async function askOnline(history: JinnyMessage[], turn: JinnyMessage[], navigate: NavigateFn, signal?: AbortSignal): Promise<JinnyMessage[]> {
     const shownProducts: CatalogProduct[] = [];
 
     for (let round = 0; round <= MAX_TOOL_ROUNDS; round++) {

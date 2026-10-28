@@ -1,4 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent, type JSX } from "react";
+import { Link } from "react-router-dom";
 import HeroHeading from "../components/HeroHeading";
 import FloatingInput from "../components/FloatingInput";
 import Newsletter from "../components/Newsletter";
@@ -28,7 +29,7 @@ export default function Contact(): JSX.Element {
                 title="Contact"
                 mediaURL={heroUrl}
                 darkenBackground={true} />
-        <section className="w-full flex lg:flex-row flex-col">
+        <section className="w-full max-w-7xl mx-auto flex lg:flex-row flex-col">
             <div className="lg:w-1/2 w-full flex flex-col lg:p-16.5 md:p-10.5 p-7.5">
                 <form className="w-full" onSubmit={handleSubmit} onInput={() => setIsSent(false)}>
                     <h2 className="lg:text-6xl text-5xl font-serif italic text-center lg:text-start">Contact Us</h2>
@@ -48,15 +49,27 @@ export default function Contact(): JSX.Element {
                     </div>
                 </form>
             </div>
-            <div className="lg:w-1/2 w-full flex flex-col gap-7.5 lg:p-16.5 md:px-10.5 md:pb-10.5 px-7.5 pb-7.5">
-                <div className="flex flex-col gap-2">
+            <div className="lg:w-1/2 w-full flex flex-col gap-5 lg:p-16.5 md:px-10.5 md:pb-10.5 px-7.5 pb-7.5">
+                <div className="flex flex-col gap-2 p-6 md:p-8 bg-white border border-black/10">
                     <h3 className="font-serif font-bold lg:text-3xl text-2xl">Customer Support</h3>
-                    <p className="font-sans md:text-2xl text-lg leading-snug">Have questions about your order, account, or services? Our dedicated support team is here to help you 24/7. Reach out anytime, and we will get back to you as quickly as possible.</p>
+                    <p className="font-sans md:text-xl text-lg leading-snug">Have questions about your order, account, or services? Our dedicated support team is here to help you 24/7. Reach out anytime, and we will get back to you as quickly as possible.</p>
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 p-6 md:p-8 bg-white border border-black/10">
                     <h3 className="font-serif font-bold lg:text-3xl text-2xl">Affiliate Support</h3>
-                    <p className="font-sans md:text-2xl text-lg leading-snug">Need assistance with your affiliate links, tracking, or payouts? Contact our partnership team for direct support, marketing materials, and optimization tips to help maximize your earnings.</p>
+                    <p className="font-sans md:text-xl text-lg leading-snug">Need assistance with your affiliate links, tracking, or payouts? Contact our partnership team for direct support, marketing materials, and optimization tips to help maximize your earnings.</p>
                 </div>
+                <nav aria-label="Quick help" className="grid sm:grid-cols-3 gap-3 font-sans">
+                    {[
+                        { to: "/customer-service", label: "FAQs" },
+                        { to: "/order-status", label: "Track an order" },
+                        { to: "/store-locator", label: "Find a boutique" },
+                    ].map((link) => (
+                        <Link key={link.to} to={link.to} className="group flex items-center justify-between gap-2 px-4 py-3 bg-sand font-semibold text-sm transition-colors hover:bg-beau hover:text-white">
+                            {link.label}
+                            <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">&rarr;</span>
+                        </Link>
+                    ))}
+                </nav>
             </div>
         </section>
         <Newsletter />

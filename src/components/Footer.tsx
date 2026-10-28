@@ -15,9 +15,9 @@ export default function Footer(): JSX.Element {
             <h2 className="text-2xl tracking-wide uppercase mb-6 font-normal">Shop</h2>
             <ul className="space-y-4 text-gray-200 text-sm font-sans tracking-wide">
               <li><Link to="/shop" className={linkClass}>Shop</Link></li>
-              <li><Link to="/shop" className={linkClass}>New</Link></li>
-              <li><Link to="/shop" className={linkClass}>Collection</Link></li>
-              <li><Link to="/shop" className={linkClass}>Sale</Link></li>
+              <li><Link to="/shop?sort=newest" className={linkClass}>New</Link></li>
+              <li><Link to="/collections" className={linkClass}>Collection</Link></li>
+              <li><Link to="/sale" className={linkClass}>Sale</Link></li>
             </ul>
           </div>
 
@@ -25,10 +25,10 @@ export default function Footer(): JSX.Element {
           <div>
             <h2 className="text-2xl tracking-wide uppercase mb-6 font-normal">Help</h2>
             <ul className="space-y-4 text-gray-200 text-sm font-sans tracking-wide">
-              <li><Link to="#" className={linkClass}>Customer Service</Link></li>
-              <li><Link to="#" className={linkClass}>Refund Policy</Link></li>
-              <li><Link to="#" className={linkClass}>Store Locator</Link></li>
-              <li><Link to="#" className={linkClass}>Order Status</Link></li>
+              <li><Link to="/customer-service" className={linkClass}>Customer Service</Link></li>
+              <li><Link to="/refund-policy" className={linkClass}>Refund Policy</Link></li>
+              <li><Link to="/store-locator" className={linkClass}>Store Locator</Link></li>
+              <li><Link to="/order-status" className={linkClass}>Order Status</Link></li>
             </ul>
           </div>
 
@@ -37,8 +37,8 @@ export default function Footer(): JSX.Element {
             <h2 className="text-2xl tracking-wide uppercase mb-6 font-normal">Company</h2>
             <ul className="space-y-4 text-gray-200 text-sm font-sans tracking-wide">
               <li><Link to="/about" className={linkClass}>About Us</Link></li>
-              <li><Link to="#" className={linkClass}>Privacy Policy</Link></li>
-              <li><Link to="#" className={linkClass}>Terms &amp; Conditions</Link></li>
+              <li><Link to="/privacy-policy" className={linkClass}>Privacy Policy</Link></li>
+              <li><Link to="/terms-and-conditions" className={linkClass}>Terms &amp; Conditions</Link></li>
               <li><Link to="/affiliate" className={linkClass}>Affiliates</Link></li>
             </ul>
           </div>

@@ -9,48 +9,59 @@ interface SortSetting {
     isAsc: boolean
 }
 
+/** Short hint shown on the active option so the current direction is readable, not just implied by an arrow. */
+const directionHint: Partial<Record<sortType, [asc: string, desc: string]>> = {
+    alphabet: ["A–Z", "Z–A"],
+    price: ["Low to high", "High to low"],
+    latest: ["Oldest first", "Newest first"],
+};
+
+function SortIcon({ sortBy }: { sortBy: sortType }): JSX.Element | null {
+    switch (sortBy) {
+        case "random":
+            return <path d="M4 7h3.5l7 10H20M4 17h3.5l2-2.9M14.5 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 14.5 20 17l-2.5 2.5" />;
+        case "alphabet":
+            return <>
+                <path d="M4 18l3.5-10L11 18M5.2 14.5h4.6" />
+                <path d="M14 8h6l-6 10h6" />
+            </>;
+        case "price":
+            return <path d="M15.5 8.5c-.6-1.3-2-2-3.5-2-2 0-3.5 1-3.5 2.7 0 3.8 7.5 1.9 7.5 5.6 0 1.7-1.6 2.7-3.8 2.7-1.6 0-3.1-.7-3.7-2M12 4.5v15" />;
+        case "latest":
+            return <>
+                <circle cx="12" cy="12" r="8" />
+                <path d="M12 7.5V12l3 2" />
+            </>;
+        default:
+            return null;
+    }
+}
+
 export function SortButton({ children, sortBy, sortFunction, currentSort, isAsc }: SortSetting): JSX.Element {
     const isActive = currentSort === sortBy;
-
-    const renderIcon = () => {
-        switch (sortBy) {
-            case "alphabet":
-                return <>
-                <text x="6.5" y="11.5" textAnchor="middle" fontSize="12" fontWeight="700" fill="currentColor" stroke="none">A</text>
-                <text x="6.5" y="22.5" textAnchor="middle" fontSize="12" fontWeight="700" fill="currentColor" stroke="none">Z</text>
-                <path d={isActive && isAsc ? "M14 14l3.5 3.5 3.5-3.5M17.5 6.5v11" : "M14 10l3.5-3.5 3.5 3.5M17.5 6.5v11"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </>
-                
-            case "latest":
-                return <>
-                <circle cx="8" cy="12" r="6.7" strokeWidth="1.5" /><path d="M6.5 12L6.5 7.5M6.5 12L9.5 14.5" strokeWidth="1.5" />
-                <path d={isActive && isAsc ? "M16.5 19.5l2 2 2-2M18.5 14.5v5" : "M16.5 16.5l2-2 2 2M18.5 14.5v5"} strokeWidth="1.8" />
-                </>;
-            case "price":
-                return <>
-                <text x="7" y="20" textAnchor="middle" fontSize="20" fontWeight="600" fill="currentColor" stroke="none">$</text>
-                <path d={isActive && isAsc ? "M14 14l3.5 3.5 3.5-3.5M17.5 6.5v11" : "M14 10l3.5-3.5 3.5 3.5M17.5 6.5v11"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </>
-            default:
-                return null;
-        }
-    };
+    const hints = directionHint[sortBy];
+    const hint = isActive && hints ? hints[isAsc ? 0 : 1] : null;
 
     return (
         <button type="button" aria-pressed={isActive}
-            aria-label={`Sort by ${children}${isActive ? `, ${isAsc ? "ascending" : "descending"}` : ""}`}
-            title={`Sort by ${children}`}
-            className={`group flex items-center justify-center p-2 cursor-pointer rounded-lg w-fit min-w-15 h-15 transition-colors duration-200 ${isActive ? 'bg-beau text-white' : 'bg-sand-dark text-black hover:bg-sand'}`} onClick={() => sortFunction(sortBy)}>
-            <span aria-hidden="true" className="w-8.5 h-8.5 flex justify-center items-center">
-                <svg viewBox="0 0 24 24" className={`w-8.5 h-8.5 ${isActive ? 'text-white' : 'text-black'}`}>
-                    <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-                        {renderIcon()}
-                    </g>
-                </svg>
-            </span>
-            <span aria-hidden="true" className={`whitespace-nowrap overflow-hidden text-base transition-all duration-500 ${isActive ? "max-w-xs opacity-100 mx-2" : "max-w-0 opacity-0 group-hover:opacity-100 group-hover:max-w-xs group-hover:mx-2 group-focus-visible:opacity-100 group-focus-visible:max-w-xs group-focus-visible:mx-2"}`}>
-                {children}
-            </span>
+            aria-label={`Sort by ${children}${hint ? `, ${hint}` : ""}`}
+            title={hints ? `Sort by ${children}. Click again to reverse.` : `Sort by ${children}`}
+            onClick={() => sortFunction(sortBy)}
+            className={`shrink-0 flex items-center gap-2 h-10 sm:px-4 px-3 rounded-full font-sans text-sm sm:text-base whitespace-nowrap transition-all duration-200 ${
+                isActive ? "bg-beau text-white shadow-md" : "text-black hover:bg-white/80"
+            }`}>
+            <svg aria-hidden="true" viewBox="0 0 24 24" className="size-4.5 shrink-0" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+                <SortIcon sortBy={sortBy} />
+            </svg>
+            <span className="font-semibold">{children}</span>
+            {hint && (
+                <span aria-hidden="true" className="flex items-center gap-1 ps-2 border-s border-white/40 text-xs sm:text-sm text-sand">
+                    {hint}
+                    <svg viewBox="0 0 24 24" className={`size-3.5 transition-transform duration-300 ${isAsc ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 5v14M6 13l6 6 6-6" />
+                    </svg>
+                </span>
+            )}
         </button>
     );
 }

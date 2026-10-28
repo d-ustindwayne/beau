@@ -25,9 +25,14 @@ export default function App() {
                         <Route path="/about" element={<Pages.About />} />
                         <Route path="/affiliate" element={<Pages.Affiliate />} />
                         <Route path="/checkout" element={<Pages.Checkout />} />
-                        {/* <Route path="/privacy-policy" element={<Pages.PrivacyPolicy />} />
-                    <Route path="/terms-and-condition" element={<Pages.TermsAndCondition />} />
-                    <Route path="/affiliates" element={<Pages.Affiliates />} /> */} {/* Unimplemented Pages */}
+                        <Route path="/collections" element={<Pages.Collections />} />
+                        <Route path="/sale" element={<Pages.Sale />} />
+                        <Route path="/customer-service" element={<Pages.CustomerService />} />
+                        <Route path="/refund-policy" element={<Pages.RefundPolicy />} />
+                        <Route path="/store-locator" element={<Pages.StoreLocator />} />
+                        <Route path="/order-status" element={<Pages.OrderStatus />} />
+                        <Route path="/privacy-policy" element={<Pages.PrivacyPolicy />} />
+                        <Route path="/terms-and-conditions" element={<Pages.Terms />} />
                         <Route path="*" element={<Pages.NotFound />} />
                     </Routes>
                 </Suspense>

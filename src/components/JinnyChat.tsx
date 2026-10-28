@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState, type FormEvent, type JSX, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import { askJinny, JINNY_API_URL, type CatalogProduct, type JinnyMessage } from "../jinny";
+import { askJinny, JINNY_API_URL, onJinnyOpen, type CatalogProduct, type JinnyMessage } from "../jinny";
 import { Cart } from "../cartData.tsx";
 import { dollarFormatter, formatCategory } from "../constants";
 import { useDialog } from "../hooks";
 import LazyImage from "./LazyImage";
 
 const STORAGE_KEY = "jinny_chat";
+// Drop an avatar at public/assets/brand/jinny.webp to replace the "J" monogram.
+const AVATAR_URL = `${import.meta.env.BASE_URL}assets/brand/jinny.webp`;
 const MAX_INPUT = 1000;
 
 const GREETING: JinnyMessage = {
@@ -52,6 +54,18 @@ function RichText({ text }: { text: string }): JSX.Element {
     });
     flush();
     return <div className="space-y-1.5">{blocks}</div>;
+}
+
+/** Jinny's portrait, falling back to a monogram until an avatar image is added. */
+function JinnyAvatar({ className, monogramClassName }: { className: string, monogramClassName: string }): JSX.Element {
+    const [hasImage, setHasImage] = useState(true);
+    return (
+        <span aria-hidden="true" className={`flex items-center justify-center shrink-0 rounded-full overflow-hidden bg-beau text-sand font-serif italic ${className}`}>
+            {hasImage
+                ? <img src={AVATAR_URL} alt="" className="size-full object-cover" onError={() => setHasImage(false)} />
+                : <span className={monogramClassName}>J</span>}
+        </span>
+    );
 }
 
 function ProductChip({ product }: { product: CatalogProduct }): JSX.Element {
@@ -121,6 +135,12 @@ export default function JinnyChat(): JSX.Element {
 
     useEffect(() => () => abortRef.current?.abort(), []);
 
+    // Other pages (e.g. Customer Service) can open the chat, optionally with a question ready to send.
+    useEffect(() => onJinnyOpen((message) => {
+        setIsOpen(true);
+        if (message) setInput(message);
+    }), []);
+
     const send = async (text: string) => {
         const content = text.trim().slice(0, MAX_INPUT);
         if (!content || isThinking) return;
@@ -172,7 +192,7 @@ export default function JinnyChat(): JSX.Element {
                 <svg aria-hidden="true" className="size-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.6}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h8M8 14h5M21 12a8.5 8.5 0 0 1-12.4 7.55L3 21l1.45-5.6A8.5 8.5 0 1 1 21 12z" />
                 </svg>
-                <span aria-hidden="true" className="absolute -top-0.5 -right-0.5 size-4 rounded-full bg-sand text-beau text-[10px] font-bold leading-4 font-serif italic">J</span>
+                <JinnyAvatar className="absolute -top-1 -right-1 size-5 ring-2 ring-sand" monogramClassName="text-[10px] font-bold" />
                 <span aria-hidden="true" className="pointer-events-none absolute right-full me-3 whitespace-nowrap rounded-full bg-white px-3 py-1 text-sm text-black shadow-md opacity-0 translate-x-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0 max-sm:hidden">
                     Ask Jinny
                 </span>
@@ -188,7 +208,7 @@ export default function JinnyChat(): JSX.Element {
                     isVisible ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
                 }`}>
                 <div className="flex items-center gap-3 px-6 py-4 border-b border-black/10">
-                    <span aria-hidden="true" className="flex items-center justify-center size-11 shrink-0 rounded-full bg-beau text-sand font-serif italic text-2xl">J</span>
+                    <JinnyAvatar className="size-11" monogramClassName="text-2xl" />
                     <div className="flex-1 min-w-0">
                         <h2 id="jinny-title" className="font-serif italic text-3xl leading-none text-black">Jinny</h2>
                         <p className="text-xs text-neutral-600 mt-1 flex items-center gap-1.5">
