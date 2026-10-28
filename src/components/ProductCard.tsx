@@ -54,9 +54,9 @@ export default function ProductCard({ imageURL, imageAlt, productCategory, produ
                 <span className="sr-only">, view details</span>
             </button>
             <div className="mt-auto">
-                <button type="button" className={ButtonDesign} disabled={wait} aria-label={`Add ${productName} to cart`}
-                    onClick={(e) => { addToCart(e, productCategory, productName, lipstickType, description, price, imageURL); clickTraffic() }}>
-                    {wait ? "Added ✓" : "Buy Now"}
+                <button type="button" className={ButtonDesign} aria-label={`Add ${productName} to cart`}
+                    onClick={(e) => { if (wait) return; addToCart(e, productCategory, productName, lipstickType, description, price, imageURL); clickTraffic() }}>
+                    Buy Now
                 </button>
             </div>
             <span role="status" className="sr-only">{wait ? `${productName} added to cart` : ""}</span>
@@ -89,7 +89,7 @@ export default function ProductCard({ imageURL, imageAlt, productCategory, produ
                         <p className="text-xs mt-1 uppercase tracking-widest font-semibold text-neutral-600 font-sans">{lipstickType}</p>
                         <p className="sm:text-2xl text-xl mt-2 font-normal font-serif">{dollarFormatter(price)}</p>
                         <QuantityStepper value={amount} onDecrement={decrement} onIncrement={increment} itemLabel={productName} />
-                        <button type="button" className={`${ButtonDesign} text-lg! w-full sm:w-fit`} disabled={wait} onClick={buyFunction}>Buy Now</button>
+                        <button type="button" className={`${ButtonDesign} text-lg! w-full sm:w-fit`} onClick={(e) => { if (!wait) buyFunction(e) }}>Buy Now</button>
                     </div>
                 </div>
                 <div className="w-full min-h-0 flex-1 overflow-y-auto border-t border-black/10 pt-3 sm:px-3.5 px-2">

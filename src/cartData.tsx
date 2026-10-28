@@ -1,13 +1,23 @@
 import { useState, useEffect } from "react";
-import type { CartList, ProductData, sortType } from "./types";
+import type { CartList, ProductData, ProductList, sortType } from "./types";
+import productList from "./productList.json";
 import sortArray from "./constants";
 
 const LOCAL_STORAGE_KEY = "shopping_cart_data";
 
+/** Refreshes saved items from the current catalogue so stale photo paths or prices from older visits are corrected, and drops items that no longer exist. */
+function syncWithCatalogue(saved: CartList): CartList {
+    const catalogue = productList as ProductList;
+    return saved.flatMap((item) => {
+        const product = catalogue[item.category]?.find((p) => p.name === item.product?.name);
+        return product && item.amount > 0 ? [{ ...item, product }] : [];
+    });
+}
+
 function getInitialCart(): CartList {
     try {
         const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
-        return savedData ? JSON.parse(savedData) : [];
+        return savedData ? syncWithCatalogue(JSON.parse(savedData)) : [];
     } catch {
         return [];
     }
