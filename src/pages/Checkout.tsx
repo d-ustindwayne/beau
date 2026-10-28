@@ -87,7 +87,7 @@ export default function Checkout(): JSX.Element {
                         return (
                             <li key={itemKey}
                                 className="flex items-center gap-4 py-3 border-b border-black/10 last:border-0">
-                                <LazyImage className="md:w-20 w-16 aspect-3/4 shrink-0 object-cover" src={item.product.photoUrl} alt={`${category} – ${item.product.name}`} width={80} height={107} />
+                                <LazyImage className="md:w-20 w-16 aspect-3/4 shrink-0 object-cover" src={item.product.photoUrl} alt={`${item.product.name} lipstick from ${category}`} width={80} height={107} />
                                 <div className="flex-1 min-w-0 flex flex-col justify-start items-start">
                                     <p className="font-bold font-serif text-xl">{item.product.name}</p>
                                     <p className="font-sans md:text-lg text-base">{category}</p>

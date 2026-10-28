@@ -147,7 +147,7 @@ export default function AffiliateApply(): JSX.Element {
                                                 <label key={niche} className="cursor-pointer">
                                                     <input type="checkbox" checked={data.niches.includes(niche)} onChange={() => toggleNiche(niche)} className="peer sr-only" />
                                                     <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-black/25 font-sans text-sm transition-colors peer-checked:bg-black peer-checked:border-black peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-beau peer-focus-visible:outline-offset-2 hover:border-black">
-                                                        {data.niches.includes(niche) && <span aria-hidden="true">✓</span>}{niche}
+                                                        {data.niches.includes(niche) && <svg aria-hidden="true" viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>}{niche}
                                                     </span>
                                                 </label>
                                             ))}

@@ -81,7 +81,7 @@ export default function ProductCard({ imageURL, imageAlt, productCategory, produ
             <Modal isOpen={openModal} toggleFunction={toggleModal} labelledBy={titleId}>
                 <div className="w-full flex flex-row text-start">
                     <div className="w-1/2">
-                        <LazyImage eager src={imageURL} alt={`${category} – ${productName}`} width={247} height={330} className="sm:p-3.5 p-2 aspect-3/4 object-cover w-full" />
+                        <LazyImage eager src={imageURL} alt={`${productName} lipstick from ${category}`} width={247} height={330} className="sm:p-3.5 p-2 aspect-3/4 object-cover w-full" />
                     </div>
                     <div className="w-1/2 sm:p-3.5 p-2 pe-8 flex flex-col items-start justify-start">
                         <h2 id={titleId} className="sm:text-4xl text-3xl font-normal font-serif wrap-break-word">{productName}</h2>

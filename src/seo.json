@@ -20,7 +20,7 @@
         },
         "/collections": {
             "title": "Collections | beau",
-            "description": "Explore the five be•au lipstick collections – Beaunds, Winter Garden, Thorns and Roses, Sun Goddess and Liexquizo – each with its own finish and story.",
+            "description": "Explore the five be•au lipstick collections: Beaunds, Winter Garden, Thorns and Roses, Sun Goddess and Liexquizo. Each with its own finish and story.",
             "priority": 0.9
         },
         "/shade-finder": {
@@ -45,7 +45,7 @@
         },
         "/affiliate/apply": {
             "title": "Apply to join | beau",
-            "description": "Apply to become a be•au affiliate. Tell us about you and your audience – it takes about three minutes.",
+            "description": "Apply to become a be•au affiliate. Tell us about you and your audience. It takes about three minutes.",
             "priority": 0.5
         },
         "/store-locator": {

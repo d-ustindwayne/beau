@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, type JSX } from "react";
+import { useMemo, useRef, useState, type JSX, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import HeroHeading from "../components/HeroHeading";
 import ProductCard from "../components/ProductCard";
@@ -12,16 +12,21 @@ import { openJinny } from "../jinny";
 const catalogue: ProductList = productList;
 const products = Object.entries(catalogue).flatMap(([collection, items]) => items.map((p) => ({ ...p, collection })));
 
-interface Option { value: string, label: string, hint: string, icon: string }
+interface Option { value: string, label: string, hint: string, icon: ReactNode }
 interface Question { id: "occasion" | "finish" | "intensity" | "budget", title: string, options: Option[] }
+
+const lineIcon = (d: string) => (
+    <svg viewBox="0 0 24 24" className="size-7" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>
+);
+const swatch = (color: string) => <span className="size-8 rounded-full ring-1 ring-black/10" style={{ backgroundColor: color }} />;
 
 const QUESTIONS: Question[] = [
     {
         id: "occasion", title: "What's the occasion?", options: [
-            { value: "everyday", label: "Everyday", hint: "Coffee runs and errands", icon: "☀️" },
-            { value: "work", label: "Work", hint: "Polished, not loud", icon: "💼" },
-            { value: "date", label: "Date night", hint: "A little romance", icon: "🌹" },
-            { value: "event", label: "Big event", hint: "All eyes on you", icon: "✨" },
+            { value: "everyday", label: "Everyday", hint: "Coffee runs and errands", icon: lineIcon("M12 4V2M12 22v-2M4 12H2M22 12h-2M6.3 6.3 4.9 4.9M19.1 19.1l-1.4-1.4M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z") },
+            { value: "work", label: "Work", hint: "Polished, not loud", icon: lineIcon("M3 8h18v11H3zM8 8V5h8v3M3 13h18") },
+            { value: "date", label: "Date night", hint: "A little romance", icon: lineIcon("M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z") },
+            { value: "event", label: "Big event", hint: "All eyes on you", icon: lineIcon("M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z") },
         ],
     },
     {
@@ -34,9 +39,9 @@ const QUESTIONS: Question[] = [
     },
     {
         id: "intensity", title: "How bold are you feeling?", options: [
-            { value: "soft", label: "Soft & natural", hint: "Your lips, but better", icon: "🤍" },
-            { value: "medium", label: "Somewhere between", hint: "Noticeable, still easy", icon: "💗" },
-            { value: "bold", label: "Full statement", hint: "Make it unforgettable", icon: "❤️" },
+            { value: "soft", label: "Soft & natural", hint: "Your lips, but better", icon: swatch("#d4a08c") },
+            { value: "medium", label: "Somewhere between", hint: "Noticeable, still easy", icon: swatch("#b4475a") },
+            { value: "bold", label: "Full statement", hint: "Hard to miss", icon: swatch("#841910") },
         ],
     },
     {
@@ -114,7 +119,7 @@ export default function ShadeFinder(): JSX.Element {
                     <div className="flex-1 h-1.5 rounded-full bg-black/10 overflow-hidden">
                         <div className="h-full bg-beau rounded-full transition-[width] duration-500 ease-out" style={{ width: `${(Math.min(step, QUESTIONS.length) / QUESTIONS.length) * 100}%` }} />
                     </div>
-                    <span className="tabular-nums text-neutral-700 w-24 text-end">{isDone ? "Complete" : `Question ${step + 1} of ${QUESTIONS.length}`}</span>
+                    <span className="tabular-nums text-neutral-700 whitespace-nowrap text-end">{isDone ? "Complete" : `Question ${step + 1} of ${QUESTIONS.length}`}</span>
                 </div>
 
                 {!isDone ? (
@@ -146,7 +151,7 @@ export default function ShadeFinder(): JSX.Element {
                         <h2 ref={headingRef} tabIndex={-1} className="font-serif italic lg:text-6xl text-4xl text-center outline-none">Your perfect match</h2>
                         <article className="mt-10 grid md:grid-cols-[minmax(0,20rem)_1fr] gap-8 items-center bg-white border border-black/10 p-6 md:p-10 shadow-sm">
                             <div className="relative">
-                                <LazyImage src={top.product.photoUrl} alt={`${formatCategory(top.product.collection)} – ${top.product.name}`} width={320} height={427} className="w-full aspect-3/4 object-cover" />
+                                <LazyImage src={top.product.photoUrl} alt={`${top.product.name} lipstick from ${formatCategory(top.product.collection)}`} width={320} height={427} className="w-full aspect-3/4 object-cover" />
                                 <span className="absolute top-3 left-3 px-3 py-1 bg-beau text-white font-sans text-xs font-semibold uppercase tracking-wider">{top.match}% match</span>
                             </div>
                             <div className="text-center md:text-start">
@@ -169,7 +174,7 @@ export default function ShadeFinder(): JSX.Element {
                             {results.slice(1).map(({ product }) => (
                                 <ProductCard key={`${product.collection}-${product.name}`} productCategory={product.collection} productName={product.name}
                                     lipstickType={product.lipstickType} description={product.description} price={product.price}
-                                    bgColor="bg-white" imageURL={product.photoUrl} imageAlt={`${formatCategory(product.collection)} – ${product.name}`} />
+                                    bgColor="bg-white" imageURL={product.photoUrl} imageAlt={`${product.name} lipstick from ${formatCategory(product.collection)}`} />
                             ))}
                         </div>
                         <div className="text-center mt-10">

@@ -27,7 +27,7 @@ export default function Navbar(): JSX.Element {
 
         <div className="md:mb-5 mb-2 shrink-0">
           <Link to="/" onClick={closeMenu} className="inline-block transition hover:drop-shadow-mist-200">
-            <img src={logo} alt="beau – home" width={154} height={74} className="h-16 w-auto object-contain" />
+            <img src={logo} alt="beau home" width={154} height={74} className="h-16 w-auto object-contain" />
           </Link>
         </div>
 

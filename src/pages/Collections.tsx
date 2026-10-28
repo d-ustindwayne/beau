@@ -51,7 +51,7 @@ export default function Collections(): JSX.Element {
                                     <li key={p.name} className={j % 2 === 1 ? "sm:translate-y-6" : ""}>
                                         <Link to={`/shop?collections=${key.toLowerCase().replace(/_/g, "-")}`} className="group block bg-white shadow-sm transition-shadow hover:shadow-xl">
                                             <span className="block overflow-hidden">
-                                                <LazyImage src={p.photoUrl} alt={`${name} – ${p.name}`} width={247} height={330} className="w-full aspect-3/4 object-cover transition-transform duration-500 group-hover:scale-105" />
+                                                <LazyImage src={p.photoUrl} alt={`${p.name} lipstick from ${name}`} width={247} height={330} className="w-full aspect-3/4 object-cover transition-transform duration-500 group-hover:scale-105" />
                                             </span>
                                             <span className="flex items-baseline justify-between gap-2 px-3 py-2.5 font-sans">
                                                 <span className="font-light text-lg truncate group-hover:text-beau transition-colors">{p.name}</span>

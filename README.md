@@ -47,7 +47,7 @@ The project relies on a minimal, highly optimized dependency tree managed cleanl
 
 ---
 
-## 💬 Jinny — AI Shopping Assistant
+## Jinny: AI Shopping Assistant
 
 Jinny is the chat assistant behind the chat button in the bottom-right corner. She can search the catalogue (`productList.json`), add products to the cart, open pages, and answer store FAQs. She runs on [Groq](https://groq.com), with Google Gemini (AI Studio) as a fallback, through a small Cloudflare Worker (`jinny-worker/`), so the API keys never reach the browser.
 

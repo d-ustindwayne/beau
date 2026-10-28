@@ -119,7 +119,7 @@ export default function CartSidebar() {
                                     isRemoving ? "scale-90 opacity-0 pointer-events-none" : "scale-100 opacity-100"
                                 }`}
                             >
-                                <LazyImage className="w-14 aspect-3/4 shrink-0 object-cover" src={item.product.photoUrl} alt={`${category} – ${item.product.name}`} width={56} height={75} />
+                                <LazyImage className="w-14 aspect-3/4 shrink-0 object-cover" src={item.product.photoUrl} alt={`${item.product.name} lipstick from ${category}`} width={56} height={75} />
                                 <div className="flex-1 min-w-0">
                                     <p className="text-sm text-black truncate"><span className="font-bold">{category}</span> | {item.product.name}</p>
                                     <p className="text-xs text-neutral-600">{dollarFormatter(item.product.price)} each</p>

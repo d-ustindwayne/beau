@@ -14,14 +14,14 @@ const MAX_INPUT = 1000;
 
 const GREETING: JinnyMessage = {
     role: "assistant",
-    content: "Hi, I'm **Jinny** 💄 Think of me as your lippie bestie. Tell me the vibe, the outfit or the occasion and I'll find your perfect shade. I can also add it to your cart, track an order, or answer anything about be•au.",
+    content: "Hi, I'm **Jinny**, be•au's beauty assistant. Tell me the occasion or what you're wearing and I'll suggest a shade. I can also add it to your cart, track an order, or answer questions about delivery and returns.",
 };
 
 const SUGGESTIONS = [
     "Show me matte shades",
     "Lipsticks under $55",
     "What's in Sun Goddess?",
-    "Something for date night 🌹",
+    "Something for date night",
 ];
 
 function loadHistory(): JinnyMessage[] {
@@ -82,7 +82,7 @@ function ProductChip({ product }: { product: CatalogProduct }): JSX.Element {
     return (
         <li className="w-36 shrink-0 snap-start flex flex-col bg-white border border-black/10 text-center">
             <div className="bg-white flex justify-center pt-2">
-                <LazyImage src={product.photoUrl} alt={`${category} – ${product.name}`} width={96} height={128} className="w-24 aspect-3/4 object-cover" />
+                <LazyImage src={product.photoUrl} alt={`${product.name} lipstick from ${category}`} width={96} height={128} className="w-24 aspect-3/4 object-cover" />
             </div>
             <div className="px-2 pt-1 pb-2 flex flex-col flex-1">
                 <p className="font-sans font-light text-lg leading-tight truncate">{product.name}</p>
@@ -90,7 +90,7 @@ function ProductChip({ product }: { product: CatalogProduct }): JSX.Element {
                 <p className="font-sans text-sm mb-2">{dollarFormatter(product.price)} · <span className="text-neutral-600">{product.finish}</span></p>
                 <button type="button" onClick={add} disabled={added} aria-label={`Add ${product.name} to cart`}
                     className="mt-auto w-full bg-beau text-white text-xs font-semibold uppercase tracking-wide py-1.5 transition-colors hover:bg-beau-dark disabled:opacity-80">
-                    {added ? "Added ✓" : "Add to cart"}
+                    {added ? "Added" : "Add to cart"}
                 </button>
             </div>
         </li>

@@ -109,7 +109,7 @@ export function getProducts(
             productCategory={category} productName={product.name}
             lipstickType={product.lipstickType} description={product.description}
             price={product.price} bgColor={bgColor || "bg-transparent"}
-            imageURL={product.photoUrl} imageAlt={`${formatCategory(category)} – ${product.name}`} />
+            imageURL={product.photoUrl} imageAlt={`${product.name} lipstick from ${formatCategory(category)}`} />
     )
     if (random) products = randomize(products);
     if (count) products = products.slice(0, count);
