@@ -35,10 +35,8 @@ jobs:
           # Public URL of the Jinny Cloudflare Worker (repo Settings > Variables > Actions). Not a secret.
           VITE_JINNY_API_URL: ${{ vars.JINNY_API_URL }}
 
-      # GitHub Pages has no SPA routing: serving the app as 404.html lets
-      # deep links and refreshes (e.g. /beau/shop) load the app instead of a 404.
-      - name: Add SPA fallback
-        run: cp dist/index.html dist/404.html
+      # Per-route index.html files, 404.html, sitemap.xml and robots.txt are
+      # written by the beau-static-seo plugin in vite.config.ts during the build.
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

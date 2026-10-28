@@ -1,0 +1,14 @@
+{
+    "name": "beau | be you",
+    "short_name": "beau",
+    "description": "Matte, satin and glossy lipsticks handcrafted in Manukau, Auckland.",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#FFFBED",
+    "theme_color": "#841910",
+    "lang": "en-NZ",
+    "icons": [
+        { "src": "/assets/brand/beau-circle-logo.png", "sizes": "any", "type": "image/png", "purpose": "any" }
+    ]
+}

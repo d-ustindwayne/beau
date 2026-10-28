@@ -1,0 +1,96 @@
+{
+    "site": {
+        "url": "https://beau.dustindwayn.ee",
+        "name": "beau",
+        "locale": "en_NZ",
+        "image": "/assets/brand/og-image.jpg",
+        "imageAlt": "be•au lipsticks on a warm cream and deep-red background",
+        "themeColor": "#841910"
+    },
+    "routes": {
+        "/": {
+            "title": "beau | be you",
+            "description": "Shop be•au lipsticks: matte, satin and glossy shades handcrafted in Manukau, Auckland. Cruelty-free, GST inclusive, with free delivery across New Zealand.",
+            "priority": 1.0
+        },
+        "/shop": {
+            "title": "Shop | beau",
+            "description": "Browse every be•au lipstick. Filter by collection and finish, sort by price or name, and get free delivery anywhere in New Zealand.",
+            "priority": 0.9
+        },
+        "/collections": {
+            "title": "Collections | beau",
+            "description": "Explore the five be•au lipstick collections – Beaunds, Winter Garden, Thorns and Roses, Sun Goddess and Liexquizo – each with its own finish and story.",
+            "priority": 0.9
+        },
+        "/shade-finder": {
+            "title": "Shade Finder | beau",
+            "description": "Not sure which lipstick suits you? Answer four quick questions and the be•au Shade Finder will match you with your perfect shade.",
+            "priority": 0.8
+        },
+        "/sale": {
+            "title": "Sale | beau",
+            "description": "Little luxuries: signature be•au lipstick shades under $25 and $55, all with free New Zealand delivery.",
+            "priority": 0.8
+        },
+        "/about": {
+            "title": "About | beau",
+            "description": "Meet be•au, an Auckland lipstick brand crafting cruelty-free colour in our Manukau studio. Our story, mission and values.",
+            "priority": 0.7
+        },
+        "/affiliate": {
+            "title": "Affiliates | beau",
+            "description": "Join the be•au affiliate collective. Share the shades you love, earn commission on every sale, and get early access to new launches.",
+            "priority": 0.6
+        },
+        "/affiliate/apply": {
+            "title": "Apply to join | beau",
+            "description": "Apply to become a be•au affiliate. Tell us about you and your audience – it takes about three minutes.",
+            "priority": 0.5
+        },
+        "/store-locator": {
+            "title": "Store Locator | beau",
+            "description": "Find a be•au boutique near you in Auckland, Wellington or Christchurch, with opening hours, directions and a live map.",
+            "priority": 0.6
+        },
+        "/customer-service": {
+            "title": "Customer Service | beau",
+            "description": "Help with be•au orders, delivery, shades, returns and payment. Search our FAQs or chat with Jinny, our beauty assistant.",
+            "priority": 0.6
+        },
+        "/order-status": {
+            "title": "Order Status | beau",
+            "description": "Track your be•au order from our Manukau studio to your door with your order number and email.",
+            "priority": 0.5
+        },
+        "/contact": {
+            "title": "Contact | beau",
+            "description": "Get in touch with be•au. Send us a message about orders, products or partnerships and we'll reply within one day.",
+            "priority": 0.5
+        },
+        "/refund-policy": {
+            "title": "Refund Policy | beau",
+            "description": "be•au refund policy: 30-day returns on unopened products, one-time shade exchanges and fast refunds within New Zealand.",
+            "priority": 0.3
+        },
+        "/privacy-policy": {
+            "title": "Privacy Policy | beau",
+            "description": "How be•au collects, uses and protects your personal information under the New Zealand Privacy Act 2020.",
+            "priority": 0.3
+        },
+        "/terms-and-conditions": {
+            "title": "Terms & Conditions | beau",
+            "description": "The terms and conditions for shopping with be•au, including orders, pricing, delivery and use of our website.",
+            "priority": 0.3
+        },
+        "/checkout": {
+            "title": "Checkout | beau",
+            "description": "Review your bag and complete your be•au order securely.",
+            "noindex": true
+        }
+    },
+    "notFound": {
+        "title": "Page not found | beau",
+        "description": "Sorry, we couldn't find that page. Head back to the be•au home page to keep shopping."
+    }
+}

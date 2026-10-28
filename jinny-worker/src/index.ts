@@ -54,7 +54,7 @@ function getProviders(env: Env): Provider[] {
     ];
     return providers.filter((p): p is Provider => p !== null);
 }
-const DEFAULT_ORIGINS = "https://d-ustindwayne.github.io,http://localhost:5173,http://localhost:4173";
+const DEFAULT_ORIGINS = "https://beau.dustindwayn.ee,https://d-ustindwayne.github.io,http://localhost:5173,http://localhost:4173";
 
 const MAX_MESSAGES = 40;
 const MAX_TOTAL_CHARS = 40_000;

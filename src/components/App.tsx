@@ -8,6 +8,7 @@ import * as Pages from "../routes.ts";
 import LoadingScreen from "./LoadingScreen";
 import ScrollToTop from "./ScrollToTop";
 import JinnyChat from "./JinnyChat";
+import Seo from "./Seo";
 
 export default function App() {
     const currentLocation = useLocation();
@@ -15,6 +16,7 @@ export default function App() {
     useScrollReveal(mainRef);
     return (<>
         <ScrollToTop />
+        <Seo />
         <div className="flex flex-col min-h-screen bg-cream text-black font-sans">
             <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-60 focus:px-4 focus:py-2 focus:bg-sand focus:text-black focus:font-semibold focus:shadow-lg">Skip to content</a>
             <Navbar />
