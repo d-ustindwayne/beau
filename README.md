@@ -1,111 +1,128 @@
-# Beau Cosmetics
+# beau
 
-Welcome to the official repository for **Beau**, a premium lipstick cosmetic shop based in Manukau City, Auckland. This platform is a modern, blazing-fast web application designed to showcase and manage lipstick products seamlessly. 
+beau (written be•au) is a lipstick shop website for a fictional cosmetics brand based in Manukau, Auckland. It was built as a UI/UX project, so there is no real backend: products, orders and affiliates come from local JSON files, and checkout is a demo.
 
-Built using **React** and **TypeScript**, the project leverages **Bun** as its primary runtime and package manager for high-performance development and bundling.
+Live site: **https://beau.dustindwayn.ee**
 
----
+By Diaz, D D N. and Sanglap, L D D.
 
-## 🚀 Features
+## Pages
 
-* **Localized Experience:** Designed specifically for the Beau's storefront in Manukau City, Auckland.
-* **Dynamic Product Feed:** Products are dynamically loaded and structured via a local `productlist.json` data matrix.
-* **Interactive Cart Sidebar:** A state-driven sliding sidebar equipped with native fluid entry/exit micro-animations (shrink and fade on product removal).
-* **Advanced Sorting System:** Features a custom, multi-criteria array sorting utility (`sortArray`) supporting:
-    * `alphabet`: A-Z sorting based on product names.
-    * `amount`: Prioritizes items by quantity.
-    * `latest`: Reverses insertion order to show new items first.
-    * `random`: A deterministic "scrambled" state utilizing custom string-hashing algorithms to prevent unwanted reshuffling during re-renders.
+| Page | Path | What it does |
+|---|---|---|
+| Home | `/` | Carousel, featured collection, shop by finish, Shade Finder and Jinny promos |
+| Shop | `/shop` | Every product, filtered and sorted through the URL |
+| Collections | `/collections` | The five collections and what is in each |
+| Shade Finder | `/shade-finder` | Four-question quiz that recommends a shade |
+| Sale | `/sale` | Products grouped by price |
+| About | `/about` | Story, mission, values and studio |
+| Affiliate | `/affiliate` | The affiliate programme and current affiliates |
+| Apply | `/affiliate/apply` | Three-step affiliate application form |
+| Store Locator | `/store-locator` | Boutique list with opening hours and a map |
+| Customer Service | `/customer-service` | Searchable FAQs |
+| Order Status | `/order-status` | Order tracking by order number and email |
+| Contact | `/contact` | Contact form |
+| Checkout | `/checkout` | Bag review and demo payment |
+| Policies | `/refund-policy`, `/privacy-policy`, `/terms-and-conditions` | Legal pages |
 
----
+## Shop URLs
 
-## 🛠️ Technological Stack & Architecture
+The Shop keeps its state in the address bar, so any view can be shared or bookmarked:
 
-### Core Runtime & Tooling
-* **Bun:** Used as a faster, all-in-one replacement for Node.js, npm, and traditional bundlers. Handles dependency resolution, execution, and final production compilation.
-* **TypeScript:** Strict static typing ensuring component interface safety, clear domain models (`ProductData`, `CartList`), and robust error checking.
-* **React:** Functional component architecture leveraging specialized React Hooks (`useState`, `useEffect`, Custom Hooks) to maintain decentralized, synchronized cart states.
+```
+/shop?collections=sun-goddess&finish=matte&sort=price-desc&page=2
+```
 
-### Styling & Animation
-* **Tailwind CSS:** A utility-first styling workflow using modern layout attributes (`w-dvw`, `flex-nowrap`) coupled with transition triggers (`transition-all duration-300`) to execute native-feeling UI animations entirely within class declarations.
+- `collections`: a collection slug, such as `winter-garden` or `thorns-and-roses`
+- `finish`: `matte`, `satin` or `glossy`
+- `sort`: `featured`, `name`, `name-desc`, `price`, `price-desc`, `newest` or `oldest`
+- `page`: the page number
 
----
+## Data
 
-## 📦 Package Dependencies
+All data lives in `src/`:
 
-The project relies on a minimal, highly optimized dependency tree managed cleanly inside `package.json`:
+- `productList.json`: products grouped by collection
+- `orderList.json`: sample orders for Order Status and Jinny. Try `BEAU-1024` with `ava@example.com`.
+- `affiliateList.json`: affiliates shown on the Affiliate page
+- `seo.json`: the title and description for every page, used for meta tags, the sitemap and robots.txt
 
-### Dependencies
-* `react`: Core UI rendering engine.
-* `react-dom`: Entry point for browser DOM rendering.
+The cart is saved in the browser's local storage.
 
-### Dev Dependencies
-* `typescript`: Type checking and language services.
-* `tailwindcss`: Utility-first CSS processing.
-* `postcss` / `autoprefixer`: Stylesheet optimization pipelines.
-* `@types/react` / `@types/react-dom`: Explicit Type Definitions.
+## Jinny, the shopping assistant
 
----
+Jinny is the chat button in the bottom-right corner. She can search products, add them to the cart, open pages, track sample orders and answer store questions.
 
-## Jinny: AI Shopping Assistant
+She runs on [Groq](https://groq.com), with Google Gemini as a fallback, through a Cloudflare Worker in `jinny-worker/`. The Worker holds the API keys, so they never reach the browser. If the Worker can't be reached, Jinny switches to an offline mode that uses keyword search and set answers.
 
-Jinny is the chat assistant behind the chat button in the bottom-right corner. She can search the catalogue (`productList.json`), add products to the cart, open pages, and answer store FAQs. She runs on [Groq](https://groq.com), with Google Gemini (AI Studio) as a fallback, through a small Cloudflare Worker (`jinny-worker/`), so the API keys never reach the browser.
-
-Without a configured Worker, Jinny runs in **offline mode**: she uses simple keyword search and canned FAQ answers, all in the browser.
-
-### 1. Deploy the Worker (one-time)
+### Deploying the Worker
 
 ```bash
 cd jinny-worker
 npx wrangler login
-npx wrangler secret put GROQ_API_KEY     # primary: Groq key (console.groq.com)
-npx wrangler secret put GEMINI_API_KEY   # fallback: Google AI Studio key (aistudio.google.com)
+npx wrangler secret put GROQ_API_KEY     # from console.groq.com
+npx wrangler secret put GEMINI_API_KEY   # from aistudio.google.com
 npx wrangler deploy                      # prints the Worker URL
 ```
 
-If Groq fails for any reason (rate limit, outage, bad key, retired model), the Worker retries the same request on Gemini. Either key also works on its own. Models (`GROQ_MODEL`, `GEMINI_MODEL`) and allowed origins are set in `jinny-worker/wrangler.toml`.
+Either key works on its own. The models and allowed origins are set in `jinny-worker/wrangler.toml`.
 
-### 2. Point the site at the Worker
+### Connecting the site to the Worker
 
-* **GitHub Pages:** in the repo, go to *Settings → Secrets and variables → Actions → Variables* and add `JINNY_API_URL` = your Worker URL. The deploy workflow passes it to the build.
-* **Local dev:** create `.env.local` (git-ignored) containing `VITE_JINNY_API_URL=https://jinny-proxy.<your-subdomain>.workers.dev`.
+- **GitHub Pages:** add a repository variable named `JINNY_API_URL` with the Worker URL (Settings, then Secrets and variables, then Actions, then Variables).
+- **Local development:** create `.env.local` with `VITE_JINNY_API_URL=<your Worker URL>`. The file is git-ignored.
 
-> Never commit API keys. The Worker URL is public and safe to share; the API keys exist only as Worker secrets.
+Never commit API keys. The Worker URL is public; the keys only exist as Worker secrets.
 
----
+## Running locally
 
-## ⚙️ Installation & Setup
+Requires [Bun](https://bun.sh).
 
-├── public/
+```bash
+bun install
+bun run dev       # development server at http://localhost:5173
+bun run build     # type-check and build to dist/
+bun run preview   # serve the build at http://localhost:4173
+bun run lint
+```
 
-├── src/
+## Deployment
 
-│   ├── assets/
+Every push to `main` builds the site and deploys it to GitHub Pages (`.github/workflows/deploy.yaml`), served at `beau.dustindwayn.ee`.
 
-│   ├── components/
+GitHub Pages has no routing for single-page apps, so the build step in `vite.config.ts` also writes:
 
-│   ├── fonts/
+- an HTML file for each page (such as `shop.html`), so every URL loads directly with its own title and description
+- `404.html` for unknown URLs
+- `sitemap.xml` and `robots.txt`
 
-│   ├── pages/
+## Tech stack
 
-│   └── cartData.tsx
+- React 19 with the React Compiler, and React Router 7
+- TypeScript
+- Vite 8 and Bun
+- Tailwind CSS 4
+- Splide for carousels
+- Cloudflare Workers for Jinny
 
-│   └── constants.tsx
+## Project structure
 
-│   └── main.tsx
-
-│   └── routes.ts
-
-│   └── style.css
-
-│   └── types.ts
-
-├── .gitignore
-
-├── package.json
-
-├── tsconfig.app.json
-
-├── tsconfig.json
-
-└── index.html
+```
+public/
+  assets/          images: brand, hero banners, products, sections, finishes, icons
+  CNAME            custom domain for GitHub Pages
+  site.webmanifest
+src/
+  components/      shared UI: navbar, footer, cart, product card, Jinny chat
+  pages/           one file per page
+  fonts/
+  *.json           products, orders, affiliates and page metadata
+  cartData.tsx     cart state and local storage
+  jinny.ts         Jinny's tools, offline mode and API calls
+  hooks.ts         shared hooks, including scroll reveal
+  routes.ts        lazy-loaded pages
+  style.css        theme colours, fonts and animations
+jinny-worker/      Cloudflare Worker for Jinny
+index.html         page shell, meta tags and structured data
+vite.config.ts     build config, including the SEO build step
+```
