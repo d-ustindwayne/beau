@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import type { Props } from "../types";
 import { ButtonDesign } from "../constants";
 import LazyImage from "./LazyImage";
+import { brandify } from "../brand";
 
 function renderMedia(mediaType: string | undefined, mediaURL: string, mediaAlt?: string, className?: string, width?: number, height?: number): JSX.Element | undefined {
     if (mediaType === "image" || mediaType === "photo") return (<LazyImage src={mediaURL} alt={mediaAlt ?? ""} width={width} height={height} className={className}/>);
@@ -36,7 +37,7 @@ hasButton, buttonClass, buttonContent, buttonLink, textColor, bgColor, alignment
     const textContent = (<>
         <h2 className={`lg:text-7xl md:text-5xl text-4xl my-3 ${font || "font-bold"}`}>{title}</h2>
         {subtitle? <p className="lg:text-5xl md:text-4xl text-2xl my-2 font-sans">{subtitle}</p> : null}
-        <p className="xl:text-3xl md:text-2xl text-xl my-3 font-sans leading-snug">{description}</p>
+        <p className="xl:text-3xl md:text-2xl text-xl my-3 font-sans leading-snug">{description ? brandify(description) : null}</p>
         {loadButton(hasButton, buttonContent, buttonClass, buttonLink)}
     </>);
 

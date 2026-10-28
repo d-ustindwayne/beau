@@ -21,7 +21,7 @@ export default function Sale(): JSX.Element {
     return (
         <>
             <title>Sale | beau</title>
-            <HeroHeading textColor="text-white" alignment="items-center" title="Little Luxuries" mediaURL={heroUrl} darkenBackground={true}
+            <HeroHeading heroName="sale" textColor="text-white" alignment="items-center" title="Little Luxuries" mediaURL={heroUrl} darkenBackground={true}
                 subtitle="Signature be•au shades at gift-ready prices." />
 
             <section className="bg-sand">

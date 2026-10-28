@@ -1,6 +1,8 @@
 import { type JSX } from "react";
+import BrandName from "../components/BrandName";
 import { Link } from "react-router-dom";
 import PhotoSlot from "../components/PhotoSlot";
+import CountUp from "../components/CountUp";
 import { ButtonDesign } from "../constants";
 import HeroHeading from "../components/HeroHeading";
 import heroUrl from "/assets/hero/default-hero.webp";
@@ -20,7 +22,7 @@ export default function About(): JSX.Element {
     return (
         <>
             <title>About | beau</title>
-            <HeroHeading textColor="text-white"
+            <HeroHeading heroName="about" textColor="text-white"
                 alignment="items-center"
                 title="About"
                 mediaURL={heroUrl}
@@ -92,11 +94,11 @@ export default function About(): JSX.Element {
                 <div className="md:w-1/2 w-full flex flex-col justify-center lg:p-14 sm:p-10 p-7 bg-cream">
                     <p className="font-sans text-xs font-semibold uppercase tracking-[0.25em] text-beau">Inside the studio</p>
                     <h2 id="studio-title" className="font-serif italic lg:text-6xl text-5xl mt-2">Crafted in Manukau</h2>
-                    <p className="font-sans md:text-xl text-lg leading-relaxed mt-5 text-neutral-800">Every be•au shade begins at our Manukau studio, where colour is mixed in small batches and each geometric case is polished and checked by hand. It's slower than mass production, and that's the point.</p>
+                    <p className="font-sans md:text-xl text-lg leading-relaxed mt-5 text-neutral-800">Every <BrandName /> shade begins at our Manukau studio, where colour is mixed in small batches and each geometric case is polished and checked by hand. It's slower than mass production, and that's the point.</p>
                     <dl className="grid grid-cols-3 gap-4 mt-8 border-t border-beau/20 pt-6">
-                        <div><dt className="font-sans text-xs uppercase tracking-wider text-neutral-600">Collections</dt><dd className="font-serif text-4xl mt-1">5</dd></div>
-                        <div><dt className="font-sans text-xs uppercase tracking-wider text-neutral-600">Shades</dt><dd className="font-serif text-4xl mt-1">20</dd></div>
-                        <div><dt className="font-sans text-xs uppercase tracking-wider text-neutral-600">Finishes</dt><dd className="font-serif text-4xl mt-1">3</dd></div>
+                        <div><dt className="font-sans text-xs uppercase tracking-wider text-neutral-600">Collections</dt><dd className="font-serif text-4xl mt-1"><CountUp value={5} /></dd></div>
+                        <div><dt className="font-sans text-xs uppercase tracking-wider text-neutral-600">Shades</dt><dd className="font-serif text-4xl mt-1"><CountUp value={20} /></dd></div>
+                        <div><dt className="font-sans text-xs uppercase tracking-wider text-neutral-600">Finishes</dt><dd className="font-serif text-4xl mt-1"><CountUp value={3} /></dd></div>
                     </dl>
                 </div>
             </section>
@@ -108,7 +110,7 @@ export default function About(): JSX.Element {
                         We do not just create luxury cosmetics; we curate a community of individuals who appreciate sophistication, structure, and intentional design.
                     </blockquote>
                     <span aria-hidden="true" className="block w-16 h-px bg-beau mt-8" />
-                    <figcaption className="font-sans text-sm uppercase tracking-[0.25em] text-neutral-700 mt-4">The be•au philosophy</figcaption>
+                    <figcaption className="font-sans text-sm uppercase tracking-[0.25em] text-neutral-700 mt-4">The <BrandName /> philosophy</figcaption>
                 </figure>
             </section>
 

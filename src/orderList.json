@@ -1,0 +1,87 @@
+[
+    {
+        "number": "BEAU-1024",
+        "email": "ava@example.com",
+        "courier": "NZ Post",
+        "tracking": "NZ7392018845",
+        "deliverTo": "Ponsonby, Auckland",
+        "estimatedDelivery": "2026-10-29",
+        "items": [
+            { "collection": "Winter_Garden", "name": "Crimson", "quantity": 1 },
+            { "collection": "Sun_Goddess", "name": "Danaya", "quantity": 1 }
+        ],
+        "history": [
+            { "status": "placed", "at": "2026-10-25T10:12:00+13:00" },
+            { "status": "packed", "at": "2026-10-26T09:40:00+13:00" },
+            { "status": "shipped", "at": "2026-10-27T14:05:00+13:00" },
+            { "status": "out_for_delivery", "at": "2026-10-28T07:30:00+13:00" }
+        ]
+    },
+    {
+        "number": "BEAU-1025",
+        "email": "liam@example.com",
+        "courier": "NZ Post",
+        "tracking": null,
+        "deliverTo": "Te Aro, Wellington",
+        "estimatedDelivery": "2026-10-31",
+        "items": [
+            { "collection": "Liexquizo", "name": "Solana", "quantity": 2 }
+        ],
+        "history": [
+            { "status": "placed", "at": "2026-10-27T19:48:00+13:00" },
+            { "status": "packed", "at": "2026-10-28T11:15:00+13:00" }
+        ]
+    },
+    {
+        "number": "BEAU-1022",
+        "email": "isla@example.com",
+        "courier": "CourierPost",
+        "tracking": "CP5518302291",
+        "deliverTo": "Riccarton, Christchurch",
+        "estimatedDelivery": "2026-10-30",
+        "items": [
+            { "collection": "Thorns_and_Roses", "name": "Yzeth", "quantity": 1 },
+            { "collection": "Thorns_and_Roses", "name": "Lylia", "quantity": 1 },
+            { "collection": "Beaunds", "name": "Benesa", "quantity": 1 }
+        ],
+        "history": [
+            { "status": "placed", "at": "2026-10-24T08:20:00+13:00" },
+            { "status": "packed", "at": "2026-10-24T16:02:00+13:00" },
+            { "status": "shipped", "at": "2026-10-27T10:30:00+13:00" }
+        ]
+    },
+    {
+        "number": "BEAU-1019",
+        "email": "mia@example.com",
+        "courier": "NZ Post",
+        "tracking": "NZ7392011107",
+        "deliverTo": "Manukau, Auckland",
+        "estimatedDelivery": "2026-10-23",
+        "items": [
+            { "collection": "Beaunds", "name": "Leigh", "quantity": 2 },
+            { "collection": "Beaunds", "name": "Cardona", "quantity": 1 }
+        ],
+        "history": [
+            { "status": "placed", "at": "2026-10-20T12:00:00+13:00" },
+            { "status": "packed", "at": "2026-10-20T17:45:00+13:00" },
+            { "status": "shipped", "at": "2026-10-21T09:10:00+13:00" },
+            { "status": "out_for_delivery", "at": "2026-10-23T07:55:00+13:00" },
+            { "status": "delivered", "at": "2026-10-23T13:22:00+13:00" }
+        ]
+    },
+    {
+        "number": "BEAU-1027",
+        "email": "noah@example.com",
+        "courier": "NZ Post",
+        "tracking": null,
+        "deliverTo": "Newmarket, Auckland",
+        "estimatedDelivery": "2026-11-02",
+        "items": [
+            { "collection": "Sun_Goddess", "name": "Mahal", "quantity": 1 },
+            { "collection": "Winter_Garden", "name": "Petal", "quantity": 1 }
+        ],
+        "history": [
+            { "status": "placed", "at": "2026-10-28T09:05:00+13:00" }
+        ]
+    }
+]

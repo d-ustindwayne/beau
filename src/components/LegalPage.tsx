@@ -1,4 +1,5 @@
 import { type JSX, type ReactNode } from "react";
+import BrandName from "./BrandName";
 import { Link } from "react-router-dom";
 import HeroHeading from "./HeroHeading";
 import heroUrl from "/assets/hero/default-hero.webp";
@@ -14,15 +15,16 @@ interface LegalPageProps {
     pageTitle: string,
     intro: string,
     updated: string,
-    sections: LegalSection[]
+    sections: LegalSection[],
+    heroName: string
 }
 
 /** Shared layout for policy pages: compact hero, sticky table of contents and a readable text column. */
-export default function LegalPage({ title, pageTitle, intro, updated, sections }: LegalPageProps): JSX.Element {
+export default function LegalPage({ title, pageTitle, intro, updated, sections, heroName }: LegalPageProps): JSX.Element {
     return (
         <>
             <title>{`${pageTitle} | beau`}</title>
-            <HeroHeading textColor="text-white" alignment="items-center" title={title} subtitle={intro} mediaURL={heroUrl} darkenBackground={true} />
+            <HeroHeading heroName={heroName} textColor="text-white" alignment="items-center" title={title} subtitle={intro} mediaURL={heroUrl} darkenBackground={true} />
 
             <div className="max-w-6xl mx-auto px-6 md:py-16 py-10 grid lg:grid-cols-[15rem_1fr] gap-x-16 gap-y-8">
                 <nav aria-label="On this page" className="lg:sticky lg:top-8 self-start">
@@ -41,7 +43,7 @@ export default function LegalPage({ title, pageTitle, intro, updated, sections }
                 <article className="max-w-3xl font-sans text-neutral-800">
                     <p className="text-sm text-neutral-600">Last updated <time>{updated}</time></p>
                     <p className="mt-4 p-4 bg-sand/60 border-s-4 border-beau text-sm leading-relaxed">
-                        be•au is a UI/UX showcase. These policies are written for a fictional store and are not a legal agreement.
+                        <BrandName /> is a UI/UX showcase. These policies are written for a fictional store and are not a legal agreement.
                     </p>
                     {sections.map((section, i) => (
                         <section key={section.id} id={section.id} aria-labelledby={`${section.id}-title`} className="scroll-mt-8 pt-10 first-of-type:pt-8">

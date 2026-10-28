@@ -24,7 +24,7 @@ export default function Contact(): JSX.Element {
     return (
         <>
         <title>Contact | beau</title>
-        <HeroHeading textColor="text-white"
+        <HeroHeading heroName="contact" textColor="text-white"
                 alignment="items-center"
                 title="Contact"
                 mediaURL={heroUrl}

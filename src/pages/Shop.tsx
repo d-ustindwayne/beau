@@ -1,5 +1,5 @@
-import { useState, useMemo, useRef, type JSX } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useState, useRef, type JSX } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import sortArray, { ButtonDesign, formatCategory, getProducts, randomize } from "../constants";
 import productList from "../productList.json";
 import type { ProductList, sortType, lipType } from "../types";
@@ -21,52 +21,67 @@ const lipTypes: Array<{ type: Exclude<lipType, "all">, image: string }> = [
     { type: "Satin", image: satinType },
 ];
 
+/** URL value for each sort option, e.g. /shop?sort=price-desc. Every sort and filter is kept in the URL so views can be shared and the back button works. */
+const SORT_PARAMS: Record<string, { sort: sortType, isAsc: boolean }> = {
+    "featured": { sort: "random", isAsc: true },
+    "name": { sort: "alphabet", isAsc: true },
+    "name-desc": { sort: "alphabet", isAsc: false },
+    "price": { sort: "price", isAsc: true },
+    "price-desc": { sort: "price", isAsc: false },
+    "newest": { sort: "latest", isAsc: false },
+    "oldest": { sort: "latest", isAsc: true },
+};
+
+const toSortParam = (sort: sortType, isAsc: boolean): string =>
+    Object.entries(SORT_PARAMS).find(([, v]) => v.sort === sort && v.isAsc === isAsc)?.[0] ?? "featured";
+
+/** "Winter_Garden" <-> "winter-garden" */
+const slugify = (value: string): string => value.toLowerCase().replace(/[_\s]+/g, "-");
+
 export default function Shop(): JSX.Element {
-    const [searchParams] = useSearchParams();
-    // Deep links: /shop?finish=Matte (Jinny), /shop?collection=Sun_Goddess (Collections page), /shop?sort=newest (footer "New").
-    const [sort, setSort] = useState<sortType>(() => searchParams.get("sort") === "newest" ? "latest" : "random");
-    const [isAsc, setIsAsc] = useState(() => searchParams.get("sort") !== "newest");
-    const [type, setType] = useState<lipType>(() => lipTypes.find((l) => l.type.toLowerCase() === searchParams.get("finish")?.toLowerCase())?.type ?? "all");
-    const [collection, setCollection] = useState<string>(() => collections.find((c) => c.toLowerCase() === searchParams.get("collection")?.toLowerCase()) ?? "all");
-    const [page, setPage] = useState(1);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const { sort, isAsc } = SORT_PARAMS[searchParams.get("sort") ?? "featured"] ?? SORT_PARAMS.featured;
+    const type: lipType = lipTypes.find((l) => l.type.toLowerCase() === searchParams.get("finish")?.toLowerCase())?.type ?? "all";
+    // "collection" is still accepted so older links keep working.
+    const collectionParam = searchParams.get("collections") ?? searchParams.get("collection");
+    const collection: string = collections.find((c) => collectionParam && slugify(c) === slugify(collectionParam)) ?? "all";
+    const page = Math.max(1, Number(searchParams.get("page")) || 1);
     // Shuffled once per visit so the "random" order stays stable across re-renders and pages.
     const [shuffledProducts] = useState(() => randomize([...allProducts]));
     const listTopRef = useRef<HTMLDivElement>(null);
 
-    const changeType = (typeI: lipType) => {
-        setType(() => typeI == type? "all" : typeI);
-        setPage(1);
+    /** Writes the next view to the URL, dropping defaults so links stay short. Filter changes reset to page 1. */
+    const updateView = (next: { sort?: sortType, isAsc?: boolean, type?: lipType, collection?: string, page?: number }) => {
+        const nextSort = next.sort ?? sort;
+        const nextAsc = next.isAsc ?? isAsc;
+        const nextType = next.type ?? type;
+        const nextCollection = next.collection ?? collection;
+        const nextPage = next.page ?? 1;
+        const params = new URLSearchParams();
+        if (nextCollection !== "all") params.set("collections", slugify(nextCollection));
+        if (nextType !== "all") params.set("finish", nextType.toLowerCase());
+        params.set("sort", toSortParam(nextSort, nextAsc));
+        if (nextPage > 1) params.set("page", String(nextPage));
+        setSearchParams(params, { replace: true, preventScrollReset: true });
     }
 
-    const changeCollection = (next: string) => {
-        setCollection(next);
-        setPage(1);
-    }
+    const changeType = (typeI: lipType) => updateView({ type: typeI === type ? "all" : typeI });
+
+    const changeCollection = (next: string) => updateView({ collection: next });
 
     const changeSort = (sortI: sortType) => {
-        if (sortI === sort) {
-            if (sortI !== "random") setIsAsc(!isAsc);
-        } else {
-            setSort(sortI);
-            // "Date added" starts with the newest products, which is what shoppers usually want first.
-            setIsAsc(sortI !== "latest");
-        }
-        setPage(1);
+        if (sortI === sort) updateView({ isAsc: sortI === "random" ? true : !isAsc });
+        // "Date added" starts with the newest products, which is what shoppers usually want first.
+        else updateView({ sort: sortI, isAsc: sortI !== "latest" });
     }
 
-    const clearFilters = () => {
-        setType("all");
-        setCollection("all");
-        setPage(1);
-    }
+    const clearFilters = () => updateView({ type: "all", collection: "all" });
 
-    const filteredAndSortedProducts = useMemo(() => {
-        const base = sort === "random" ? shuffledProducts : allProducts;
-        const productsToProcess = base.filter((product) =>
-            (type === "all" || product.props.lipstickType === type) &&
-            (collection === "all" || product.props.productCategory === collection));
-        return sort === "random" ? productsToProcess : sortArray(productsToProcess, sort, isAsc);
-    }, [shuffledProducts, sort, isAsc, type, collection]);
+    const base = sort === "random" ? shuffledProducts : allProducts;
+    const matchingProducts = base.filter((product) =>
+        (type === "all" || product.props.lipstickType === type) &&
+        (collection === "all" || product.props.productCategory === collection));
+    const filteredAndSortedProducts = sort === "random" ? matchingProducts : sortArray(matchingProducts, sort, isAsc);
     const hasFilters = type !== "all" || collection !== "all";
 
     const totalProducts = filteredAndSortedProducts.length;
@@ -76,7 +91,7 @@ export default function Shop(): JSX.Element {
     const currentProductsView = filteredAndSortedProducts.slice(start, start + PAGE_SIZE);
 
     const goToPage = (nextPage: number): void => {
-        setPage(nextPage);
+        updateView({ page: nextPage });
         const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         listTopRef.current?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
     }
@@ -85,7 +100,10 @@ export default function Shop(): JSX.Element {
         <title>Shop | beau</title>
         <section className="flex md:flex-row flex-col items-center font-serif">
             <div className="md:w-1/3 w-full">
-                <h1 className="md:p-14 px-6 pt-10 pb-2 xl:text-7xl lg:text-6xl text-5xl md:text-start text-center italic">Choose your look</h1>
+                <h1 className="md:px-14 md:pt-14 px-6 pt-10 pb-2 xl:text-7xl lg:text-6xl text-5xl md:text-start text-center italic">Choose your look</h1>
+                <p className="md:px-14 px-6 md:pb-14 font-sans text-base md:text-start text-center text-neutral-700">
+                    Unsure? <Link to="/shade-finder" className="font-semibold text-beau underline underline-offset-4 decoration-beau/40 hover:decoration-beau">Take the Shade Finder</Link>
+                </p>
             </div>
             <div role="group" aria-label="Filter by finish" className="md:w-2/3 w-full flex flex-row justify-evenly sm:gap-4 gap-2 md:py-10 py-6 sm:mr-10.5 mr-0 md:px-0 px-3">
                 {lipTypes.map(({ type: lip, image }) => {

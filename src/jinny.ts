@@ -1,4 +1,5 @@
 import productList from "./productList.json";
+import orderList from "./orderList.json";
 import { Cart } from "./cartData.tsx";
 import { dollarFormatter, formatCategory } from "./constants";
 import type { ProductList } from "./types";
@@ -43,7 +44,9 @@ export function onJinnyOpen(handler: (message?: string) => void): () => void {
 }
 
 const PAGE_PATHS: Record<string, string> = {
-    home: "/", shop: "/shop", about: "/about", contact: "/contact", affiliate: "/affiliate", checkout: "/checkout",
+    home: "/", shop: "/shop", about: "/about", contact: "/contact", affiliate: "/affiliate", affiliate_apply: "/affiliate/apply", checkout: "/checkout",
+    collections: "/collections", sale: "/sale", shade_finder: "/shade-finder", customer_service: "/customer-service", order_status: "/order-status", store_locator: "/store-locator",
+    refund_policy: "/refund-policy", privacy_policy: "/privacy-policy", terms: "/terms-and-conditions",
 };
 
 /* ---------- Catalogue ---------- */
@@ -140,13 +143,31 @@ export async function executeTool(call: ToolCall, navigate: NavigateFn): Promise
                 }),
             };
         }
+        case "get_order_status": {
+            const number = (str(args.order_number) ?? "").trim().toUpperCase().replace(/^#/, "");
+            const email = (str(args.email) ?? "").trim().toLowerCase();
+            const order = orderList.find((o) => o.number === number && o.email.toLowerCase() === email);
+            if (!order) return { content: JSON.stringify({ error: "No order found with that number and email." }) };
+            const latest = order.history[order.history.length - 1];
+            return {
+                content: JSON.stringify({
+                    number: order.number, status: latest.status, updated: latest.at, estimated_delivery: order.estimatedDelivery,
+                    deliver_to: order.deliverTo, courier: order.courier, tracking: order.tracking,
+                    items: order.items.map((i) => ({ name: i.name, collection: formatCategory(i.collection), quantity: i.quantity })),
+                }),
+            };
+        }
         case "navigate": {
             const page = str(args.page) ?? "";
             const path = PAGE_PATHS[page];
             if (!path) return { content: JSON.stringify({ error: "Unknown page" }) };
             const finish = str(args.finish);
-            navigate(page === "shop" && finish ? `${path}?finish=${encodeURIComponent(finish)}` : path);
-            return { content: JSON.stringify({ navigated_to: page, finish: finish ?? null }) };
+            const collection = str(args.collection);
+            const params = new URLSearchParams();
+            if (page === "shop" && collection) params.set("collections", collection.toLowerCase().replace(/_/g, "-"));
+            if (page === "shop" && finish) params.set("finish", finish.toLowerCase());
+            navigate(params.size ? `${path}?${params}` : path);
+            return { content: JSON.stringify({ navigated_to: page, finish: finish ?? null, collection: collection ?? null }) };
         }
         default:
             return { content: JSON.stringify({ error: "Unknown tool" }) };
@@ -170,7 +191,18 @@ function toApiMessages(messages: JinnyMessage[]): JinnyMessage[] {
     return clean.slice(start) as JinnyMessage[];
 }
 
+/** Retries once after a short pause, since free AI tiers occasionally fail a single request under load. */
 async function requestReply(messages: JinnyMessage[], signal?: AbortSignal): Promise<{ content: string | null, tool_calls?: ToolCall[] }> {
+    try {
+        return await requestReplyOnce(messages, signal);
+    } catch (error) {
+        if (signal?.aborted) throw error;
+        await new Promise((resolve) => setTimeout(resolve, 1200));
+        return requestReplyOnce(messages, signal);
+    }
+}
+
+async function requestReplyOnce(messages: JinnyMessage[], signal?: AbortSignal): Promise<{ content: string | null, tool_calls?: ToolCall[] }> {
     const res = await fetch(JINNY_API_URL!, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -241,16 +273,16 @@ async function offlineReply(history: JinnyMessage[], navigate: NavigateFn): Prom
         }
     }
 
-    const page = Object.keys(PAGE_PATHS).find((p) => new RegExp(`\\b(go to|open|take me to|show me) (the )?${p}\\b`).test(text));
+    const page = Object.keys(PAGE_PATHS).find((p) => new RegExp(`\\b(go to|open|take me to|show me) (the )?${p.replace(/_/g, " ")}\\b`).test(text));
     if (page) {
         navigate(PAGE_PATHS[page]);
-        return reply(`Taking you to the ${page} page now.`);
+        return reply(`Taking you to the ${page.replace(/_/g, " ")} page now.`);
     }
 
     if (/deliver|shipping|ship/.test(text)) return reply("Delivery is **free** on every order.");
     if (/gst|tax/.test(text)) return reply("All our prices are in NZD and already include 15% GST.");
     if (/contact|email|support|address/.test(text)) return reply("You can reach us at **beau@example.com**, or through the Contact page. Our support team is here 24/7.");
-    if (/affiliate|partner|commission/.test(text)) return reply("Our affiliate collective lets you **Join**, **Advertise** with our brand imagery, and **Earn** commission on every purchase you drive. Scan the QR code on the Affiliate page to apply.");
+    if (/affiliate|partner|commission/.test(text)) return reply("Our affiliate collective lets you **Join**, **Advertise** with our brand imagery, and **Earn** commission on every purchase you drive. Apply through the form on our Affiliate page.");
 
     const finish = ["matte", "satin", "glossy"].find((f) => text.includes(f));
     const priceMatch = text.match(/(under|below|less than|max)\s*\$?(\d+)/);

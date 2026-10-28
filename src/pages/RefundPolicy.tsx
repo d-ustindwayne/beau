@@ -1,11 +1,12 @@
 import { type JSX } from "react";
+import BrandName from "../components/BrandName";
 import { Link } from "react-router-dom";
 import LegalPage, { type LegalSection } from "../components/LegalPage";
 
 const sections: LegalSection[] = [
     {
         id: "overview", title: "Our promise", body: <>
-            <p>We want every be•au piece to feel like it was made for you. If something isn't right, we'll make it right, whether that's an exchange, a refund or store credit.</p>
+            <p>We want every <BrandName /> piece to feel like it was made for you. If something isn't right, we'll make it right, whether that's an exchange, a refund or store credit.</p>
             <p>Nothing in this policy limits your rights under the <strong>Consumer Guarantees Act 1993</strong> or the <strong>Fair Trading Act 1986</strong>.</p>
         </>,
     },
@@ -50,6 +51,6 @@ const sections: LegalSection[] = [
 ];
 
 export default function RefundPolicy(): JSX.Element {
-    return <LegalPage title="Refund Policy" pageTitle="Refund Policy" updated="28 October 2026" sections={sections}
+    return <LegalPage heroName="refund-policy" title="Refund Policy" pageTitle="Refund Policy" updated="28 October 2026" sections={sections}
         intro="Simple, fair returns: 30 days for change of mind, and faulty items always made right." />;
 }

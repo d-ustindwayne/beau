@@ -1,11 +1,12 @@
 import { type JSX } from "react";
+import BrandName from "../components/BrandName";
 import { Link } from "react-router-dom";
 import LegalPage, { type LegalSection } from "../components/LegalPage";
 
 const sections: LegalSection[] = [
     {
         id: "about", title: "About these terms", body: <>
-            <p>These terms apply when you use the be•au website or buy from us. By placing an order, you agree to them. They don't affect your rights under New Zealand consumer law.</p>
+            <p>These terms apply when you use the <BrandName /> website or buy from us. By placing an order, you agree to them. They don't affect your rights under New Zealand consumer law.</p>
         </>,
     },
     {
@@ -39,7 +40,7 @@ const sections: LegalSection[] = [
     },
     {
         id: "content", title: "Our content", body: <>
-            <p>All images, product names, designs and text on this site belong to be•au. Please don't reuse them without our written permission.</p>
+            <p>All images, product names, designs and text on this site belong to <BrandName />. Please don't reuse them without our written permission.</p>
         </>,
     },
     {
@@ -50,6 +51,6 @@ const sections: LegalSection[] = [
 ];
 
 export default function Terms(): JSX.Element {
-    return <LegalPage title="Terms & Conditions" pageTitle="Terms & Conditions" updated="28 October 2026" sections={sections}
+    return <LegalPage heroName="terms" title="Terms & Conditions" pageTitle="Terms & Conditions" updated="28 October 2026" sections={sections}
         intro="The fine print, written plainly." />;
 }

@@ -65,3 +65,40 @@ export function useDialog(
         };
     }, [isOpen, containerRef, initialFocusRef]);
 }
+
+/**
+ * Fades top-level sections up as they scroll into view. Watches for new content too,
+ * because pages are lazy-loaded after the route changes. Skipped for reduced-motion users.
+ */
+export function useScrollReveal(containerRef: RefObject<HTMLElement | null>): void {
+    useEffect(() => {
+        const root = containerRef.current;
+        if (!root || !("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add("is-revealed");
+                io.unobserve(entry.target);
+            });
+        }, { rootMargin: "0px 0px -8% 0px" });
+
+        const scan = () => {
+            root.querySelectorAll<HTMLElement>("section:not([data-reveal])").forEach((section) => {
+                section.dataset.reveal = "";
+                // Only outermost sections animate, so nested ones don't fade twice.
+                if (section.parentElement?.closest("section")) return;
+                section.classList.add("reveal");
+                io.observe(section);
+            });
+        };
+
+        scan();
+        const mo = new MutationObserver(scan);
+        mo.observe(root, { childList: true, subtree: true });
+        return () => {
+            mo.disconnect();
+            io.disconnect();
+        };
+    }, [containerRef]);
+}

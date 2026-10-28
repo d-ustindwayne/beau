@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState, type FormEvent, type JSX, type ReactNode } from "react";
+import { Fragment, useEffect, useRef, useState, type FormEvent, type JSX, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { askJinny, JINNY_API_URL, onJinnyOpen, type CatalogProduct, type JinnyMessage } from "../jinny";
 import { Cart } from "../cartData.tsx";
 import { dollarFormatter, formatCategory } from "../constants";
 import { useDialog } from "../hooks";
 import LazyImage from "./LazyImage";
+import { brandify } from "../brand";
 
 const STORAGE_KEY = "jinny_chat";
 // Drop an avatar at public/assets/brand/jinny.webp to replace the "J" monogram.
@@ -13,14 +14,14 @@ const MAX_INPUT = 1000;
 
 const GREETING: JinnyMessage = {
     role: "assistant",
-    content: "Hi, I'm **Jinny**, your beau beauty assistant. I can help you find the perfect shade, add it to your cart, or answer questions about delivery and our affiliate programme.",
+    content: "Hi, I'm **Jinny** 💄 Think of me as your lippie bestie. Tell me the vibe, the outfit or the occasion and I'll find your perfect shade. I can also add it to your cart, track an order, or answer anything about be•au.",
 };
 
 const SUGGESTIONS = [
     "Show me matte shades",
     "Lipsticks under $55",
     "What's in Sun Goddess?",
-    "How does delivery work?",
+    "Something for date night 🌹",
 ];
 
 function loadHistory(): JinnyMessage[] {
@@ -37,7 +38,7 @@ function loadHistory(): JinnyMessage[] {
 function RichText({ text }: { text: string }): JSX.Element {
     const inline = (line: string): ReactNode[] =>
         line.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
-            part.startsWith("**") && part.endsWith("**") ? <strong key={i}>{part.slice(2, -2)}</strong> : part);
+            part.startsWith("**") && part.endsWith("**") ? <strong key={i}>{brandify(part.slice(2, -2))}</strong> : <Fragment key={i}>{brandify(part)}</Fragment>);
 
     const blocks: JSX.Element[] = [];
     let bullets: string[] = [];

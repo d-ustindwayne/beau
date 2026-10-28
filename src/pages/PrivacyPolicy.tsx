@@ -1,11 +1,12 @@
 import { type JSX } from "react";
+import BrandName from "../components/BrandName";
 import { Link } from "react-router-dom";
 import LegalPage, { type LegalSection } from "../components/LegalPage";
 
 const sections: LegalSection[] = [
     {
         id: "who-we-are", title: "Who we are", body: <>
-            <p>be•au is a lipstick boutique based in Manukau City, Auckland. This policy explains how we collect, use and protect your personal information, in line with the <strong>Privacy Act 2020</strong> and its Information Privacy Principles.</p>
+            <p><BrandName /> is a lipstick boutique based in Manukau City, Auckland. This policy explains how we collect, use and protect your personal information, in line with the <strong>Privacy Act 2020</strong> and its Information Privacy Principles.</p>
         </>,
     },
     {
@@ -51,6 +52,6 @@ const sections: LegalSection[] = [
 ];
 
 export default function PrivacyPolicy(): JSX.Element {
-    return <LegalPage title="Privacy Policy" pageTitle="Privacy Policy" updated="28 October 2026" sections={sections}
+    return <LegalPage heroName="privacy-policy" title="Privacy Policy" pageTitle="Privacy Policy" updated="28 October 2026" sections={sections}
         intro="What we collect, why we collect it, and how we keep it safe." />;
 }

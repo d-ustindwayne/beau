@@ -1,13 +1,14 @@
 import { type JSX } from "react";
+import BrandName from "../components/BrandName";
 import HeroHeading from "../components/HeroHeading";
 import LazyImage from "../components/LazyImage";
 import heroUrl from "/assets/hero/default-hero.webp";
-import { SplideClass } from "../constants";
+import { ButtonDesign, SplideClass } from "../constants";
+import { Link } from "react-router-dom";
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import affiliateList from "../affiliateList.json";
 import type { AffiliateDetails } from "../types";
-import qrCode from "/assets/sections/affiliate-qr.png";
 import instaIcon from "/assets/icons/instagram.png"; // Since this is in public, we use the string
 
 const splideOptions = {
@@ -37,7 +38,7 @@ export default function Affiliate(): JSX.Element {
 
     return (<>
         <title>Affiliates | beau</title>
-        <HeroHeading textColor="text-white"
+        <HeroHeading heroName="affiliate" textColor="text-white"
             alignment="items-center"
             title="Affiliates"
             mediaURL={heroUrl}
@@ -66,17 +67,19 @@ export default function Affiliate(): JSX.Element {
             </Splide>
             <section className="flex md:flex-row flex-col md:items-center w-full">
             <div className="lg:w-2/3 md:w-1/2 w-full md:p-10 px-6 py-8">
-                <h2 className="md:text-5xl text-4xl font-serif md:px-5 tracking-wider">Why be•au</h2>
+                <h2 className="md:text-5xl text-4xl font-serif md:px-5 tracking-wider">Why <BrandName /></h2>
                 <p className="font-sans md:text-2xl text-xl leading-snug tracking-wider md:px-5 mt-6">
-                    At be•au, beauty is an art form defined by geometric precision and timeless elegance.
+                    At <BrandName />, beauty is an art form defined by geometric precision and timeless elegance.
                     If you share our passion for high-end aesthetics, we invite you to join our exclusive affiliate collective.
                 </p>
             </div>
 
-            <div className="lg:w-1/3 md:w-1/2 w-full md:p-10 px-6 pb-8 flex flex-col items-center md:items-start">
-                <h3 className="text-center md:text-start lg:text-4xl sm:text-3xl text-2xl font-serif tracking-wider">Scan QR code to join</h3>
-                <div className="w-full max-w-xs md:max-w-none mt-4">
-                    <img className="w-full aspect-square object-contain [image-rendering:pixelated]" src={qrCode} alt="QR code to join the beau affiliate programme" width={200} height={200} loading="lazy" />
+            <div className="lg:w-1/3 md:w-1/2 w-full md:p-10 px-6 pb-10">
+                <div className="on-dark bg-beau text-white p-8 md:p-10 text-center md:text-start shadow-xl">
+                    <p className="font-sans text-xs font-semibold uppercase tracking-[0.25em] text-sand">Now accepting applications</p>
+                    <h3 className="font-serif italic lg:text-5xl text-4xl mt-3">Join the collective</h3>
+                    <p className="font-sans font-light text-lg mt-3 leading-snug">Three short steps, about three minutes. We review every application personally.</p>
+                    <Link to="/affiliate/apply" className={`${ButtonDesign} mb-0! mt-6! bg-white! text-beau! hover:bg-sand! text-lg!`}>Apply now</Link>
                 </div>
             </div>
         </section>
@@ -89,11 +92,6 @@ export default function Affiliate(): JSX.Element {
                         <span aria-hidden="true" className="font-sans text-xs font-semibold tracking-[0.3em] text-beau">{String(i + 1).padStart(2, "0")}</span>
                         <h3 className="font-serif italic lg:text-6xl md:text-5xl text-6xl tracking-wider mt-2">{step.title}</h3>
                         <p className="font-sans xl:text-xl lg:text-lg md:text-sm text-lg tracking-wide leading-snug mt-4 max-w-[18rem]">{step.text}</p>
-                        {i < steps.length - 1 && (
-                            <span aria-hidden="true" className="absolute z-10 flex items-center justify-center size-10 rounded-full bg-beau text-white shadow-md md:-right-5 lg:-right-6 md:top-1/2 md:-translate-y-1/2 max-md:-bottom-8 max-md:left-1/2 max-md:-translate-x-1/2 max-md:rotate-90">
-                                <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-                            </span>
-                        )}
                     </li>
                 ))}
             </ol>

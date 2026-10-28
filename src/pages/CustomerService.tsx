@@ -4,11 +4,12 @@ import HeroHeading from "../components/HeroHeading";
 import heroUrl from "/assets/hero/default-hero.webp";
 import { ButtonDesign } from "../constants";
 import { openJinny } from "../jinny";
+import { brandify } from "../brand";
 
 interface Faq { q: string, a: ReactNode, text: string }
 interface FaqGroup { title: string, items: Faq[] }
 
-const faq = (q: string, text: string, a?: ReactNode): Faq => ({ q, text, a: a ?? text });
+const faq = (q: string, text: string, a?: ReactNode): Faq => ({ q, text, a: a ?? brandify(text) });
 
 const faqGroups: FaqGroup[] = [
     {
@@ -67,7 +68,7 @@ export default function CustomerService(): JSX.Element {
     return (
         <>
             <title>Customer Service | beau</title>
-            <HeroHeading textColor="text-white" alignment="items-center" title="Customer Service" mediaURL={heroUrl} darkenBackground={true}
+            <HeroHeading heroName="customer-service" textColor="text-white" alignment="items-center" title="Customer Service" mediaURL={heroUrl} darkenBackground={true}
                 subtitle="Answers, orders, returns and everything in between. We're here 24/7." />
 
             <section aria-label="Quick help" className="max-w-6xl mx-auto px-6 md:pt-16 pt-10">
@@ -113,7 +114,7 @@ export default function CustomerService(): JSX.Element {
                             {group.items.map((item) => (
                                 <details key={item.q} name="faq" className="group border-b border-black/15">
                                     <summary className="flex items-center justify-between gap-6 py-5 cursor-pointer list-none [&::-webkit-details-marker]:hidden font-serif text-xl md:text-2xl hover:text-beau transition-colors">
-                                        {item.q}
+                                        <span>{brandify(item.q)}</span>
                                         <span aria-hidden="true" className="relative shrink-0 size-4 before:absolute before:inset-x-0 before:top-1/2 before:h-0.5 before:-translate-y-1/2 before:bg-current after:absolute after:inset-y-0 after:left-1/2 after:w-0.5 after:-translate-x-1/2 after:bg-current after:transition-transform after:duration-300 group-open:after:scale-y-0 text-beau" />
                                     </summary>
                                     <div className="pb-6 pe-10 font-sans text-base md:text-lg leading-relaxed text-neutral-800 animate-fade-in [&_a]:text-beau [&_a]:underline [&_a]:underline-offset-4">{item.a}</div>

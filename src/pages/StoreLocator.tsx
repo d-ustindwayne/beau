@@ -48,10 +48,9 @@ function getOpenStatus(): { isOpen: boolean, label: string, today: number } {
     return { isOpen: false, label: `Opens ${nextDay} ${formatHour(nextOpen)}`, today };
 }
 
+/** Standard Google Maps embed (no API key needed), zoomed to street level around the boutique. */
 function mapUrl(store: Store): string {
-    const pad = 0.012;
-    const bbox = [store.lon - pad * 1.6, store.lat - pad, store.lon + pad * 1.6, store.lat + pad].join(",");
-    return `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${store.lat},${store.lon}`;
+    return `https://maps.google.com/maps?q=${store.lat},${store.lon}&z=15&hl=en&output=embed`;
 }
 
 export default function StoreLocator(): JSX.Element {
@@ -72,7 +71,7 @@ export default function StoreLocator(): JSX.Element {
     return (
         <>
             <title>Store Locator | beau</title>
-            <HeroHeading textColor="text-white" alignment="items-center" title="Store Locator" mediaURL={heroUrl} darkenBackground={true}
+            <HeroHeading heroName="store-locator" textColor="text-white" alignment="items-center" title="Store Locator" mediaURL={heroUrl} darkenBackground={true}
                 subtitle="Find a be•au boutique and try your shade in person." />
 
             <section className="max-w-7xl mx-auto px-4 md:px-6 md:py-14 py-8">
@@ -128,7 +127,7 @@ export default function StoreLocator(): JSX.Element {
                         <div className="relative h-[22rem] md:h-[28rem] lg:h-[30rem] bg-collection">
                             {loadedMap !== src && <div aria-hidden="true" className="absolute inset-0 skeleton" />}
                             <iframe key={src} src={src} title={`Map showing be•au ${selected.name}`} loading="lazy" onLoad={() => setLoadedMap(src)}
-                                className={`absolute inset-0 size-full border-0 [filter:grayscale(0.5)_sepia(0.12)] transition-opacity duration-500 ${loadedMap === src ? "opacity-100" : "opacity-0"}`} />
+                                className={`absolute inset-0 size-full border-0 transition-opacity duration-500 ${loadedMap === src ? "opacity-100" : "opacity-0"}`} />
                             <span className="absolute top-3 left-3 px-2.5 py-1 bg-white/95 shadow font-sans text-[11px] font-semibold uppercase tracking-wider text-beau">Prototype</span>
                         </div>
                         <div key={selected.id} className="p-5 md:p-7 grid md:grid-cols-[1fr_auto] gap-6 animate-fade-in">
@@ -165,7 +164,7 @@ export default function StoreLocator(): JSX.Element {
                         </div>
                     </div>
                 </div>
-                <p className="font-sans text-xs text-neutral-600 mt-6 text-center">Boutique locations are illustrative for this UI/UX prototype. Map data © OpenStreetMap contributors.</p>
+                <p className="font-sans text-xs text-neutral-600 mt-6 text-center">Boutique locations are illustrative for this UI/UX prototype. Map data © Google.</p>
             </section>
         </>
     );

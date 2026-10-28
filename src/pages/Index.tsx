@@ -96,7 +96,7 @@ export default function Index(): JSX.Element {
                 <ul className="max-w-5xl mx-auto grid grid-cols-3 md:gap-10 gap-4 md:mt-12 mt-8">
                     {finishes.map((finish) => (
                         <li key={finish.name}>
-                            <Link to={`/shop?finish=${finish.name}`} className="group flex flex-col items-center text-center">
+                            <Link to={`/shop?finish=${finish.name.toLowerCase()}`} className="group flex flex-col items-center text-center">
                                 <span className="w-full max-w-56 aspect-square rounded-full overflow-hidden shadow-md ring-0 ring-[#e37d72] transition-all duration-300 group-hover:ring-8 group-hover:shadow-xl">
                                     <img src={finish.image} alt="" width={224} height={224} loading="lazy" decoding="async" className="size-full object-cover transition-transform duration-700 group-hover:rotate-45 group-hover:scale-105" />
                                 </span>
@@ -106,6 +106,13 @@ export default function Index(): JSX.Element {
                         </li>
                     ))}
                 </ul>
+                <div className="max-w-5xl mx-auto mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 p-6 md:px-10 bg-sand text-center sm:text-start">
+                    <div>
+                        <p className="font-serif italic text-3xl">Not sure where to start?</p>
+                        <p className="font-sans text-neutral-800 mt-1">Answer four quick questions and we'll match you with your shade.</p>
+                    </div>
+                    <Link to="/shade-finder" className={`${ButtonDesign} my-0! shrink-0 text-lg!`}>Find my shade</Link>
+                </div>
             </section>
 
             <MediaText mediaType="image" mediaURL={affiliatePhoto} mediaWidth={708} mediaHeight={585}

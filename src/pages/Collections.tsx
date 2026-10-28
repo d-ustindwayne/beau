@@ -21,7 +21,7 @@ export default function Collections(): JSX.Element {
     return (
         <>
             <title>Collections | beau</title>
-            <HeroHeading textColor="text-white" alignment="items-center" title="Collections" mediaURL={heroUrl} darkenBackground={true}
+            <HeroHeading heroName="collections" textColor="text-white" alignment="items-center" title="Collections" mediaURL={heroUrl} darkenBackground={true}
                 subtitle="Five collections, each with its own finish and its own story." />
 
             {Object.entries(catalogue).map(([key, products], i) => {
@@ -44,12 +44,12 @@ export default function Collections(): JSX.Element {
                                     <div><dt className="text-xs uppercase tracking-wider text-neutral-600">Finish</dt><dd className="font-serif text-2xl">{finishes}</dd></div>
                                     <div><dt className="text-xs uppercase tracking-wider text-neutral-600">From</dt><dd className="font-serif text-2xl">{dollarFormatter(Math.min(...prices))}</dd></div>
                                 </dl>
-                                <Link to={`/shop?collection=${key}`} className={`${ButtonDesign} mt-8! mb-0! text-lg!`}>Shop {name}</Link>
+                                <Link to={`/shop?collections=${key.toLowerCase().replace(/_/g, "-")}`} className={`${ButtonDesign} mt-8! mb-0! text-lg!`}>Shop {name}</Link>
                             </div>
                             <ul className="lg:w-3/5 grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
                                 {products.map((p, j) => (
                                     <li key={p.name} className={j % 2 === 1 ? "sm:translate-y-6" : ""}>
-                                        <Link to={`/shop?collection=${key}`} className="group block bg-white shadow-sm transition-shadow hover:shadow-xl">
+                                        <Link to={`/shop?collections=${key.toLowerCase().replace(/_/g, "-")}`} className="group block bg-white shadow-sm transition-shadow hover:shadow-xl">
                                             <span className="block overflow-hidden">
                                                 <LazyImage src={p.photoUrl} alt={`${name} – ${p.name}`} width={247} height={330} className="w-full aspect-3/4 object-cover transition-transform duration-500 group-hover:scale-105" />
                                             </span>
