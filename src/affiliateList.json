@@ -2,47 +2,46 @@
     {
         "name": "Aveline Laurent",
         "insta": "line.laurent",
-        "photoUrl": "./assets/AffiliateCarousel/Aveline.jpg"
+        "photoUrl": "./assets/affiliates/aveline.webp"
     },
     {
         "name": "Camille Morel",
         "insta": "cxmll_mrl",
-        "photoUrl": "./assets/AffiliateCarousel/Camille.jpg"
+        "photoUrl": "./assets/affiliates/camille.webp"
     },
     {
         "name": "Colette Rousseau",
         "insta": "col.r",
-        "photoUrl": "./assets/AffiliateCarousel/Colette.jpg"
+        "photoUrl": "./assets/affiliates/colette.webp"
     },
     {
         "name": "Elise Beaumont",
         "insta": "Elise_Bea",
-        "photoUrl": "./assets/AffiliateCarousel/Elise.jpg"
+        "photoUrl": "./assets/affiliates/elise.webp"
     },
     {
         "name": "Genevieve Dubois",
         "insta": "GenVDub",
-        "photoUrl": "./assets/AffiliateCarousel/Genevieve.jpg"
+        "photoUrl": "./assets/affiliates/genevieve.webp"
     },
     {
         "name": "Isolde Mercier",
         "insta": "IssyMerc",
-        "photoUrl": "./assets/AffiliateCarousel/Isolde.jpg"
+        "photoUrl": "./assets/affiliates/isolde.webp"
     },
     {
         "name": "Margaux Fontaine",
         "insta": "margaux_fontaine",
-        "photoUrl": "./assets/AffiliateCarousel/Margaux.jpg"
+        "photoUrl": "./assets/affiliates/margaux.webp"
     },
     {
         "name": "Sloane Zhang",
         "insta": "SloaneZzz",
-        "photoUrl": "./assets/AffiliateCarousel/Sloane.jpg"
+        "photoUrl": "./assets/affiliates/sloane.webp"
     },
     {
         "name": "Viviene Vance",
         "insta": "Vivi_Vance",
-        "photoUrl": "./assets/AffiliateCarousel/Viviene.jpg"
+        "photoUrl": "./assets/affiliates/viviene.webp"
     }
-
 ]

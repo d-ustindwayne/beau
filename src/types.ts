@@ -31,7 +31,8 @@ export type ProductList = Record<string, Array<ProductData>>;
 export interface ModalProps extends PropsWithChildren {
     children: ReactNode,
     isOpen: boolean,
-    toggleFunction: () => void
+    toggleFunction: () => void,
+    labelledBy?: string
 }
 
 export interface CartDot {
@@ -56,6 +57,8 @@ export interface Props {
     mediaType?: 'photo' | 'image' | 'video' | undefined,
     mediaURL: string,
     mediaAlt?: string,
+    mediaWidth?: number,
+    mediaHeight?: number,
     mediaPadding?: string,
     title: string,
     subtitle?: string
@@ -63,6 +66,7 @@ export interface Props {
     hasButton?: boolean,
     buttonContent?: string,
     buttonClass?: string,
+    buttonLink?: string,
     textColor?: string,
     bgColor?: string,
     alignment?: "items-center" | "items-start" | "items-end",

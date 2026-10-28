@@ -37,3 +37,8 @@ desktop.ini
 # Vite / Build tools
 vite.config.ts.timestamp-*
 *.tsbuildinfo
+
+# Secrets / Cloudflare Worker local state
+apikey
+.dev.vars
+.wrangler

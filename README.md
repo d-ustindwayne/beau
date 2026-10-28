@@ -47,6 +47,33 @@ The project relies on a minimal, highly optimized dependency tree managed cleanl
 
 ---
 
+## 💬 Jinny — AI Shopping Assistant
+
+Jinny is the chat assistant behind the chat button in the bottom-right corner. She can search the catalogue (`productList.json`), add products to the cart, open pages, and answer store FAQs. She runs on [Groq](https://groq.com), with Google Gemini (AI Studio) as a fallback, through a small Cloudflare Worker (`jinny-worker/`), so the API keys never reach the browser.
+
+Without a configured Worker, Jinny runs in **offline mode**: she uses simple keyword search and canned FAQ answers, all in the browser.
+
+### 1. Deploy the Worker (one-time)
+
+```bash
+cd jinny-worker
+npx wrangler login
+npx wrangler secret put GROQ_API_KEY     # primary: Groq key (console.groq.com)
+npx wrangler secret put GEMINI_API_KEY   # fallback: Google AI Studio key (aistudio.google.com)
+npx wrangler deploy                      # prints the Worker URL
+```
+
+If Groq fails for any reason (rate limit, outage, bad key, retired model), the Worker retries the same request on Gemini. Either key also works on its own. Models (`GROQ_MODEL`, `GEMINI_MODEL`) and allowed origins are set in `jinny-worker/wrangler.toml`.
+
+### 2. Point the site at the Worker
+
+* **GitHub Pages:** in the repo, go to *Settings → Secrets and variables → Actions → Variables* and add `JINNY_API_URL` = your Worker URL. The deploy workflow passes it to the build.
+* **Local dev:** create `.env.local` (git-ignored) containing `VITE_JINNY_API_URL=https://jinny-proxy.<your-subdomain>.workers.dev`.
+
+> Never commit API keys. The Worker URL is public and safe to share; the API keys exist only as Worker secrets.
+
+---
+
 ## ⚙️ Installation & Setup
 
 ├── public/

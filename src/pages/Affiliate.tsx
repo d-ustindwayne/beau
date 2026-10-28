@@ -1,40 +1,38 @@
-import { useState, useEffect, useMemo, type JSX } from "react";
+import { type JSX } from "react";
 import HeroHeading from "../components/HeroHeading";
-import heroUrl from "/assets/misc_photos/DefaultHeroBackground.jpg";
-import { breakpoints, SplideClass } from "../constants";
+import LazyImage from "../components/LazyImage";
+import heroUrl from "/assets/hero/default-hero.webp";
+import { SplideClass } from "../constants";
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import affiliateList from "../affiliateList.json";
 import type { AffiliateDetails } from "../types";
-import qrCode from "/assets/misc_photos/Affiliate-QR.png";
-import joinImg from "/assets/misc_photos/Join.png";
-import advertiseImg from "/assets/misc_photos/Advertise.png";
-import earnImg from "/assets/misc_photos/Earn.png";
-import instaIcon from "/instagram.png"; // Since this is in public, we use the string
+import qrCode from "/assets/sections/affiliate-qr.png";
+import joinImg from "/assets/sections/affiliate-join.webp";
+import advertiseImg from "/assets/sections/affiliate-advertise.webp";
+import earnImg from "/assets/sections/affiliate-earn.webp";
+import instaIcon from "/assets/icons/instagram.png"; // Since this is in public, we use the string
+
+const splideOptions = {
+    type: 'loop', rewind: true, arrow: true, snap: true, perMove: 1, autoplay: true, pagination: false,
+    padding: '5rem', focus: 'center', classes: SplideClass, perPage: 3,
+    breakpoints: {
+        1023: { perPage: 2 },
+        767: { perPage: 1, padding: '2.5rem' },
+    },
+};
+
+const steps = [
+    { image: joinImg, alt: "Join: Apply to our exclusive affiliate collective and become a curated voice for modern luxury." },
+    { image: advertiseImg, alt: "Advertise: Share your unique link using our premium visual assets and high-end brand imagery." },
+    { image: earnImg, alt: "Earn: Receive competitive commissions on every successful purchase driven by your influence." },
+];
 
 export default function Affiliate(): JSX.Element {
     const affiliates: AffiliateDetails[] = affiliateList;
-    const [width, setWidth] = useState(window.innerWidth);
-
-    useEffect(() => {
-        const handleResize = () => setWidth(window.innerWidth);
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-    const pageCount = useMemo(() => {
-        if (width >= breakpoints['xl']) return 3;
-        if (width >= breakpoints['lg']) return 3;
-        if (width >= breakpoints['md']) return 2;
-        return 1;
-    }, [width]);
-
-    const splideOptions = useMemo(() => ({
-        type: 'loop', rewind: true, arrow: true, snap: true, perMove: 1, autoplay: true, pagination: false,
-        padding: '5rem', lazyLoad: 'nearby', focus: 'center', classes: SplideClass, perPage: pageCount
-    }), [pageCount]);
 
     return (<>
+        <title>Affiliates | beau</title>
         <HeroHeading textColor="text-white"
             alignment="items-center"
             title="Affiliates"
@@ -42,54 +40,49 @@ export default function Affiliate(): JSX.Element {
             darkenBackground={true} />
 
         <section id="affiliate-carousel">
-            <h1 className="lg:text-7xl md:text-6xl text-5xl font-[Times_New_Roman] italic p-0 pt-8 pb-2 text-center tracking-wider md:pb-4 md:pt-7.5">Partner With Us</h1>
-            <Splide className="block" hasTrack={false} aria-label="Affiliate Carousel" tag="section"
+            <h2 className="lg:text-7xl md:text-6xl text-5xl font-serif italic px-5 pt-8 pb-2 text-center tracking-wider md:pb-4 md:pt-7.5">Partner With Us</h2>
+            <Splide className="block" hasTrack={false} aria-label="Our affiliates" tag="section"
                 options={splideOptions}>
                 <SplideTrack className="py-8">
                     {affiliates.map((aff) => {
-                        return (<SplideSlide className="relative flex flex-col justify-center">
-                            <div className="h-[80dvh] w-full px-5 flex">
-                                <img className="h-full object-cover min-w-full" src={aff.photoUrl} alt={`${aff.name}`} />
+                        return (<SplideSlide key={aff.insta} className="relative flex flex-col justify-center">
+                            <div className="md:h-[80dvh] h-[60dvh] w-full sm:px-5 px-2 flex">
+                                <LazyImage className="h-full object-cover min-w-full" src={aff.photoUrl} alt={aff.name} width={376} height={564} />
                             </div>
-                            <div className="flex flex-col justify-center items-center">
-                                <p className="font-[Times_New_Roman] bold text-3xl whitespace-nowrap tracking-wider">{aff.name}</p>
+                            <div className="flex flex-col justify-center items-center mt-3 px-2 text-center">
+                                <p className="font-serif font-bold md:text-3xl text-2xl tracking-wider">{aff.name}</p>
                                 <span className="flex flex-row items-center whitespace-nowrap gap-2">
-                                    <img className="mt-1 h-6 w-6 flex items-end justify-center" src={instaIcon} alt={`Instagram: ${aff.insta}`} />
-                                    <p className="font-[OpenSans] text-2xl tracking-wider">{aff.insta}</p>
+                                    <img className="h-5 w-5" src={instaIcon} alt="" aria-hidden="true" width={20} height={20} />
+                                    <p className="font-sans md:text-2xl text-xl tracking-wider"><span className="sr-only">Instagram: </span>@{aff.insta}</p>
                                 </span>
                             </div>
                         </SplideSlide>)
                     })}
                 </SplideTrack>
             </Splide>
-            <section className="flex md:flex-row flex-col w-dvw">
-            <div className="lg:w-2/3 md:w-1/2 w-full p-10 ">
-                <h1 className="text-5xl font-['Times_New_Roman',serif] px-5 tracking-wider">Why be•au</h1>
-                <br />
-                <p className="font-['Open_Sans'] text-2xl tracking-wider px-5">
+            <section className="flex md:flex-row flex-col md:items-center w-full">
+            <div className="lg:w-2/3 md:w-1/2 w-full md:p-10 px-6 py-8">
+                <h2 className="md:text-5xl text-4xl font-serif md:px-5 tracking-wider">Why be•au</h2>
+                <p className="font-sans md:text-2xl text-xl leading-snug tracking-wider md:px-5 mt-6">
                     At be•au, beauty is an art form defined by geometric precision and timeless elegance.
                     If you share our passion for high-end aesthetics, we invite you to join our exclusive affiliate collective.
                 </p>
             </div>
 
-            <div className="lg:w-1/3 md:w-1/2 w-full p-10">
-                <h1 className="text-center md:text-start lg:text-4xl sm:text-3xl text-2xl font-['Times_New_Roman',serif] tracking-wider">Scan QR code to join</h1>
-                <div className="w-full">
-                    <img className="w-full aspect-square md:object-contain md:scale-100 scale-70" src={qrCode} alt="QR code" />
+            <div className="lg:w-1/3 md:w-1/2 w-full md:p-10 px-6 pb-8 flex flex-col items-center md:items-start">
+                <h3 className="text-center md:text-start lg:text-4xl sm:text-3xl text-2xl font-serif tracking-wider">Scan QR code to join</h3>
+                <div className="w-full max-w-xs md:max-w-none mt-4">
+                    <img className="w-full aspect-square object-contain [image-rendering:pixelated]" src={qrCode} alt="QR code to join the beau affiliate programme" width={200} height={200} loading="lazy" />
                 </div>
             </div>
         </section>
 
-        <section className="flex md:flex-row flex-col w-dvw justify-center items-center">
-            <div className="flex justify-center md:w-1/3 w-full p-10 ">
-                <img src={joinImg} alt="Join Image" />
-            </div>
-            <div className="flex justify-center md:w-1/3 w-full p-10 ">
-                <img src={advertiseImg} alt="Advertise Image" />
-            </div>
-            <div className="flex justify-center md:w-1/3 w-full p-10 ">
-                <img src={earnImg} alt="Earn Image" />
-            </div>
+        <section className="flex md:flex-row flex-col w-full justify-center items-center pb-6">
+            {steps.map((step) => (
+                <div key={step.image} className="flex justify-center md:w-1/3 w-full lg:p-10 p-6">
+                    <LazyImage src={step.image} alt={step.alt} width={400} height={400} className="w-full max-w-sm aspect-square object-contain rounded-full" />
+                </div>
+            ))}
         </section>
         </section>
     </>)

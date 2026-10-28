@@ -3,111 +3,68 @@ import { Link } from "react-router-dom";
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import MediaText from "../components/MediaText";
+import Newsletter from "../components/Newsletter";
+import LazyImage from "../components/LazyImage";
 import productList from "../productList.json" with {type: "json"};
 import { AnchorDesign, ButtonDesign, SplideClass } from "../constants";
-import affiliatePhoto from "/assets/misc_photos/AffiliatePhoto.jpg";
-import getLookPhoto from "/assets/misc_photos/LookHighlightPhoto.jpg";
-import carousel1 from "/assets/HeaderCarousel/CarouselImage1.png";
-import carousel2 from "/assets/HeaderCarousel/CarouselImage2.png";
-import carousel3 from "/assets/HeaderCarousel/CarouselImage3.png";
-import sendButton from "/newsletter-email-button.svg";
+import affiliatePhoto from "/assets/sections/affiliate-feature.webp";
+import getLookPhoto from "/assets/sections/look-highlight.webp";
+import carousel1 from "/assets/hero/carousel-1.webp";
+import carousel2 from "/assets/hero/carousel-2.webp";
+import carousel3 from "/assets/hero/carousel-3.webp";
 import { getProducts } from "../constants";
+
+const headerSlides = [
+    { src: carousel1, alt: "Your shade, your story" },
+    { src: carousel2, alt: "Made for every version of you" },
+    { src: carousel3, alt: "Wear your boldest self. Introducing the Sun Goddess Collection" },
+];
+
+const slideButton = `${ButtonDesign} my-0! z-10 absolute bottom-[15%] right-1/2 translate-x-1/2 max-sm:text-sm! max-sm:py-1.5! whitespace-nowrap shadow-lg`;
 
 export default function Index(): JSX.Element {
     return (
         <>
-            <header id="header-carousel">
-                <Splide hasTrack={false} aria-label="Header Carousel" tag="section"
-                    options={ { type: 'loop', rewind: true, arrow: true, drag: 'free', snap: true,
-                    lazyLoad: 'nearby', classes: SplideClass } }>
+            <title>beau | be you</title>
+            <header id="header-carousel" className="skeleton aspect-[1440/668] overflow-hidden">
+                <Splide hasTrack={false} aria-label="Featured collections" tag="section"
+                    options={ { type: 'loop', rewind: true, arrow: true, drag: 'free', snap: true, classes: SplideClass } }>
                     <SplideTrack>
-                        <SplideSlide className="relative text-center">
-                            <img className="w-dvw" src={carousel1} alt="IMAGE" />
-                            <Link to="/shop" className={`${ButtonDesign} z-10 absolute lg:bottom-15 md:bottom-9 sm:bottom-5 bottom-8 right-1/2 translate-x-1/2`}>Shop Now</Link>
-                        </SplideSlide>
-                        <SplideSlide className="relative">
-                            <img className="w-dvw" src={carousel2} alt="IMAGE" />
-                            <Link to="/shop" className={`${ButtonDesign} z-10 absolute lg:bottom-15 md:bottom-9 sm:bottom-5 bottom-8 right-1/2 translate-x-1/2`}>Shop Now</Link>
-                        </SplideSlide>
-                        <SplideSlide className="relative">
-                            <img className="w-dvw" src={carousel3} alt="IMAGE" />
-                            <Link to="/shop" className={`${ButtonDesign} z-10 absolute lg:bottom-15 md:bottom-9 sm:bottom-5 bottom-8 right-1/2 translate-x-1/2`}>Shop Now</Link>
-                        </SplideSlide>
+                        {headerSlides.map((slide, i) => (
+                            <SplideSlide key={slide.src} className="relative text-center">
+                                <LazyImage eager={i === 0} className="w-full h-auto" src={slide.src} alt={slide.alt} width={1440} height={668} />
+                                <Link to="/shop" className={slideButton}>Shop Now</Link>
+                            </SplideSlide>
+                        ))}
                     </SplideTrack>
                 </Splide>
             </header>
 
-            {/* <section id="product-highlights">
-                <h1 className="md:py-7 py-5 bg-zinc-100 sm:text-5xl text-4xl text-center font-bold font-serif">Our Products</h1>
-                <Splide className="sm:block hidden" hasTrack={false} aria-label="Header Carousel" tag="section"
-                    options={ { type: 'loop', rewind: true, arrow: true, snap: true, perMove: 1, autoplay: true,
-                    padding: '5rem', perPage: 3, lazyLoad: 'nearby', focus: 'center', classes: defaultClasses,} }>
-                    <SplideTrack>
-                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product1.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product2.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product3.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product4.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product5.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product6.png" alt="IMAGE" /></SplideSlide>
-                    </SplideTrack>
-                </Splide>
-                <Splide className="block sm:hidden" hasTrack={false} aria-label="Header Carousel" tag="section"
-                    options={ { type: 'loop', rewind: true, snap: true, perMove: 1, autoplay: true, pagination: false,
-                    padding: '2.5rem', perPage: 1, lazyLoad: 'nearby', classes: defaultClasses,} }>
-                    <SplideTrack>
-                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product1.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product2.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product3.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product4.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product5.png" alt="IMAGE" /></SplideSlide>
-                        <SplideSlide><img className="" src="/assets/ProductsCarousel/Product6.png" alt="IMAGE" /></SplideSlide>
-                    </SplideTrack>
-                </Splide>
-            </section> */}
-
-            <section className="bg-[#d2e5eb] flex flex-col items-center justify-center pb-12 pt-7.5">
-                <h1 className='font-[\"Times_New_Roman\",serif] text-6xl text-center italic pt-5 pb-6.25'>Winter Garden Collection</h1>
-                <div className="lg:grid md:hidden hidden grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <section aria-labelledby="collection-title" className="bg-collection flex flex-col items-center justify-center pb-12 pt-7.5">
+                <h2 id="collection-title" className='font-serif lg:text-6xl md:text-5xl text-4xl text-center italic px-5 pt-5 pb-6.25'>Winter Garden Collection</h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4 [&>*:nth-child(n+3)]:hidden md:[&>*:nth-child(n+3)]:flex md:[&>*:nth-child(n+4)]:hidden lg:[&>*:nth-child(n+4)]:flex">
                     {getProducts(productList, "Winter_Garden")}
-                </div>
-                <div className="lg:hidden md:grid hidden grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {getProducts(productList, "Winter_Garden", false, 3)}
-                </div>
-                <div className="lg:hidden md:hidden grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {getProducts(productList, "Winter_Garden", false, 2)}
                 </div>
                 <div className="block lg:mt-6 md:mt-4 mt-2">
                     <Link to="/shop" className={AnchorDesign}>View More</Link>
                 </div>
             </section>
 
-            <section className="relative w-full min-h-[20dvh] md:min-h-[50dvh] flex md:items-center items-start justify-center md:justify-end overflow-hidden">
-                <img src={getLookPhoto} alt="Sun Goddess - Perena" className="absolute inset-0 h-full w-full object-cover object-left"/>
+            <section aria-labelledby="look-title" className="relative w-full min-h-[20dvh] md:min-h-[50dvh] flex md:items-center items-start justify-center md:justify-end overflow-hidden bg-neutral-800">
+                <LazyImage src={getLookPhoto} alt="" width={1441} height={771} className="absolute inset-0 h-full w-full object-cover object-left"/>
                 <div className="relative flex flex-col justify-center items-center py-10 lg:mr-10 md:mr-8 mr-0">
-                    <h1 className="font-['Times_New_Roman',serif] text-white xl:text-7xl md:text-6xl text-5xl py-4">Get This Look</h1>
-                    {getProducts(productList, "Sun_Goddess", false, 1, "bg-white")}
+                    <h2 id="look-title" className="font-serif text-white xl:text-7xl md:text-6xl text-5xl py-4 [text-shadow:0_2px_16px_rgb(0_0_0/0.45)]">Get This Look</h2>
+                    {getProducts(productList, "Sun_Goddess", false, 1, "bg-white shadow-xl")}
                 </div>
             </section>
 
-            <MediaText mediaType="image" mediaURL={affiliatePhoto} mediaAlt="ImageNotFound" direction="tnp"
+            <MediaText mediaType="image" mediaURL={affiliatePhoto} mediaWidth={708} mediaHeight={585}
+            mediaAlt="A beau affiliate creator wearing a signature lip shade" direction="tnp"
             title="Meet Our Affiliate" description="Join our community of creators and earn rewards for sharing looks you love."
-            font="font-['Times_New_Roman'] italic font-normal text-7xl sm:py-0 pt-3! pb-12"
-            hasButton={true} buttonContent="Explore" bgColor="bg-[#FFFBED]" ratio="6&6"/>
+            font="font-serif italic font-normal"
+            hasButton={true} buttonContent="Explore" buttonLink="/affiliate" bgColor="bg-cream" ratio="6&6"/>
 
-            <section id="newsletter" className="bg-[#841910] text-white flex flex-col justify-center items-center lg:py-12 md:py-9 py-7.5">
-                <h1 className="font-['Times_New_Roman',serif] lg:text-5xl text-3xl italic">Subscribe to newsletter</h1>
-                <h5 className="font-[OpenSans] lg:text-xl text-lg font-thin">Exclusive Offers: Get access to special promotions and discounts available only to subscribers.</h5>
-                <div className="relative md:w-2/5 w-3/4 md:my-8 my-6">
-                    <input id="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" minLength={2} maxLength={100} placeholder="" className="peer block w-full px-2.5 pb-2.5 pt-5 text-sm border-b-2 border-white focus:ring-0 outline-0" />
-                    <label htmlFor="email" className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-left left-2.5
-                        peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Enter email here</label>
-                    <span className="w-5 h-5 bg-center bg-no-repeat bg-contain absolute right-0 top-0 translate-y-full cursor-pointer">
-                        <img src={sendButton} alt="Send" />
-                        <span className="sr-only">Send Email Newsletter</span>
-                    </span>
-                </div>
-            </section>
-
+            <Newsletter />
         </>
     );
 }

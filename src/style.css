@@ -1,8 +1,37 @@
 @import "tailwindcss";
 
-body {
-    margin: 0;
-    padding: 0;
+/* THEME TOKENS */
+@theme {
+    --color-beau: #841910;
+    --color-beau-dark: #6b130c;
+    --color-beau-footer: #7A1C16;
+    --color-cream: #FFFBED;
+    --color-sand: #F8E8BC;
+    --color-sand-dark: #eed8a4;
+    --color-field: #f8f9f6;
+    --color-collection: #d2e5eb;
+
+    --font-serif: "TimesNewRoman", "Times New Roman", Times, serif;
+    --font-sans: "OpenSans", ui-sans-serif, system-ui, sans-serif;
+
+    --animate-shimmer: shimmer 1.6s ease-in-out infinite;
+    --animate-fade-in: fade-in 0.4s ease-out both;
+    --animate-pop-in: pop-in 0.25s ease-out both;
+
+    @keyframes shimmer {
+        from { background-position: 150% 0; }
+        to { background-position: -50% 0; }
+    }
+
+    @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes pop-in {
+        from { opacity: 0; transform: translateY(0.5rem) scale(0.97); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
 }
 
 /* FONTS */
@@ -11,6 +40,7 @@ body {
     src: url(fonts/OpenSans-VariableFont.ttf) format("truetype");
     font-weight: 200 800;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -18,6 +48,52 @@ body {
     src: url(fonts/OpenSans-Italic-VariableFont.ttf) format("truetype");
     font-weight: 200 800;
     font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'TimesNewRoman';
+    src: local("Times New Roman"), local("TimesNewRomanPSMT"), url(fonts/times-new-roman.ttf) format("truetype");
+    font-display: swap;
+}
+
+/* BASE */
+@layer base {
+    body {
+        margin: 0;
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    button:not(:disabled),
+    [role="button"]:not([aria-disabled="true"]) {
+        cursor: pointer;
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--color-beau);
+        outline-offset: 3px;
+    }
+
+    .on-dark :focus-visible {
+        outline-color: var(--color-sand);
+    }
+
+    ::selection {
+        background-color: var(--color-beau);
+        color: #fff;
+    }
+}
+
+/* UTILITIES */
+@utility skeleton {
+    background-color: rgb(132 25 16 / 0.07);
+    background-image: linear-gradient(100deg, transparent 20%, rgb(255 255 255 / 0.55) 50%, transparent 80%);
+    background-size: 200% 100%;
+    background-repeat: no-repeat;
+    animation: var(--animate-shimmer);
+    color: transparent;
 }
 
 /* ANIMATIONS */
@@ -34,4 +110,15 @@ body {
 
 .cart-float {
     animation: addToCart 1.5s cubic-bezier(0.5, 1, 0.25, 1.25) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }

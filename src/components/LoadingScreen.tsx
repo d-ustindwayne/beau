@@ -1,11 +1,21 @@
 import { type JSX } from "react"
+import ProductCardSkeleton from "./ProductCardSkeleton";
 
+/** Route-level placeholder shown while a page chunk loads. */
 export default function LoadingScreen(): JSX.Element {
     return (
-        <div className="flex items-center justify-center space-x-7 mt-72 mb-56">
-            <div className="w-10 h-10 bg-[#841910] rounded-full animate-bounce [animation-delay:-1s]"></div>
-            <div className="w-10 h-10 bg-[#841910] rounded-full animate-bounce [animation-delay:-1.2s]"></div>
-            <div className="w-10 h-10 bg-[#841910] rounded-full animate-bounce [animation-delay:-1.5s]"></div>
+        <div role="status" aria-busy="true" className="animate-fade-in">
+            <span className="sr-only">Loading page…</span>
+            <div aria-hidden="true" className="skeleton w-full md:min-h-[54dvh] sm:min-h-[40dvh] min-h-[35dvh]" />
+            <div aria-hidden="true" className="flex flex-col items-center pt-10 pb-12">
+                <div className="skeleton h-12 md:w-md w-3/4 mb-8" />
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4 w-full max-w-7xl">
+                    <ProductCardSkeleton />
+                    <ProductCardSkeleton />
+                    <ProductCardSkeleton className="hidden md:flex" />
+                    <ProductCardSkeleton className="hidden lg:flex" />
+                </div>
+            </div>
         </div>
     );
 }

@@ -1,21 +1,23 @@
 import type { JSX } from "react";
-import logo from "/beau-logo.png";
-import beautext from "/beau-logo.png";
+import logo from "/assets/brand/beau-logo.png";
+import beautext from "/assets/brand/beau-logo.png";
 import { Link } from "react-router-dom";
+
+const linkClass = "underline-offset-4 decoration-sand hover:text-white hover:underline transition";
 
 export default function Footer(): JSX.Element {
   return (
-    <footer className="bg-[#7A1C16] text-white font-serif py-16 px-6 md:px-12 lg:px-24">
+    <footer className="on-dark bg-beau-footer text-white font-serif py-16 px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8 items-start mb-16">
 
           <div>
             <h2 className="text-2xl tracking-wide uppercase mb-6 font-normal">Shop</h2>
             <ul className="space-y-4 text-gray-200 text-sm font-sans tracking-wide">
-              <li><Link to="/shop/all" className="hover:text-white transition">Shop</Link></li>
-              <li><Link to="/shop/new" className="hover:text-white transition">New</Link></li>
-              <li><Link to="/shop/collections" className="hover:text-white transition">Collection</Link></li>
-              <li><Link to="/shop/sale" className="hover:text-white transition">Sale</Link></li>
+              <li><Link to="/shop" className={linkClass}>Shop</Link></li>
+              <li><Link to="/shop" className={linkClass}>New</Link></li>
+              <li><Link to="/shop" className={linkClass}>Collection</Link></li>
+              <li><Link to="/shop" className={linkClass}>Sale</Link></li>
             </ul>
           </div>
 
@@ -23,10 +25,10 @@ export default function Footer(): JSX.Element {
           <div>
             <h2 className="text-2xl tracking-wide uppercase mb-6 font-normal">Help</h2>
             <ul className="space-y-4 text-gray-200 text-sm font-sans tracking-wide">
-              <li><Link to="#" className="hover:text-white transition">Customer Service</Link></li>
-              <li><Link to="#" className="hover:text-white transition">Refund Policy</Link></li>
-              <li><Link to="#" className="hover:text-white transition">Store Locator</Link></li>
-              <li><Link to="#" className="hover:text-white transition">Order Status</Link></li>
+              <li><Link to="#" className={linkClass}>Customer Service</Link></li>
+              <li><Link to="#" className={linkClass}>Refund Policy</Link></li>
+              <li><Link to="#" className={linkClass}>Store Locator</Link></li>
+              <li><Link to="#" className={linkClass}>Order Status</Link></li>
             </ul>
           </div>
 
@@ -34,10 +36,10 @@ export default function Footer(): JSX.Element {
           <div>
             <h2 className="text-2xl tracking-wide uppercase mb-6 font-normal">Company</h2>
             <ul className="space-y-4 text-gray-200 text-sm font-sans tracking-wide">
-              <li><Link to="/about" className="hover:text-white transition">About Us</Link></li>
-              <li><Link to="/" className="hover:text-white transition">Privacy Policy</Link></li>
-              <li><Link to="#" className="hover:text-white transition">Terms Of Conditions</Link></li>
-              <li><Link to="/affiliate" className="hover:text-white transition">Affiliates</Link></li>
+              <li><Link to="/about" className={linkClass}>About Us</Link></li>
+              <li><Link to="#" className={linkClass}>Privacy Policy</Link></li>
+              <li><Link to="#" className={linkClass}>Terms &amp; Conditions</Link></li>
+              <li><Link to="/affiliate" className={linkClass}>Affiliates</Link></li>
             </ul>
           </div>
 
@@ -47,7 +49,7 @@ export default function Footer(): JSX.Element {
             <div className="space-y-6 text-gray-200 text-sm font-sans tracking-wide">
               <div>
                 <p className="font-bold text-white mb-1">Email</p>
-                <a href="mailto:beau@example.com" className="hover:text-white transition">
+                <a href="mailto:beau@example.com" className={linkClass}>
                   beau@example.com
                 </a>
               </div>
@@ -62,12 +64,12 @@ export default function Footer(): JSX.Element {
 
         </div>
 
-        <div className="flex flex-col items-center justify-center text-center pb-8 border-b border-b-white">
-          <img src={logo} alt="beau" className="object-contain"/>
+        <div className="flex flex-col items-center justify-center text-center pb-8 border-b border-b-white/40">
+          <img src={logo} alt="beau" width={154} height={74} loading="lazy" className="object-contain"/>
         </div>
 
         <div className="pt-8 text-center text-white text-base md:text-lg tracking-wide font-normal">
-          &copy; 2026, <img src={beautext} alt="" className="inline object-contain h-6 mb-1.5" />. All rights reserved
+          &copy; 2026, <img src={beautext} alt="beau" loading="lazy" className="inline object-contain h-6 w-auto mb-1.5" />. All rights reserved
         </div>
       </div>
     </footer>

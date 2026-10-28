@@ -1,150 +1,137 @@
 import { Cart, useCartList } from "../cartData.tsx";
-import { ButtonDesign, dollarFormatter } from "../constants";
-import { type JSX } from "react";
+import { ButtonDesign, dollarFormatter, formatCategory, gstFromInclusive } from "../constants";
+import { useState, type FormEvent, type JSX } from "react";
+import { Link } from "react-router-dom";
+import FloatingInput from "../components/FloatingInput";
+import LazyImage from "../components/LazyImage";
+
+const sectionHeading = "font-serif font-semibold italic lg:text-6xl text-5xl my-2.5";
+const divider = <span aria-hidden="true" className="flex bg-beau lg:h-px h-0.5 w-full my-4.5"></span>;
+const fieldSpacing = "md:my-5.5 my-3.5";
 
 export default function Checkout(): JSX.Element {
     const currentCart = useCartList("alphabet");
     const subtotal = Cart.getSubtotal(currentCart);
     const cartCount = Cart.getCount(currentCart);
+    const [discountCode, setDiscountCode] = useState("");
+    const [discountMessage, setDiscountMessage] = useState("");
+    const [orderTotal, setOrderTotal] = useState<number | null>(null);
+
+    const applyDiscount = () => {
+        setDiscountMessage(discountCode.trim() === "" ? "Please enter a code." : "This code is invalid or has expired.");
+    };
+
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (cartCount === 0) return;
+        setOrderTotal(subtotal);
+        await Cart.clear();
+        window.scrollTo({ top: 0 });
+    };
+
+    if (orderTotal !== null) return (
+        <section className="flex flex-col items-center justify-center text-center px-6 py-24 animate-pop-in">
+            <title>Order confirmed | beau</title>
+            <span aria-hidden="true" className="flex items-center justify-center size-16 rounded-full bg-beau text-white text-3xl mb-6">&#10003;</span>
+            <h1 className="font-serif italic lg:text-6xl text-5xl">Thank you!</h1>
+            <p role="status" className="font-sans text-xl mt-4 max-w-lg">Your order of <span className="font-semibold">{dollarFormatter(orderTotal)}</span> has been placed.</p>
+            <p className="font-sans text-sm text-neutral-600 mt-2">This is a demo store, so no payment was taken.</p>
+            <Link to="/shop" className={ButtonDesign}>Continue Shopping</Link>
+        </section>
+    );
+
     return (<div className="flex justify-center">
-        <section className="md:max-w-full sm:max-w-[87.5dvw] max-w-full w-full flex flex-col md:flex-row justify-center md:border-x-none border-x-3 md:border-transparent border-x-[#841910]">
-            <div className="md:w-1/2 w-full p-6.5 sm:flex flex-col md:border-r-[#841910] md:border-r">
-                <h1 className="font-['Times_New_Roman',serif] font-semibold italic lg:text-6xl text-5xl my-2.5">Delivery</h1>
-                <span className="flex bg-[#841910] lg:h-px md:h-0.5 sm:h-0.5 h-0.5 w-full my-4.5"></span>
-                <form className="w-full">
-                    <div className="w-full relative border-2 border-[#841910] md:my-5.5 my-3.5 bg-[#f8f9f6]">
-                        <input id="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"  minLength={2} maxLength={100} placeholder="" className="peer block w-full px-2.5 pb-2.5 pt-5 text-sm border-b-2 border-white focus:ring-0 outline-0" />
-                        <label htmlFor="email" className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-left left-2.5 truncate
-                            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Email</label>
+        <title>Checkout | beau</title>
+        <h1 className="sr-only">Checkout</h1>
+        <section className="md:max-w-full sm:max-w-[87.5dvw] max-w-full w-full flex flex-col md:flex-row justify-center md:border-x-0 sm:border-x-3 border-x-0 border-x-beau">
+            <form id="checkout-form" onSubmit={handleSubmit} className="md:w-1/2 w-full sm:p-6.5 p-5 flex flex-col md:border-r-beau md:border-r">
+                <h2 className={sectionHeading}>Delivery</h2>
+                {divider}
+                <fieldset className="w-full">
+                    <legend className="sr-only">Delivery details</legend>
+                    <FloatingInput id="delivery-email" label="Email" type="email" autoComplete="email" required maxLength={100} wrapperClassName={fieldSpacing} />
+                    <div className={`flex sm:flex-row flex-col ${fieldSpacing} sm:gap-4 gap-3.5`}>
+                        <FloatingInput id="delivery-first-name" label="First Name" autoComplete="given-name" required minLength={2} maxLength={100} />
+                        <FloatingInput id="delivery-last-name" label="Last Name" autoComplete="family-name" required minLength={2} maxLength={100} />
                     </div>
-                    <div className="flex justify-between md:my-5.5 my-3.5 gap-[6.75dvw]">
-                        <div className="w-full relative border-2 border-[#841910] my-0! bg-[#f8f9f6]">
-                            <input id="firstName" type="text" minLength={2} maxLength={100} placeholder="" className="peer block w-full px-2.5 pb-2.5 pt-5 text-sm border-b-2 border-white focus:ring-0 outline-0" />
-                            <label htmlFor="firstName" className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-left left-2.5 truncate
-                            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">First Name</label>
-                        </div>
-                        <div className="w-full relative border-2 border-[#841910] my-0! bg-[#f8f9f6]">
-                            <input id="lastName" type="text" minLength={2} maxLength={100} placeholder="" className="peer block w-full px-2.5 pb-2.5 pt-5 text-sm border-b-2 border-white focus:ring-0 outline-0" />
-                            <label htmlFor="lastName" className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-left left-2.5 truncate
-                            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Last Name</label>
-                        </div>
+                    <FloatingInput id="delivery-company" label="Company (Optional)" autoComplete="organization" maxLength={100} wrapperClassName={fieldSpacing} />
+                    <FloatingInput id="delivery-address-1" label="Address" autoComplete="address-line1" required minLength={2} maxLength={100} wrapperClassName={fieldSpacing} />
+                    <FloatingInput id="delivery-address-2" label="Apartment, suite, etc. (Optional)" autoComplete="address-line2" maxLength={100} wrapperClassName={fieldSpacing} />
+                    <div className={`grid sm:grid-cols-3 grid-cols-2 ${fieldSpacing} sm:gap-4 gap-3.5`}>
+                        <FloatingInput id="delivery-city" label="City" autoComplete="address-level2" required minLength={2} maxLength={100} />
+                        <FloatingInput id="delivery-region" label="Region" autoComplete="address-level1" required minLength={2} maxLength={100} />
+                        <FloatingInput id="delivery-postcode" label="Postal Code" autoComplete="postal-code" inputMode="numeric" pattern="[0-9]{4}" title="4-digit NZ postcode" required maxLength={4} wrapperClassName="max-sm:col-span-2" />
                     </div>
-                    <div className="w-full relative border-2 border-[#841910] md:my-5.5 my-3.5 bg-[#f8f9f6]">
-                        <input id="companyName" type="text" minLength={2} maxLength={100} placeholder="" className="peer block w-full px-2.5 pb-2.5 pt-5 text-sm border-b-2 border-white focus:ring-0 outline-0" />
-                        <label htmlFor="companyName" className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-left left-2.5 truncate
-                            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Company (Optional)</label>
+                    <FloatingInput id="delivery-phone" label="Phone" type="tel" autoComplete="tel" required minLength={7} maxLength={20} wrapperClassName={fieldSpacing} />
+                </fieldset>
+
+                <h2 className={`${sectionHeading} mt-6`}>Payment</h2>
+                {divider}
+                <fieldset className="w-full">
+                    <legend className="sr-only">Payment details</legend>
+                    <FloatingInput id="card-number" label="Card Number" autoComplete="cc-number" inputMode="numeric" pattern="[0-9 ]{12,23}" title="12 to 19 digit card number" required maxLength={23} wrapperClassName={fieldSpacing} />
+                    <div className={`flex ${fieldSpacing} sm:gap-4 gap-3.5`}>
+                        <FloatingInput id="card-expiry" label="Expiration Date (MM/YY)" autoComplete="cc-exp" inputMode="numeric" pattern="(0[1-9]|1[0-2])\/?[0-9]{2}" title="MM/YY" required maxLength={5} />
+                        <FloatingInput id="card-cvc" label="Security Code" autoComplete="cc-csc" inputMode="numeric" pattern="[0-9]{3,4}" title="3 or 4 digits" required maxLength={4} />
                     </div>
-                    <div className="w-full relative border-2 border-[#841910] md:my-5.5 my-3.5 bg-[#f8f9f6]">
-                        <input id="addresssLine1" type="text" minLength={2} maxLength={100} placeholder="" className="peer block w-full px-2.5 pb-2.5 pt-5 text-sm border-b-2 border-white focus:ring-0 outline-0" />
-                        <label htmlFor="addresssLine1" className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-left left-2.5 truncate
-                            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Address</label>
-                    </div>
-                    <div className="w-full relative border-2 border-[#841910] md:my-5.5 my-3.5 bg-[#f8f9f6]">
-                        <input id="addressLine2" type="text" minLength={2} maxLength={100} placeholder="" className="peer block w-full px-2.5 pb-2.5 pt-5 text-sm border-b-2 border-white focus:ring-0 outline-0" />
-                        <label htmlFor="addressLine2" className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-left left-2.5 truncate
-                            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Apartment, suite, etc. (Optional)</label>
-                    </div>
-                    <div className="flex justify-between md:my-5.5 my-3.5 gap-[2.75dvw]">
-                        <div className="w-full relative border-2 border-[#841910] my-0! bg-[#f8f9f6]">
-                            <input id="city" type="text" minLength={2} maxLength={100} placeholder="" className="peer block w-full px-2.5 pb-2.5 pt-5 text-sm border-b-2 border-white focus:ring-0 outline-0" />
-                            <label htmlFor="city" className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-left left-2.5 truncate
-                            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">City</label>
-                        </div>
-                        <div className="w-full relative border-2 border-[#841910] my-0! bg-[#f8f9f6]">
-                            <input id="region" type="text" minLength={2} maxLength={100} placeholder="" className="peer block w-full px-2.5 pb-2.5 pt-5 text-sm border-b-2 border-white focus:ring-0 outline-0" />
-                            <label htmlFor="region" className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-left left-2.5 truncate
-                            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Region</label>
-                        </div>
-                        <div className="w-full relative border-2 border-[#841910] my-0! bg-[#f8f9f6]">
-                            <input id="postCode" type="postCode" minLength={2} maxLength={8} placeholder="" className="peer block w-full px-2.5 pb-2.5 pt-5 text-sm border-b-2 border-white focus:ring-0 outline-0" />
-                            <label htmlFor="postCode" className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-left left-2.5 truncate
-                            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Postal Code</label>
-                        </div>
-                    </div>
-                    <div className="w-full relative border-2 border-[#841910] md:my-5.5 my-3.5 bg-[#f8f9f6]">
-                        <input id="phoneNumber" type="tel" minLength={2} maxLength={20} placeholder="" className="peer block w-full px-2.5 pb-2.5 pt-5 text-sm border-b-2 border-white focus:ring-0 outline-0" />
-                        <label htmlFor="phoneNumber" className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-left left-2.5 truncate
-                            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Phone</label>
-                    </div>
-                </form>
-                <h1 className="font-['Times_New_Roman',serif] font-semibold italic lg:text-6xl text-5xl my-2.5">Payment</h1>
-                <span className="flex bg-[#841910] lg:h-px md:h-0.5 sm:h-0.5 h-0.5 w-full my-4.5"></span>
-                <form className="w-full">
-                    <div className="w-full relative border-2 border-[#841910] md:my-5.5 my-3.5 bg-[#f8f9f6]">
-                        <input id="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" minLength={2} maxLength={100} placeholder="" className="peer block w-full px-2.5 pb-2.5 pt-5 text-sm border-b-2 border-white focus:ring-0 outline-0" />
-                        <label htmlFor="email" className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-left left-2.5 truncate
-                            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Card Number</label>
-                    </div>
-                    <div className="flex justify-between md:my-5.5 my-3.5 gap-[6.75dvw]">
-                        <div className="w-full relative border-2 border-[#841910] my-0! bg-[#f8f9f6]">
-                            <input id="firstName" type="firstName" minLength={2} maxLength={100} placeholder="" className="peer block w-full px-2.5 pb-2.5 pt-5 text-sm border-b-2 border-white focus:ring-0 outline-0" />
-                            <label htmlFor="firstName" className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-left left-2.5 truncate
-                            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Expiration Date (MM/YY)</label>
-                        </div>
-                        <div className="w-full relative border-2 border-[#841910] my-0! bg-[#f8f9f6]">
-                            <input id="lastName" type="lastName" minLength={2} maxLength={100} placeholder="" className="peer block w-full px-2.5 pb-2.5 pt-5 text-sm border-b-2 border-white focus:ring-0 outline-0" />
-                            <label htmlFor="lastName" className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-left left-2.5 truncate
-                            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Security Code</label>
-                        </div>
-                    </div>
-                    <div className="w-full relative border-2 border-[#841910] md:my-5.5 my-3.5 bg-[#f8f9f6]">
-                        <input id="companyName" type="companyName" minLength={2} maxLength={100} placeholder="" className="peer block w-full px-2.5 pb-2.5 pt-5 text-sm border-b-2 border-white focus:ring-0 outline-0" />
-                        <label htmlFor="companyName" className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-left left-2.5 truncate
-                            peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Name on Card</label>
-                    </div>
-                </form>
-            </div>
-            <div className="md:w-1/2 w-full p-6.5 sm:flex flex-col md:border-l-[#841910] md:border-l">
-                <h1 className="font-['Times_New_Roman',serif] font-semibold italic lg:text-6xl text-5xl my-2.5">Order Summary</h1>
-                <span className="flex bg-[#841910] lg:h-px md:h-0.5 sm:h-0.5 h-0.5 w-full my-4.5"></span>
-                <div className="flex flex-col">
-                    {cartCount !== 0 ? (currentCart.map((item) => {
+                    <FloatingInput id="card-name" label="Name on Card" autoComplete="cc-name" required minLength={2} maxLength={100} wrapperClassName={fieldSpacing} />
+                </fieldset>
+            </form>
+            <div className="md:w-1/2 w-full sm:p-6.5 p-5 flex flex-col md:border-l-beau md:border-l">
+                <div className="md:sticky md:top-6">
+                <h2 className={sectionHeading}>Order Summary</h2>
+                {divider}
+                {cartCount !== 0 ? (<ul className="flex flex-col">{currentCart.map((item) => {
                         const itemKey = `${item.category}-${item.product.name}`;
+                        const category = formatCategory(item.category);
                         return (
-                            <div key={itemKey}
-                                className="relative flex items-center gap-4 py-3 border-b border-white last:border-0 transition-all duration-300 ease-in-out origin-center">
-                                <div className="md:w-20 md:h-32 w-16 h-20 rounded-lg shrink-0">
-                                    <img className="w-full object-cover" src={item.product.photoUrl} />
+                            <li key={itemKey}
+                                className="flex items-center gap-4 py-3 border-b border-black/10 last:border-0">
+                                <LazyImage className="md:w-20 w-16 aspect-3/4 shrink-0 object-cover" src={item.product.photoUrl} alt={`${category} – ${item.product.name}`} width={80} height={107} />
+                                <div className="flex-1 min-w-0 flex flex-col justify-start items-start">
+                                    <p className="font-bold font-serif text-xl">{item.product.name}</p>
+                                    <p className="font-sans md:text-lg text-base">{category}</p>
+                                    <p className="font-sans md:text-lg text-base">QTY: <span className="font-bold">{item.amount}</span></p>
                                 </div>
-                                <div className="flex-1 min-w-0 flex flex-col justify-start items-start min-h-full">
-                                    <p className="font-bold font-['Times_New_Roman',serif] text-xl">{item.product.name}</p>
-                                    <p className="font-[OpenSans] text-lg">{item.category.replaceAll('_', ' ')}</p>
-                                    <p className="font-[OpenSans] text-lg">QTY: <span className="font-bold">{item.amount}</span>    </p>
-                                </div>
-                                <div className="flex h-full">
-                                    <p className="text-sm font-semibold text-black flex">{dollarFormatter(item.product.price * item.amount)}</p>
-                                </div>
-                            </div>
+                                <p className="font-sans md:text-lg text-base font-semibold text-black tabular-nums">{dollarFormatter(item.product.price * item.amount)}</p>
+                            </li>
                         );
-                    })) :
-                        <div className="flex h-full items-center justify-center">
-                            <p>No items in cart</p>
+                    })}</ul>) :
+                        <div className="flex flex-col items-center justify-center gap-2 py-10 text-center">
+                            <p className="font-serif italic text-2xl">Your cart is empty</p>
+                            <Link to="/shop" className="text-beau underline underline-offset-4 hover:text-beau-dark">Browse the shop</Link>
                         </div>
                     }
-                </div>
-                <div className="flex flex-col font-[OpenSans]">
-                    <span className="flex justify-between items-center gap-2.5 md:mb-2.5 md:mt-0 my-3.5">
-                        <input type="text" minLength={2} maxLength={16} className="truncate w-3/5! border-2 border-[#841910] bg-white p-2.5 " placeholder="Discount Code or Gift Card" />
-                        <button type="button" className={`${ButtonDesign} w-2/5! my-1.5!`}>Apply</button>
-                    </span>
+                <div className="flex flex-col font-sans gap-2 mt-4">
+                    <div className="flex flex-col gap-1 mb-2">
+                        <span className="flex justify-between items-stretch gap-2.5">
+                            <label htmlFor="discount-code" className="sr-only">Discount code or gift card</label>
+                            <input id="discount-code" type="text" value={discountCode} maxLength={16}
+                                onChange={(e) => { setDiscountCode(e.target.value); setDiscountMessage(""); }}
+                                className="min-w-0 flex-1 border-2 border-beau bg-white px-2.5 py-2 outline-0 transition-shadow focus:shadow-[0_0_0_3px_rgb(132_25_16/0.18)]" placeholder="Discount Code or Gift Card" />
+                            <button type="button" onClick={applyDiscount} className={`${ButtonDesign} my-0! text-base! px-5!`}>Apply</button>
+                        </span>
+                        <p role="status" className="min-h-5 text-sm text-beau">{discountMessage}</p>
+                    </div>
                     <span className="flex justify-between items-center">
                         <p>Quantity</p>
-                        <p>{cartCount}</p>
+                        <p className="tabular-nums">{cartCount}</p>
                     </span>
                     <span className="flex justify-between items-center">
                         <p>Delivery</p>
                         <p className="italic">FREE</p>
                     </span>
                     <span className="flex justify-between items-center">
-                        <p>Tax</p>
-                        <p>{dollarFormatter((subtotal * 0.15))}</p>
+                        <p>GST <span className="text-neutral-600">(15%, included)</span></p>
+                        <p className="tabular-nums">{dollarFormatter(gstFromInclusive(subtotal))}</p>
                     </span>
-                    <span className="flex justify-between items-center">
+                    <span className="flex justify-between items-center border-t border-black/15 pt-3 mt-1 text-lg">
                         <p className="font-bold uppercase">Total to pay</p>
-                        <p>{dollarFormatter(subtotal)}</p>
+                        <p className="font-bold tabular-nums">{dollarFormatter(subtotal)}</p>
                     </span>
                 </div>
-                <button type="button" className={`${ButtonDesign} w-full`}>Pay Now</button>
+                <button type="submit" form="checkout-form" disabled={cartCount === 0} className={`${ButtonDesign} w-full`}>Pay Now</button>
+                </div>
             </div>
         </section>
     </div>)

@@ -83,6 +83,10 @@ export const Cart = {
         await updateCart(nextCart);
     },
 
+    async clear() {
+        await updateCart([]);
+    },
+
     getSubtotal(currentCart: CartList): number {
         return currentCart.reduce(
             (sum, item) => sum + item.product.price * item.amount,
