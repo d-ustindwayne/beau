@@ -11,6 +11,13 @@ export const SplideClass: object = {
     pagination: 'splide__pagination gap-2',
 }
 
+/** beau's mailboxes, one per purpose. Jinny's copy lives in jinny-worker/src/index.ts. */
+export const EMAILS = {
+    support: "support@dustindwayn.ee",
+    affiliates: "affiliates@dustindwayn.ee",
+    privacy: "privacy@dustindwayn.ee",
+} as const;
+
 export const breakpoints: Record<bp, number> = {
   'sm': 640,
   'md': 768,

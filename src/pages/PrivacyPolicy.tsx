@@ -2,6 +2,7 @@ import { type JSX } from "react";
 import BrandName from "../components/BrandName";
 import { Link } from "react-router-dom";
 import LegalPage, { type LegalSection } from "../components/LegalPage";
+import { EMAILS } from "../constants";
 
 const sections: LegalSection[] = [
     {
@@ -41,7 +42,7 @@ const sections: LegalSection[] = [
     },
     {
         id: "your-rights", title: "Your rights", body: <>
-            <p>You can ask to see or correct the personal information we hold about you at any time. Just <Link to="/contact">contact us</Link>. If you're not happy with how we've handled your information, you can contact the Office of the Privacy Commissioner.</p>
+            <p>You can ask to see or correct the personal information we hold about you at any time. Just email <a href={`mailto:${EMAILS.privacy}`}>{EMAILS.privacy}</a> or <Link to="/contact">contact us</Link>. If you're not happy with how we've handled your information, you can contact the Office of the Privacy Commissioner.</p>
         </>,
     },
     {

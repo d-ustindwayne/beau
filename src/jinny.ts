@@ -1,7 +1,7 @@
 import productList from "./productList.json";
 import orderList from "./orderList.json";
 import { Cart } from "./cartData.tsx";
-import { dollarFormatter, formatCategory } from "./constants";
+import { dollarFormatter, EMAILS, formatCategory } from "./constants";
 import type { ProductList } from "./types";
 
 /* ---------- Types ---------- */
@@ -311,8 +311,8 @@ async function offlineReply(history: JinnyMessage[], navigate: NavigateFn): Prom
 
     if (/deliver|shipping|ship/.test(text)) return reply("Delivery is **free** on every order.");
     if (/gst|tax/.test(text)) return reply("All our prices are in NZD and already include 15% GST.");
-    if (/contact|email|support|address/.test(text)) return reply("You can reach us at **beau@example.com**, or through the Contact page. Our support team is here 24/7.");
-    if (/affiliate|partner|commission/.test(text)) return reply("Our affiliate collective lets you **Join**, **Advertise** with our brand imagery, and **Earn** commission on every purchase you drive. Apply through the form on our Affiliate page.");
+    if (/contact|email|support|address/.test(text)) return reply(`You can reach us at **${EMAILS.support}**, or through the Contact page. Our support team is here 24/7.`);
+    if (/affiliate|partner|commission/.test(text)) return reply(`Our affiliate collective lets you **Join**, **Advertise** with our brand imagery, and **Earn** commission on every purchase you drive. Apply through the form on our Affiliate page, or email **${EMAILS.affiliates}**.`);
 
     const finish = ["matte", "satin", "glossy"].find((f) => text.includes(f));
     const priceMatch = text.match(/(under|below|less than|max)\s*\$?(\d+)/);

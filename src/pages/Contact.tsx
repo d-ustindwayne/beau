@@ -4,7 +4,7 @@ import HeroHeading from "../components/HeroHeading";
 import FloatingInput from "../components/FloatingInput";
 import Newsletter from "../components/Newsletter";
 import heroUrl from "/assets/hero/default-hero.webp";
-import { ButtonDesign, FieldControl, FieldLabel, FieldWrapper } from "../constants";
+import { ButtonDesign, EMAILS, FieldControl, FieldLabel, FieldWrapper } from "../constants";
 
 const MESSAGE_LIMIT = 500;
 
@@ -53,10 +53,12 @@ export default function Contact(): JSX.Element {
                 <div className="flex flex-col gap-2 p-6 md:p-8 bg-white border border-black/10">
                     <h3 className="font-serif font-bold lg:text-3xl text-2xl">Customer Support</h3>
                     <p className="font-sans md:text-xl text-lg leading-snug">Have questions about your order, account, or services? Our dedicated support team is here to help you 24/7. Reach out anytime, and we will get back to you as quickly as possible.</p>
+                    <a href={`mailto:${EMAILS.support}`} className="font-sans md:text-xl text-lg text-beau font-semibold underline underline-offset-4 w-fit">{EMAILS.support}</a>
                 </div>
                 <div className="flex flex-col gap-2 p-6 md:p-8 bg-white border border-black/10">
                     <h3 className="font-serif font-bold lg:text-3xl text-2xl">Affiliate Support</h3>
                     <p className="font-sans md:text-xl text-lg leading-snug">Need assistance with your affiliate links, tracking, or payouts? Contact our partnership team for direct support, marketing materials, and optimization tips to help maximize your earnings.</p>
+                    <a href={`mailto:${EMAILS.affiliates}`} className="font-sans md:text-xl text-lg text-beau font-semibold underline underline-offset-4 w-fit">{EMAILS.affiliates}</a>
                 </div>
                 <nav aria-label="Quick help" className="grid sm:grid-cols-3 gap-3 font-sans">
                     {[

@@ -2,6 +2,7 @@ import type { JSX } from "react";
 import logo from "/assets/brand/beau-logo.png";
 import beautext from "/assets/brand/beau-logo.png";
 import { Link } from "react-router-dom";
+import { EMAILS } from "../constants";
 
 const linkClass = "underline-offset-4 decoration-sand hover:text-white hover:underline transition";
 
@@ -49,8 +50,8 @@ export default function Footer(): JSX.Element {
             <div className="space-y-6 text-gray-200 text-sm font-sans tracking-wide">
               <div>
                 <p className="font-bold text-white mb-1">Email</p>
-                <a href="mailto:beau@example.com" className={linkClass}>
-                  beau@example.com
+                <a href={`mailto:${EMAILS.support}`} className={linkClass}>
+                  {EMAILS.support}
                 </a>
               </div>
               <div>

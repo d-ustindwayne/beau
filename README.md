@@ -43,7 +43,7 @@ The Shop keeps its state in the address bar, so any view can be shared or bookma
 All data lives in `src/`:
 
 - `productList.json`: products grouped by collection
-- `orderList.json`: sample orders for Order Status and Jinny. Try `BEAU-1024` with `ava@example.com`.
+- `orderList.json`: sample orders for Order Status and Jinny. Try `BEAU-1024` with `ava@dustindwayn.ee`.
 - `affiliateList.json`: affiliates shown on the Affiliate page
 - `seo.json`: the title and description for every page, used for meta tags, the sitemap and robots.txt
 

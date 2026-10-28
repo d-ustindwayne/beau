@@ -1,7 +1,7 @@
 [
     {
         "number": "BEAU-1024",
-        "email": "ava@example.com",
+        "email": "ava@dustindwayn.ee",
         "courier": "NZ Post",
         "tracking": "NZ7392018845",
         "deliverTo": "Ponsonby, Auckland",
@@ -19,7 +19,7 @@
     },
     {
         "number": "BEAU-1025",
-        "email": "liam@example.com",
+        "email": "liam@dustindwayn.ee",
         "courier": "NZ Post",
         "tracking": null,
         "deliverTo": "Te Aro, Wellington",
@@ -34,7 +34,7 @@
     },
     {
         "number": "BEAU-1022",
-        "email": "isla@example.com",
+        "email": "isla@dustindwayn.ee",
         "courier": "CourierPost",
         "tracking": "CP5518302291",
         "deliverTo": "Riccarton, Christchurch",
@@ -52,7 +52,7 @@
     },
     {
         "number": "BEAU-1019",
-        "email": "mia@example.com",
+        "email": "mia@dustindwayn.ee",
         "courier": "NZ Post",
         "tracking": "NZ7392011107",
         "deliverTo": "Manukau, Auckland",
@@ -71,7 +71,7 @@
     },
     {
         "number": "BEAU-1027",
-        "email": "noah@example.com",
+        "email": "noah@dustindwayn.ee",
         "courier": "NZ Post",
         "tracking": null,
         "deliverTo": "Newmarket, Auckland",
