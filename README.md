@@ -1,4 +1,4 @@
-# Beau Cosmetics — Lipstick Shop
+# Beau Cosmetics
 
 Welcome to the official repository for **Beau**, a premium lipstick cosmetic shop based in Manukau City, Auckland. This platform is a modern, blazing-fast web application designed to showcase and manage lipstick products seamlessly. 
 
