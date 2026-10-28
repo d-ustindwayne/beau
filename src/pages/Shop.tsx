@@ -95,7 +95,7 @@ export default function Shop(): JSX.Element {
                             className="group flex flex-col items-center sm:px-3.5 px-1 rounded-full focus-visible:outline-offset-8">
                             <span className="lg:w-45 md:w-32.5 sm:w-30.5 w-24 rounded-full aspect-square flex justify-center items-center">
                                 <img src={image} alt="" width={180} height={180} loading="lazy" decoding="async"
-                                    className={`w-full h-full object-cover rounded-full motion-safe:animate-spin [animation-duration:60s] transition-shadow duration-300 ${isSelected? 'ring-8 md:ring-12 ring-[#e37d72]' : 'ring-0 group-hover:ring-4 group-hover:ring-[#e37d72]/50'}`}/>
+                                    className={`w-full h-full object-cover rounded-full animate-spin [animation-duration:25s] transition-shadow duration-300 ${isSelected? 'ring-8 md:ring-12 ring-[#e37d72]' : 'ring-0 group-hover:ring-4 group-hover:ring-[#e37d72]/50'}`}/>
                             </span>
                             <span className={`my-4 md:text-3xl text-xl transition-colors ${isSelected ? "text-beau" : ""}`}>{lip}</span>
                         </button>

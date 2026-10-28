@@ -26,7 +26,7 @@ interface Provider {
     url: string;
     apiKey: string;
     model: string;
-    /** Gemini 2.5+ models spend part of the budget on hidden reasoning, so they get more room. */
+    /** Reasoning models spend part of the budget on hidden thinking, so leave plenty of room. */
     maxTokens: number;
 }
 
@@ -45,11 +45,11 @@ function getProviders(env: Env): Provider[] {
     const providers: Array<Provider | null> = [
         env.GROQ_API_KEY ? {
             name: "groq", url: "https://api.groq.com/openai/v1/chat/completions",
-            apiKey: env.GROQ_API_KEY, model: env.GROQ_MODEL || "llama-3.3-70b-versatile", maxTokens: 600,
+            apiKey: env.GROQ_API_KEY, model: env.GROQ_MODEL || "openai/gpt-oss-120b", maxTokens: 2048,
         } : null,
         env.GEMINI_API_KEY ? {
             name: "gemini", url: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
-            apiKey: env.GEMINI_API_KEY, model: env.GEMINI_MODEL || "gemini-2.5-flash", maxTokens: 2048,
+            apiKey: env.GEMINI_API_KEY, model: env.GEMINI_MODEL || "gemini-3.8-flash", maxTokens: 2048,
         } : null,
     ];
     return providers.filter((p): p is Provider => p !== null);
@@ -107,7 +107,7 @@ const TOOLS = [
                     finish: { type: "string", enum: FINISHES },
                     min_price: { type: "number" },
                     max_price: { type: "number" },
-                    limit: { type: "integer", minimum: 1, maximum: 8 },
+                    limit: { type: "integer", description: "How many results to return (up to 8)." },
                 },
             },
         },
@@ -137,7 +137,7 @@ const TOOLS = [
                 properties: {
                     product_name: { type: "string" },
                     collection: { type: "string", enum: COLLECTIONS },
-                    quantity: { type: "integer", minimum: 1, maximum: 20 },
+                    quantity: { type: "integer", description: "How many to add (1 to 20)." },
                 },
                 required: ["product_name"],
             },
@@ -268,7 +268,8 @@ export default {
                 const res = await callProvider(provider, messages);
                 if (!res.ok) {
                     lastStatus = res.status;
-                    console.warn(`${provider.name} failed with ${res.status}`);
+                    const detail = (await res.text().catch(() => "")).slice(0, 300);
+                    console.warn(`${provider.name} (${provider.model}) failed with ${res.status}: ${detail}`);
                     continue;
                 }
                 const data = await res.json() as { choices?: Array<{ message?: { content?: string | null; tool_calls?: ToolCall[] } }> };

@@ -3,8 +3,8 @@ main = "src/index.ts"
 compatibility_date = "2026-10-01"
 
 [vars]
-GROQ_MODEL = "llama-3.3-70b-versatile"
-GEMINI_MODEL = "gemini-2.5-flash"
+GROQ_MODEL = "openai/gpt-oss-120b"
+GEMINI_MODEL = "gemini-3.8-flash"
 ALLOWED_ORIGINS = "https://d-ustindwayne.github.io,http://localhost:5173,http://localhost:4173"
 
 # Secrets: never put keys in this file. Set them with:
