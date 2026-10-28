@@ -26,9 +26,9 @@ const promises = [
 ];
 
 const finishes = [
+    { name: "Glossy", image: glossyType, text: "High-shine, light-catching colour." },
     { name: "Matte", image: matteType, text: "Velvety, shine-free and long-wearing." },
     { name: "Satin", image: satinType, text: "A soft, natural sheen with comfort." },
-    { name: "Glossy", image: glossyType, text: "High-shine, light-catching colour." },
 ];
 
 const jinnyPrompts = ["Find me a bold red", "What suits a night out?", "Show me shades under $25"];
