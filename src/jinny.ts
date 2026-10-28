@@ -90,7 +90,10 @@ export function searchProducts({ query, collection, finish, min_price, max_price
     return scored.slice(0, Math.min(Math.max(limit, 1), 8)).map(({ p }) => p);
 }
 
-const summarise = (p: CatalogProduct) => ({ name: p.name, collection: formatCategory(p.collection), finish: p.finish, price: dollarFormatter(p.price) });
+/** The first paragraph of a description says what colour the shade actually is. */
+const shadeOf = (p: CatalogProduct) => p.description.split("\n")[0];
+
+const summarise = (p: CatalogProduct) => ({ name: p.name, collection: formatCategory(p.collection), finish: p.finish, price: dollarFormatter(p.price), shade: shadeOf(p) });
 
 /* ---------- Tool execution (runs in the browser) ---------- */
 
