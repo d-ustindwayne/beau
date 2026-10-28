@@ -30,6 +30,8 @@ interface Provider {
     model: string;
     /** Reasoning models spend part of the budget on hidden thinking, so leave plenty of room. */
     maxTokens: number;
+    /** Provider-specific request fields. */
+    extra?: Record<string, unknown>;
 }
 
 interface ToolCall {
@@ -48,6 +50,8 @@ function getProviders(env: Env): Provider[] {
         env.GROQ_API_KEY ? {
             name: "groq", url: "https://api.groq.com/openai/v1/chat/completions",
             apiKey: env.GROQ_API_KEY, model: env.GROQ_MODEL || "openai/gpt-oss-120b", maxTokens: 2048,
+            // gpt-oss thinks at "medium" by default, which makes short chat replies slow.
+            extra: (env.GROQ_MODEL || "openai/gpt-oss-120b").startsWith("openai/gpt-oss") ? { reasoning_effort: "low" } : undefined,
         } : null,
         env.GEMINI_API_KEY ? {
             name: "gemini", url: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
@@ -58,6 +62,8 @@ function getProviders(env: Env): Provider[] {
 }
 const DEFAULT_ORIGINS = "https://beau.dustindwayn.ee,https://d-ustindwayne.github.io,http://localhost:5173,http://localhost:4173";
 
+// A provider that hasn't answered by now is treated as down, so the next one gets a turn.
+const PROVIDER_TIMEOUT_MS = 15_000;
 const MAX_MESSAGES = 40;
 const MAX_TOTAL_CHARS = 40_000;
 const LIMITS = { user: 1_000, assistant: 4_000, tool: 6_000, toolArgs: 1_000 };
@@ -287,7 +293,9 @@ async function callProvider(provider: Provider, messages: ChatMessage[]): Promis
             tool_choice: "auto",
             temperature: 0.7,
             max_tokens: provider.maxTokens,
+            ...provider.extra,
         }),
+        signal: AbortSignal.timeout(PROVIDER_TIMEOUT_MS),
     });
 }
 

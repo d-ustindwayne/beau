@@ -23,7 +23,7 @@ export interface CatalogProduct {
 
 export type JinnyMessage =
     | { role: "user", content: string }
-    | { role: "assistant", content: string | null, tool_calls?: ToolCall[], products?: CatalogProduct[], isError?: boolean }
+    | { role: "assistant", content: string | null, tool_calls?: ToolCall[], products?: CatalogProduct[], inCart?: string[], isError?: boolean }
     | { role: "tool", tool_call_id: string, content: string };
 
 export type NavigateFn = (path: string) => void;
@@ -99,7 +99,8 @@ const summarise = (p: CatalogProduct) => ({ name: p.name, collection: formatCate
 
 interface ToolResult {
     content: string,
-    products?: CatalogProduct[]
+    products?: CatalogProduct[],
+    addedToCart?: boolean
 }
 
 export async function executeTool(call: ToolCall, navigate: NavigateFn): Promise<ToolResult> {
@@ -134,7 +135,7 @@ export async function executeTool(call: ToolCall, navigate: NavigateFn): Promise
             const p = matches[0];
             const quantity = Math.min(Math.max(Math.round(num(args.quantity) ?? 1), 1), 20);
             await Cart.add(p.collection, { name: p.name, price: p.price, lipstickType: p.finish, description: p.description, photoUrl: p.photoUrl }, quantity);
-            return { content: JSON.stringify({ added: quantity, product: summarise(p), cart_items: Cart.getCount(Cart.CartList) }), products: [p] };
+            return { content: JSON.stringify({ added: quantity, product: summarise(p), cart_items: Cart.getCount(Cart.CartList) }), products: [p], addedToCart: true };
         }
         case "get_cart": {
             const cart = Cart.CartList;
@@ -181,6 +182,11 @@ export async function executeTool(call: ToolCall, navigate: NavigateFn): Promise
 
 const MAX_TOOL_ROUNDS = 4;
 const HISTORY_LIMIT = 24;
+// The worker gives each AI provider 15s and tries two, so this leaves room for both.
+const REQUEST_TIMEOUT_MS = 35_000;
+const EMPTY_REPLY = "Sorry babe, I lost my train of thought there. Can you ask me that again?";
+
+export const productKey = (p: CatalogProduct) => `${p.collection}-${p.name}`;
 
 /** Strips UI-only fields and trims history so it always starts at a user message. */
 function toApiMessages(messages: JinnyMessage[]): JinnyMessage[] {
@@ -199,18 +205,32 @@ async function requestReply(messages: JinnyMessage[], signal?: AbortSignal): Pro
     try {
         return await requestReplyOnce(messages, signal);
     } catch (error) {
-        if (signal?.aborted) throw error;
+        // A timeout already waited long enough; only quick failures are worth a second try.
+        if (signal?.aborted || (error instanceof Error && error.name === "TimeoutError")) throw error;
         await new Promise((resolve) => setTimeout(resolve, 1200));
         return requestReplyOnce(messages, signal);
     }
 }
 
 async function requestReplyOnce(messages: JinnyMessage[], signal?: AbortSignal): Promise<{ content: string | null, tool_calls?: ToolCall[] }> {
+    // A stuck request must not leave the customer staring at the typing dots forever.
+    const controller = new AbortController();
+    let timedOut = false;
+    const timer = setTimeout(() => { timedOut = true; controller.abort(); }, REQUEST_TIMEOUT_MS);
+    const stop = () => controller.abort();
+    if (signal?.aborted) stop();
+    signal?.addEventListener("abort", stop);
     const res = await fetch(JINNY_API_URL!, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: toApiMessages(messages) }),
-        signal,
+        signal: controller.signal,
+    }).catch((error) => {
+        if (timedOut) throw Object.assign(new Error("Jinny is taking too long to answer."), { name: "TimeoutError" });
+        throw error;
+    }).finally(() => {
+        clearTimeout(timer);
+        signal?.removeEventListener("abort", stop);
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok || !data.message) throw new Error(data.error || "Jinny couldn't respond right now.");
@@ -231,21 +251,27 @@ export async function askJinny(history: JinnyMessage[], navigate: NavigateFn, si
     } catch (error) {
         // If the AI service is down or not configured, answer from the local catalogue instead of failing,
         // unless a tool already ran this turn (re-running it offline could, for example, add an item twice).
-        if (signal?.aborted || turn.some((m) => m.role === "tool")) throw error;
+        if (signal?.aborted || turn.some((m) => m.role === "tool") || (error instanceof Error && error.name === "TimeoutError")) throw error;
         return [await offlineReply(history, navigate)];
     }
 }
 
 async function askOnline(history: JinnyMessage[], turn: JinnyMessage[], navigate: NavigateFn, signal?: AbortSignal): Promise<JinnyMessage[]> {
     const shownProducts: CatalogProduct[] = [];
+    const inCart = new Set<string>();
 
     for (let round = 0; round <= MAX_TOOL_ROUNDS; round++) {
         const reply = await requestReply([...history, ...turn], signal);
         const toolCalls = round < MAX_TOOL_ROUNDS ? reply.tool_calls : undefined;
 
         if (!toolCalls?.length) {
-            const unique = shownProducts.filter((p, i, arr) => arr.findIndex((q) => q.name === p.name && q.collection === p.collection) === i);
-            turn.push({ role: "assistant", content: reply.content ?? "", products: unique.length ? unique : undefined });
+            const unique = shownProducts.filter((p, i, arr) => arr.findIndex((q) => productKey(q) === productKey(p)) === i);
+            turn.push({
+                role: "assistant",
+                content: reply.content?.trim() || (unique.length ? "" : EMPTY_REPLY),
+                products: unique.length ? unique : undefined,
+                inCart: inCart.size ? [...inCart] : undefined,
+            });
             return turn;
         }
 
@@ -253,6 +279,7 @@ async function askOnline(history: JinnyMessage[], turn: JinnyMessage[], navigate
         for (const call of toolCalls) {
             const result = await executeTool(call, navigate);
             if (result.products) shownProducts.push(...result.products);
+            if (result.addedToCart) result.products?.forEach((p) => inCart.add(productKey(p)));
             turn.push({ role: "tool", tool_call_id: call.id, content: result.content });
         }
     }
@@ -264,7 +291,7 @@ async function askOnline(history: JinnyMessage[], turn: JinnyMessage[], navigate
 async function offlineReply(history: JinnyMessage[], navigate: NavigateFn): Promise<JinnyMessage> {
     const last = [...history].reverse().find((m) => m.role === "user");
     const text = last?.role === "user" ? last.content.toLowerCase() : "";
-    const reply = (content: string, products?: CatalogProduct[]): JinnyMessage => ({ role: "assistant", content, products });
+    const reply = (content: string, products?: CatalogProduct[], inCart?: string[]): JinnyMessage => ({ role: "assistant", content, products, inCart });
 
     const addMatch = text.match(/\badd\s+(\d+\s+)?(.+?)(\s+to\s+(my\s+)?(cart|bag))?$/);
     if (addMatch) {
@@ -272,7 +299,7 @@ async function offlineReply(history: JinnyMessage[], navigate: NavigateFn): Prom
         const product = catalog.find((p) => addMatch[2].includes(p.name.toLowerCase()));
         if (product) {
             await executeTool({ id: "offline", type: "function", function: { name: "add_to_cart", arguments: JSON.stringify({ product_name: product.name, collection: product.collection, quantity }) } }, navigate);
-            return reply(`Done! I've added ${quantity} × **${product.name}** to your cart.`, [product]);
+            return reply(`Done! I've added ${quantity} × **${product.name}** to your cart.`, [product], [productKey(product)]);
         }
     }
 

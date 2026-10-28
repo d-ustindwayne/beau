@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useRef, useState, type FormEvent, type JSX, type ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
-import { askJinny, JINNY_API_URL, onJinnyOpen, type CatalogProduct, type JinnyMessage } from "../jinny";
+import { useLocation, useNavigate } from "react-router-dom";
+import { askJinny, JINNY_API_URL, onJinnyOpen, productKey, type CatalogProduct, type JinnyMessage } from "../jinny";
 import { Cart } from "../cartData.tsx";
 import { dollarFormatter, formatCategory } from "../constants";
 import { useDialog } from "../hooks";
@@ -69,7 +69,8 @@ function JinnyAvatar({ className, monogramClassName }: { className: string, mono
     );
 }
 
-function ProductChip({ product }: { product: CatalogProduct }): JSX.Element {
+/** `inCart` marks a product Jinny just added, so the card confirms it instead of offering to add it again. */
+function ProductChip({ product, inCart }: { product: CatalogProduct, inCart?: boolean }): JSX.Element {
     const [added, setAdded] = useState(false);
     const category = formatCategory(product.collection);
 
@@ -88,10 +89,14 @@ function ProductChip({ product }: { product: CatalogProduct }): JSX.Element {
                 <p className="font-sans font-light text-lg leading-tight truncate">{product.name}</p>
                 <p className="font-serif font-bold text-sm leading-tight truncate">{category}</p>
                 <p className="font-sans text-sm mb-2">{dollarFormatter(product.price)} · <span className="text-neutral-600">{product.finish}</span></p>
-                <button type="button" onClick={add} disabled={added} aria-label={`Add ${product.name} to cart`}
-                    className="mt-auto w-full bg-beau text-white text-xs font-semibold uppercase tracking-wide py-1.5 transition-colors hover:bg-beau-dark disabled:opacity-80">
-                    {added ? "Added" : "Add to cart"}
-                </button>
+                {inCart ? (
+                    <p className="mt-auto w-full border border-beau text-beau text-xs font-semibold uppercase tracking-wide py-1.5">In your cart</p>
+                ) : (
+                    <button type="button" onClick={add} disabled={added} aria-label={`Add ${product.name} to cart`}
+                        className="mt-auto w-full bg-beau text-white text-xs font-semibold uppercase tracking-wide py-1.5 transition-colors hover:bg-beau-dark disabled:opacity-80">
+                        {added ? "Added" : "Add to cart"}
+                    </button>
+                )}
             </div>
         </li>
     );
@@ -99,6 +104,7 @@ function ProductChip({ product }: { product: CatalogProduct }): JSX.Element {
 
 export default function JinnyChat(): JSX.Element {
     const navigate = useNavigate();
+    const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
     const [messages, setMessages] = useState<JinnyMessage[]>(loadHistory);
@@ -135,6 +141,15 @@ export default function JinnyChat(): JSX.Element {
     }, [messages, isThinking, isVisible]);
 
     useEffect(() => () => abortRef.current?.abort(), []);
+
+    // Moving to another page (a link, the back button, or Jinny navigating) closes the chat so the page is visible.
+    const lastLocationKey = useRef(location.key);
+    useEffect(() => {
+        if (lastLocationKey.current === location.key) return;
+        lastLocationKey.current = location.key;
+        setIsOpen(false);
+        setIsClosing(false);
+    }, [location.key]);
 
     // Other pages (e.g. Customer Service) can open the chat, optionally with a question ready to send.
     useEffect(() => onJinnyOpen((message) => {
@@ -249,7 +264,7 @@ export default function JinnyChat(): JSX.Element {
                                 ) : null}
                                 {m.role === "assistant" && m.products?.length ? (
                                     <ul aria-label="Suggested products" className="flex gap-2.5 w-full overflow-x-auto snap-x pb-2">
-                                        {m.products.map((p) => <ProductChip key={`${p.collection}-${p.name}`} product={p} />)}
+                                        {m.products.map((p) => <ProductChip key={productKey(p)} product={p} inCart={m.inCart?.includes(productKey(p))} />)}
                                     </ul>
                                 ) : null}
                             </div>
@@ -258,9 +273,9 @@ export default function JinnyChat(): JSX.Element {
                     {isThinking && (
                         <div role="status" className="flex items-center gap-1.5 w-fit bg-white border border-black/10 px-4 py-3.5 rounded-2xl rounded-bl-sm">
                             <span className="sr-only">Jinny is typing…</span>
-                            <span aria-hidden="true" className="size-2 rounded-full bg-beau animate-bounce [animation-delay:-0.3s]" />
-                            <span aria-hidden="true" className="size-2 rounded-full bg-beau animate-bounce [animation-delay:-0.15s]" />
-                            <span aria-hidden="true" className="size-2 rounded-full bg-beau animate-bounce" />
+                            <span aria-hidden="true" className="size-2 rounded-full bg-beau animate-typing motion-reduce:animate-none" />
+                            <span aria-hidden="true" className="size-2 rounded-full bg-beau animate-typing motion-reduce:animate-none [animation-delay:0.15s]" />
+                            <span aria-hidden="true" className="size-2 rounded-full bg-beau animate-typing motion-reduce:animate-none [animation-delay:0.3s]" />
                         </div>
                     )}
 
