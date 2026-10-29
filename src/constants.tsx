@@ -13,9 +13,9 @@ export const SplideClass: object = {
 
 /** beau's mailboxes, one per purpose. Jinny's copy lives in jinny-worker/src/index.ts. */
 export const EMAILS = {
-    support: "support@dustindwayn.ee",
-    affiliates: "affiliates@dustindwayn.ee",
-    privacy: "privacy@dustindwayn.ee",
+    support: "support@beau.dustindwayn.ee",
+    affiliates: "affiliates@beau.dustindwayn.ee",
+    privacy: "privacy@beau.dustindwayn.ee",
 } as const;
 
 export const breakpoints: Record<bp, number> = {
